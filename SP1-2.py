@@ -1,31 +1,3 @@
-
-"""
-Created on Mon Oct 21 13:22:02 2019
-
-@author: tomoyaukawa
-"""
-
-############
-"""GAP_SP"""
-############
-
-"""
-
-OPTIMISATION:
-    
-    Variable integer to optimize:
-    V_ij:The number of loading k vehicles (out of order's unit vehicles) in hold i
-    
-    Minimize:
-    1.The penalty of order different discharging port in one hold
-    2.The penalty of vehicles different loading/discharging port in pair hold
-    3.The penalty of cars passed holds that exceed threshold
-   
-    Maximize:
-    4.The benefit of left space near the entrance when the ship reaches check point
-    
-"""
-
 import warnings
 import openpyxl
 import numpy as np
@@ -44,11 +16,9 @@ def Read_booking(FileName):
     D = [] #揚げ地の集合
     T = [] #港の集合
     
-    lport_name = list(Booking_df["PORT_L"].unique())
-    dport_name = list(Booking_df["PORT_D"].unique())
-    lport_name = lport_name[:-1]
-    dport_name = dport_name[:-1]
-    
+    lport_name = [x for x in list(Booking_df["PORT_L"].unique()) if not pd.isnull(x)]
+    dport_name = [x for x in list(Booking_df["PORT_D"].unique()) if not pd.isnull(x)]
+
     for t in range(len(lport_name)):
         L.append(t)
     
@@ -85,16 +55,12 @@ def Read_booking(FileName):
         if 500 < tmp and tmp <= 1000:
             if tmp % 2 == 0:
                 u_num = [int(tmp / 2), int(tmp / 2)]
-                concat1 = concat2 = Booking_df.iloc[j,:]
-                concat1["Units"] = u_num[0]
-                concat2["Units"] = u_num[1]
-                divide_df = pd.concat([divide_df, concat1, concat2], axis = 1)
             if tmp % 2 == 1:
                 u_num = [int(tmp / 2) + 1, int(tmp / 2)]
-                concat1 = concat2 = Booking_df.iloc[j,:]
-                concat1["Units"] = u_num[0]
-                concat2["Units"] = u_num[1]
-                divide_df = pd.concat([divide_df, concat1, concat2], axis = 1)
+            concat1 = concat2 = Booking_df.iloc[j,:]
+            concat1["Units"] = u_num[0]
+            concat2["Units"] = u_num[1]
+            divide_df = pd.concat([divide_df, concat1, concat2], axis = 1)
             divided_j.append(j)
             divide_dic.append([j,tmp])
        
@@ -235,47 +201,30 @@ def main():
     #==============================================================================================
     
     #ファイルロード
-    File1 = "book/booking3.csv"
-    File2 = "data/hold.csv"
-    File3 = "data/mainlamp.csv"
-    File4 = "data/back_mainlamp.csv"
-    File5 = "data/afr_mainlamp.csv"
-    File6 = "data/stress_mainlamp.csv"
-    File7 = "data/gangnum_2.csv"
-    File8 = "data/gangnum_3.csv"
+    BookingFile = "book/exp.csv"
+    HoldFile = "data/hold.csv"
+    MainLampFile = "data/mainlamp.csv"
+    BackMainLampFile = "data/back_mainlamp.csv"
+    AfrMainLampFile = "data/afr_mainlamp.csv"
+    StressFile = "data/stress_mainlamp.csv"
+    Gang2File = "data/gangnum_2.csv"
+    Gang3File = "data/gangnum_3.csv"
+
+    print("File:" + BookingFile)
     
     #注文情報の読み込み
     T,L,D,J,U,A,G,J_small,J_medium,J_large,Port,Check_port,Booking,divide_dic \
-    = Read_booking(File1)
+    = Read_booking(BookingFile)
     
     #船体情報の読み込み1
     I,B,I_pair,I_next,I_same,I_lamp,I_deck,RT_benefit,delta_s,min_s,max_s,delta_h,max_h,Hold_encode,Hold \
-    = Read_hold(File2)
+    = Read_hold(HoldFile)
     
     #船体情報の読み込み2
     Ml_Load,Ml_Back,Ml_Afr,Stress,GANG2,GANG3 \
-    = Read_other(File3,File4,File5,File6,File7,File8,Hold_encode)
+    = Read_other(MainLampFile,BackMainLampFile,AfrMainLampFile,StressFile,Gang2File,Gang3File,Hold_encode)
     
-    #==============================================
-    #print('-----Loaded threshold data-----')
-    #print(delta_s)
-    #print(delta_h)
-    #print(min_s)
-    #print(max_s)
-    #print(max_h)
-    #print("\n")
-    #print('-----Loaded instance data-----')
-    #print(I)
-    #print(I_pair)
-    #print(I_next)
-    #print(I_same)
-    #print(I_lamp)
-    #print(I_deck)
-    #print(J)
-    #print(B)
-    #print(A)
-    #print("\n")
-    #==============================================
+    
     
     J_t_load = [] #J_t_load:港tで積む注文の集合
     J_t_keep = [] #J_t_keep:港tを通過する注文の集合
@@ -366,30 +315,14 @@ def main():
                    J_large_divide.append(tmp)
     """
     
-    #==============================================
-    #print(Port)
-    #print(Booking)
-    #print(T)
-    #print(L)
-    #print(D)
-    #print(J)
-    #print(U)
-    #print(J_t_load)
-    #print(J_t_keep) 
-    #print(J_t_dis)
-    #print(J_lk)
-    #print(J_ld)
-    #print(gang_num)
-    #print(J_large_divide)
-    #print("\n")
-    #==============================================
+    
     
     #モデリング1(定数・変数の設定)
     #==============================================================================================
     
     #Gurobiパラメータ設定
-    #GAP_SP = gp.Model()
-    GAP_SP.setParam("TimeLimit", 3600)
+    GAP_SP = gp.Model()
+    GAP_SP.setParam("TimeLimit", 86400)
     GAP_SP.setParam("MIPFocus", 1)
     GAP_SP.setParam("LPMethod", 1)
     GAP_SP.printStats()
@@ -579,15 +512,15 @@ def main():
     
     #J_small
     #分割しない
-    GAP_SP.addConstrs(gp.quicksum(X_ij[i,j] for i in I) == 1 for j in J_small)
+    # GAP_SP.addConstrs(gp.quicksum(X_ij[i,j] for i in I) == 1 for j in J_small)
     
     #J_medium
-    GAP_SP.addConstrs(gp.quicksum(X_ij[i,j] for i in I) == 1 for j in J_medium)
+    # GAP_SP.addConstrs(gp.quicksum(X_ij[i,j] for i in I) == 1 for j in J_medium)
     
     #J_large
-    for k1 in range(len(I_deck)):
-        for k2 in range(k1):
-            GAP_SP.addConstrs(gp.quicksum(X_ij[i1,j] for i1 in I_deck[k1]) * gp.quicksum(X_ij[i2,j] for i2 in I_deck[k2]) <= 0 for j in J_large)
+    # for k1 in range(len(I_deck)):
+    #     for k2 in range(k1):
+    #         GAP_SP.addConstrs(gp.quicksum(X_ij[i1,j] for i1 in I_deck[k1]) * gp.quicksum(X_ij[i2,j] for i2 in I_deck[k2]) <= 0 for j in J_large)
        
     #特殊制約2(移動経路制約)
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -797,6 +730,9 @@ def main():
     c_list.append("LPORT")
     c_list.append("DPORT")
     c_list.append("Cost")
+    booking_name = BookingFile.split(".")[0]
+    assignment_result_name="result/"+booking_name+"_assignment.xlsx"
+    leftRT_result_name="result/"+booking_name+"_leftRT.xlsx"
     assign_data = pd.DataFrame(assign, columns=c_list)
     assign_data.to_excel('result/assignment.xlsx', index=False, columns=c_list)
     I_left_data.to_excel('result/leftRT.xlsx', index=False)
