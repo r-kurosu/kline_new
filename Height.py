@@ -426,6 +426,23 @@ def main():
     
     #基本制約
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  
+
+    #高さ制約
+    #ホールドの高さ
+    HoldHeightVar = []
+    for i in range(len(HoldHeight)):
+        HoldHeightVar.append(GAP_SP.addVar(
+            lb=0, vtype=gp.GRB.CONTINUOUS))
+    #車の高さ
+    VehicleHeightVar = []
+    for i in range(len(VehicleHeight)):
+        VehicleHeightVar.append(GAP_SP.addVar(
+            lb=0, vtype=gp.GRB.CONTINUOUS))
+
+    #制約式
+    for i in range(len(HoldHeight)):
+        for j in range(len(VehicleHeight)):
+            GAP_SP.addConstr(VehicleHeightVar[i]*X_ij[i, j] <= HoldHeightVar[i])
     
     #割当てた注文がコンパートメント毎にリソースを超えない
     GAP_SP.addConstrs(gp.quicksum(V_ij[i,j] * A[j] for j in J) <= B[i] for i in I)
@@ -442,7 +459,7 @@ def main():
     #目的関数1の制約
     for t in T:
         GAP_SP.addConstrs(X_ij[i,j] <= Y_keep_it[i,t] for i in I for j in J_t_keep[t])
-     
+    
     for t in D:
         t2 = t
         for t1 in L:
