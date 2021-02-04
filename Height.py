@@ -8,9 +8,9 @@ from sklearn.preprocessing import LabelEncoder
 
 warnings.filterwarnings("ignore")
 
-def Read_booking(FileName):
+def Read_booking(BookingFileName):
     
-    Booking_df = pd.read_csv(FileName)
+    Booking_df = pd.read_csv(BookingFileName)
     
     L = [] #積み地の集合
     D = [] #揚げ地の集合
@@ -100,9 +100,9 @@ def Read_booking(FileName):
  
     return T,L,D,J,U,A,G,J_small,J_medium,J_large,Port,Check_port,Booking,divide_dic
 
-def Read_hold(FileName):
+def Read_hold(HoldFileName):
     
-    Hold_df = pd.read_csv(FileName)
+    Hold_df = pd.read_csv(HoldFileName)
     
     B = list(Hold_df["Resourse"])
     RT_benefit = list(Hold_df["RT_benefit"])
@@ -111,15 +111,17 @@ def Read_hold(FileName):
     min_s = Hold_df.iloc[0,Hold_df.columns.get_loc('Min_s')]
     max_s = Hold_df.iloc[0,Hold_df.columns.get_loc('Max_s')]
     max_h = Hold_df.iloc[0,Hold_df.columns.get_loc('Max_h')]
+    height = list(Hold_df["Height"])
     
-    list_drop_cols = ['Resourse','RT_benefit','Weight_s','Weight_h1','Weight_h2','Min_s','Max_s','Max_h']
+
+    
+    list_drop_cols = ['Resourse','RT_benefit','Weight_s','Weight_h1','Weight_h2','Min_s','Max_s','Max_h','Height']
     
     #ホールド番号のエンコード
     Hold_encode = Hold_df.iloc[:,0:2]
     le = LabelEncoder()
     Hold_encode["Resourse"] = le.fit_transform(Hold_df['Hold'].values)
     Hold_encode = Hold_encode.rename(columns = {'Resourse':'Index'})
-    
     Hold_data = Hold_df.drop(list_drop_cols,axis=1)
     
     for i in range(len(Hold_encode)):
@@ -157,7 +159,7 @@ def Read_hold(FileName):
             count = count + 1
         I_deck.append(append_list)
        
-    return I,B,I_pair,I_next,I_same,I_lamp,I_deck,RT_benefit,delta_s,min_s,max_s,delta_h,max_h,Hold_encode,Hold_df
+    return I,B,I_pair,I_next,I_same,I_lamp,I_deck,RT_benefit,delta_s,min_s,max_s,delta_h,max_h,Hold_encode,Hold_df,height
 
 def Read_other(FileName1,FileName2,FileName3,FileName4,FileName5,FileName6,Hold_encode):
     
@@ -201,28 +203,25 @@ def main():
     #==============================================================================================
     
     #ファイルロード
-    BookingFile = "book/exp.csv"
-    HoldFile = "data/hold.csv"
-    MainLampFile = "data/mainlamp.csv"
-    BackMainLampFile = "data/back_mainlamp.csv"
-    AfrMainLampFile = "data/afr_mainlamp.csv"
-    StressFile = "data/stress_mainlamp.csv"
+    BookingFile = "book/exp_height.csv"
+    HoldFile = "revised_data/hold.csv"
+    MainLampFile = "revised_data/mainlamp.csv"
+    BackMainLampFile = "revised_data/back_mainlamp.csv"
+    AfrMainLampFile = "revised_data/afr_mainlamp.csv"
+    StressFile = "revised_data/stress_mainlamp.csv"
     Gang2File = "data/gangnum_2.csv"
     Gang3File = "data/gangnum_3.csv"
 
     print("File:" + BookingFile)
     
     #注文情報の読み込み
-    T,L,D,J,U,A,G,J_small,J_medium,J_large,Port,Check_port,Booking,divide_dic \
-    = Read_booking(BookingFile)
+    T,L,D,J,U,A,G,J_small,J_medium,J_large,Port,Check_port,Booking,divide_dic = Read_booking(BookingFile)
     
     #船体情報の読み込み1
-    I,B,I_pair,I_next,I_same,I_lamp,I_deck,RT_benefit,delta_s,min_s,max_s,delta_h,max_h,Hold_encode,Hold \
-    = Read_hold(HoldFile)
+    I,B,I_pair,I_next,I_same,I_lamp,I_deck,RT_benefit,delta_s,min_s,max_s,delta_h,max_h,Hold_encode,Hold, HoldHeight = Read_hold(HoldFile)
     
     #船体情報の読み込み2
-    Ml_Load,Ml_Back,Ml_Afr,Stress,GANG2,GANG3 \
-    = Read_other(MainLampFile,BackMainLampFile,AfrMainLampFile,StressFile,Gang2File,Gang3File,Hold_encode)
+    Ml_Load,Ml_Back,Ml_Afr,Stress,GANG2,GANG3 = Read_other(MainLampFile,BackMainLampFile,AfrMainLampFile,StressFile,Gang2File,Gang3File,Hold_encode)
     
     
     
