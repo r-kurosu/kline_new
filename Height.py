@@ -81,6 +81,7 @@ def Read_booking(BookingFileName):
     J = list(Booking["Index"])
     U = list(Booking["Units"])
     G = list(Booking["Weight"])
+    VehicleHeight = list(Booking["Height"])
     
     key2 = Booking.columns.get_loc('LPORT')
     key3 = Booking.columns.get_loc('DPORT')
@@ -98,7 +99,7 @@ def Read_booking(BookingFileName):
         if 200 < U[j]:
             J_large.append(j)
  
-    return T,L,D,J,U,A,G,J_small,J_medium,J_large,Port,Check_port,Booking,divide_dic
+    return T,L,D,J,U,A,G,J_small,J_medium,J_large,Port,Check_port,Booking,divide_dic, VehicleHeight
 
 def Read_hold(HoldFileName):
     
@@ -215,7 +216,7 @@ def main():
     print("File:" + BookingFile)
     
     #注文情報の読み込み
-    T,L,D,J,U,A,G,J_small,J_medium,J_large,Port,Check_port,Booking,divide_dic = Read_booking(BookingFile)
+    T,L,D,J,U,A,G,J_small,J_medium,J_large,Port,Check_port,Booking,divide_dic, VehicleHeight = Read_booking(BookingFile)
     
     #船体情報の読み込み1
     I,B,I_pair,I_next,I_same,I_lamp,I_deck,RT_benefit,delta_s,min_s,max_s,delta_h,max_h,Hold_encode,Hold, HoldHeight = Read_hold(HoldFile)
