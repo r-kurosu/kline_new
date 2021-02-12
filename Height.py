@@ -5,8 +5,11 @@ import pandas as pd
 import gurobipy as gp
 import category_encoders as ce
 from sklearn.preprocessing import LabelEncoder
+import sys
 
 warnings.filterwarnings("ignore")
+
+args = sys.argv
 
 def Read_booking(BookingFileName):
     
@@ -204,7 +207,8 @@ def main():
     #==============================================================================================
     
     #ファイルロード
-    BookingFile = "book/exp_height.csv"
+    # BookingFile = "book/exp_height.csv"
+    BookingFile = args[1]
     HoldFile = "revised_data/hold.csv"
     MainLampFile = "revised_data/mainlamp.csv"
     BackMainLampFile = "revised_data/back_mainlamp.csv"
@@ -748,7 +752,7 @@ def main():
     c_list.append("DPORT")
     c_list.append("Cost")
     booking_name = BookingFile.split(".")[0]
-    assignment_result_name="result/"+booking_name+"_assignment.xlsx"
+    assignment_result_name="result/height_"+booking_name+"_assignment.xlsx"
     leftRT_result_name="result/"+booking_name+"_leftRT.xlsx"
     assign_data = pd.DataFrame(assign, columns=c_list)
     assign_data.to_excel(assignment_result_name, index=False, columns=c_list)
