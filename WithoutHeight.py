@@ -322,7 +322,7 @@ def main():
     
     #Gurobiパラメータ設定
     GAP_SP = gp.Model()
-    GAP_SP.setParam("TimeLimit", 3600)
+    GAP_SP.setParam("TimeLimit", 10)
     GAP_SP.setParam("MIPFocus", 1)
     GAP_SP.setParam("LPMethod", 1)
     GAP_SP.printStats()
@@ -626,134 +626,141 @@ def main():
     #ペナルティ計算
     print("-" * 65)
     print("penalty count => ")
-    
-    #OBJ1のペナルティ
-    penal1 = 0
-    for i in I:
-        for t1 in L:
-            for t2 in D:
-                if Z_it1t2[i,t1,t2].X > 0:
-                    penal1 = penal1 + Z_it1t2[i,t1,t2].X
-                    
-    #OBJ2のペナルティ
-    penal2_1 = penal2_2 = 0
-    for i1 in I:
-        for i2 in I:
-            for t in L:
-                if Z1_i1i2t[i1,i2,t].X > 0:
-                    penal2_1 = penal2_1 + 1
-                    #print(f"ホールド{i1},{i2}で積み地ペナルティ")
-            for t in D:
-                if Z2_i1i2t[i1,i2,t].X > 0:
-                   penal2_2 = penal2_2 + 1
-                   #print(f"ホールド{i1},{i2}で揚げ地ペナルティ")
-               
-    #OBJ3のペナルティ
-    penal3 = 0
-    for i in I:
-        for j in J:
-            for t in T:
-                if M_ijt[i,j,t].X > 0:
-                    penal3 = penal3 + M_ijt[i,j,t].X
-    
-    #OBJ4のペナルティ
-    benefit4 = 0
-    for t in check_point:
-        for i in I:
-            if N_it[i,t].X > 0:
-                benefit4 = benefit4 + N_it[i,t].X
-    
-    #OBJ5のペナルティ
-    penal5 = 0
-    for t in L:
-        for i in I_lamp:
-            if K3_it[i,t].X > 0:
-                penal5 = penal5 + K3_it[i,t].X
-                
-    #解の書き込み
-    answer = []
-    assign = []            
-    for i in I:              
-        for j in J:
-            if V_ij[i,j].X > 0:
-                #assign_data[GAPホールド番号、GAP注文番号、積む台数,ホールド番号、注文番号、ユニット数、RT、積み港、降ろし港、資源要求量]
-                answer.append([i,j])
-                assign.append([0,0,V_ij[i,j].X,0,0,"L","D",0])
-    
-    print("")
-    print("[weight]")
-    print(f"Object1's weight : {w1}")
-    print(f"Object2's weight : {w2}")
-    print(f"Object3's weight : {w3}")
-    print(f"Object4's weight : {w4}")
-    print(f"Object5's weight : {w5}")
-    
-    print("")
-    print("[penalty & benefit]")
-    print(f"Different discharge port in one hold                  : {penal1_z} × {penal1}")  
-    print(f"Different loading port in pair hold                   : {penal2_load} × {penal2_1}")
-    print(f"Different discharge port in pair hold                 : {penal2_dis} × {penal2_2}")
-    print(f"The number of cars passed holds that exceed threshold : {penal3}")
-    print(f"The benefit remaining RT of hold near the entrance    : {benefit4}")
-    print(f"The penalty of total dead space                       : {penal5_k} × {penal5}")
-    print("")             
-    print(f" => Total penalty is {val_opt}")
-    print("-" * 65)  
-    
-    #残リソース 
-    I_left_data = Hold.iloc[:,0:2]
-    
-    for k in range(len(assign)):
-        
-        key = Booking.columns.get_loc('Index')
-        i_t = answer[k][0]
-        j_t = Booking.iloc[answer[k][1], key]
-        
-        #hold_ID
-        assign[k][0] = Hold.iloc[i_t,0]
-        
-        #order_ID
-        assign[k][1] = Booking.iloc[j_t,Booking.columns.get_loc('Order_num')]
-        
-        #Units(original booking)
-        assign[k][3] = Booking.iloc[j_t,Booking.columns.get_loc('Units')]
-        for j in range(len(divide_dic)):
-            if assign[k][1] - 1 == divide_dic[j][0]:
-                assign[k][3] = divide_dic[j][1]
-        
-        #RT
-        assign[k][4] = Booking.iloc[j_t,Booking.columns.get_loc('RT')]
-        
-        #L_port
-        assign[k][5] = Booking.iloc[j_t,Booking.columns.get_loc('LPORT')]
-        
-        #D_port
-        assign[k][6] = Booking.iloc[j_t,Booking.columns.get_loc('DPORT')]
-        
-        #Cost
-        assign[k][7] = assign[k][2] * assign[k][4]
-        
-        #残リソース計算
-        I_left_data.iloc[answer[k][0], 1] = I_left_data.iloc[answer[k][0], 1] - assign[k][7]
-        if I_left_data.iloc[answer[k][0], 1] < 0.1:
-            I_left_data.iloc[answer[k][0], 1] = 0
 
-    c_list = []
-    c_list.append("Hold_ID")
-    c_list.append("Order_ID")
-    c_list.append("Load_Units")
-    c_list.append("Units")
-    c_list.append("RT")
-    c_list.append("LPORT")
-    c_list.append("DPORT")
-    c_list.append("Cost")
-    booking_name = BookingFile.split(".")[0]
-    assignment_result_name="result/without_height_"+booking_name+"_assignment.xlsx"
-    leftRT_result_name="result/"+booking_name+"_leftRT.xlsx"
-    assign_data = pd.DataFrame(assign, columns=c_list)
-    assign_data.to_excel(assignment_result_name, index=False, columns=c_list)
-    I_left_data.to_excel(leftRT_result_name, index=False)
+    try:
     
+        #OBJ1のペナルティ
+        penal1 = 0
+        for i in I:
+            for t1 in L:
+                for t2 in D:
+                    if Z_it1t2[i,t1,t2].X > 0:
+                        penal1 = penal1 + Z_it1t2[i,t1,t2].X
+                    
+        #OBJ2のペナルティ
+        penal2_1 = penal2_2 = 0
+        for i1 in I:
+            for i2 in I:
+                for t in L:
+                    if Z1_i1i2t[i1,i2,t].X > 0:
+                        penal2_1 = penal2_1 + 1
+                        #print(f"ホールド{i1},{i2}で積み地ペナルティ")
+                for t in D:
+                    if Z2_i1i2t[i1,i2,t].X > 0:
+                        penal2_2 = penal2_2 + 1
+                        #print(f"ホールド{i1},{i2}で揚げ地ペナルティ")
+                
+        #OBJ3のペナルティ
+        penal3 = 0
+        for i in I:
+            for j in J:
+                for t in T:
+                    if M_ijt[i,j,t].X > 0:
+                        penal3 = penal3 + M_ijt[i,j,t].X
+        
+        #OBJ4のペナルティ
+        benefit4 = 0
+        for t in check_point:
+            for i in I:
+                if N_it[i,t].X > 0:
+                    benefit4 = benefit4 + N_it[i,t].X
+        
+        #OBJ5のペナルティ
+        penal5 = 0
+        for t in L:
+            for i in I_lamp:
+                if K3_it[i,t].X > 0:
+                    penal5 = penal5 + K3_it[i,t].X
+                    
+        #解の書き込み
+        answer = []
+        assign = []            
+        for i in I:              
+            for j in J:
+                if V_ij[i,j].X > 0:
+                    #assign_data[GAPホールド番号、GAP注文番号、積む台数,ホールド番号、注文番号、ユニット数、RT、積み港、降ろし港、資源要求量]
+                    answer.append([i,j])
+                    assign.append([0,0,V_ij[i,j].X,0,0,"L","D",0])
+        
+        print("")
+        print("[weight]")
+        print(f"Object1's weight : {w1}")
+        print(f"Object2's weight : {w2}")
+        print(f"Object3's weight : {w3}")
+        print(f"Object4's weight : {w4}")
+        print(f"Object5's weight : {w5}")
+        
+        print("")
+        print("[penalty & benefit]")
+        print(f"Different discharge port in one hold                  : {penal1_z} × {penal1}")  
+        print(f"Different loading port in pair hold                   : {penal2_load} × {penal2_1}")
+        print(f"Different discharge port in pair hold                 : {penal2_dis} × {penal2_2}")
+        print(f"The number of cars passed holds that exceed threshold : {penal3}")
+        print(f"The benefit remaining RT of hold near the entrance    : {benefit4}")
+        print(f"The penalty of total dead space                       : {penal5_k} × {penal5}")
+        print("")             
+        print(f" => Total penalty is {val_opt}")
+        print("-" * 65)  
+        
+        #残リソース 
+        I_left_data = Hold.iloc[:,0:2]
+        
+        for k in range(len(assign)):
+            
+            key = Booking.columns.get_loc('Index')
+            i_t = answer[k][0]
+            j_t = Booking.iloc[answer[k][1], key]
+            
+            #hold_ID
+            assign[k][0] = Hold.iloc[i_t,0]
+            
+            #order_ID
+            assign[k][1] = Booking.iloc[j_t,Booking.columns.get_loc('Order_num')]
+            
+            #Units(original booking)
+            assign[k][3] = Booking.iloc[j_t,Booking.columns.get_loc('Units')]
+            for j in range(len(divide_dic)):
+                if assign[k][1] - 1 == divide_dic[j][0]:
+                    assign[k][3] = divide_dic[j][1]
+            
+            #RT
+            assign[k][4] = Booking.iloc[j_t,Booking.columns.get_loc('RT')]
+            
+            #L_port
+            assign[k][5] = Booking.iloc[j_t,Booking.columns.get_loc('LPORT')]
+            
+            #D_port
+            assign[k][6] = Booking.iloc[j_t,Booking.columns.get_loc('DPORT')]
+            
+            #Cost
+            assign[k][7] = assign[k][2] * assign[k][4]
+            
+            #残リソース計算
+            I_left_data.iloc[answer[k][0], 1] = I_left_data.iloc[answer[k][0], 1] - assign[k][7]
+            if I_left_data.iloc[answer[k][0], 1] < 0.1:
+                I_left_data.iloc[answer[k][0], 1] = 0
+
+        c_list = []
+        c_list.append("Hold_ID")
+        c_list.append("Order_ID")
+        c_list.append("Load_Units")
+        c_list.append("Units")
+        c_list.append("RT")
+        c_list.append("LPORT")
+        c_list.append("DPORT")
+        c_list.append("Cost")
+        booking_name = BookingFile.split(".")[0]
+        assignment_result_name="result/without_height_"+booking_name+"_assignment.xlsx"
+        leftRT_result_name="result/"+booking_name+"_leftRT.xlsx"
+        assign_data = pd.DataFrame(assign, columns=c_list)
+        assign_data.to_excel(assignment_result_name, index=False, columns=c_list)
+        I_left_data.to_excel(leftRT_result_name, index=False)
+    # except gp.GRBException as e:
+    #     print(e.getErrorCode())
+    #     print(e.getMessage())
+    except Exception as e2:
+        print("Exception during optimization")
+
 if __name__ == "__main__":
     main()
 
