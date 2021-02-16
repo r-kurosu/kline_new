@@ -53,6 +53,8 @@ INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/algorithms/algorithmic.sty
 INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/algorithms/algorithmic.sty
 INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/tools/enumerate.sty
 INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/tools/enumerate.sty
+INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/tools/longtable.sty
+INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/tools/longtable.sty
 INPUT main.aux
 INPUT main.aux
 OUTPUT main.aux
@@ -133,4 +135,7 @@ INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/txfonts/txexa.tfm
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/txfonts/txexa.tfm
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/txfonts/txexa.tfm
 OUTPUT main.dvi
+INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/txfonts/txss.tfm
+INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/txfonts/omstxr.fd
+INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/txfonts/omstxr.fd
 INPUT main.aux

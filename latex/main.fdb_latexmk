@@ -1,9 +1,9 @@
 # Fdb version 3
-["dvipdf"] 1613442180 "main.dvi" "main.pdf" "main" 1613442181
-  "main.dvi" 1613442180 10476 a9a6f2c8e01b085cd8493efb70d28d3d "latex"
+["dvipdf"] 1613464383 "main.dvi" "main.pdf" "main" 1613464384
+  "main.dvi" 1613464383 27496 d1d5788b6243414933c4c91f35f470ec "latex"
   (generated)
   "main.pdf"
-["latex"] 1613442180 "main.tex" "main.dvi" "main" 1613442181
+["latex"] 1613464383 "main.tex" "main.dvi" "main" 1613464384
   "/usr/local/texlive/2019/texmf-dist/fonts/map/fontname/texfonts.map" 1511824771 3332 103109f5612ad95229751940c61aada0 ""
   "/usr/local/texlive/2019/texmf-dist/fonts/tfm/public/cm/cmr8.tfm" 1136768653 1292 21c1c5bfeaebccffdb478fd231a0997d ""
   "/usr/local/texlive/2019/texmf-dist/fonts/tfm/public/txfonts/txb.tfm" 1136768653 2452 76194099b4f1c022cb59f4564251c4fe ""
@@ -38,6 +38,7 @@
   "/usr/local/texlive/2019/texmf-dist/tex/latex/graphics/keyval.sty" 1570222634 2590 3aa06f747eb7e19c8d68947f1828fd06 ""
   "/usr/local/texlive/2019/texmf-dist/tex/latex/graphics/trig.sty" 1570222634 3976 f6c84526d8a14dceb492f9a764e82175 ""
   "/usr/local/texlive/2019/texmf-dist/tex/latex/tools/enumerate.sty" 1570222634 3469 bb111855092044188dbc6ed4683ad0a9 ""
+  "/usr/local/texlive/2019/texmf-dist/tex/latex/tools/longtable.sty" 1570222634 12125 d0d4ebd542e3988278244a32c1fea9b5 ""
   "/usr/local/texlive/2019/texmf-dist/tex/latex/txfonts/omltxmi.fd" 1137111002 492 e7f8afe4428797548d4301de03a1b15f ""
   "/usr/local/texlive/2019/texmf-dist/tex/latex/txfonts/omltxr.fd" 1137111002 870 69c45d93efdad241458796711e5ee4ae ""
   "/usr/local/texlive/2019/texmf-dist/tex/latex/txfonts/omstxr.fd" 1137111002 857 81ff640acbcd7da3dc30601847d7e35a ""
@@ -60,9 +61,9 @@
   "/usr/local/texlive/2019/texmf-dist/web2c/texmf.cnf" 1570742662 39452 758acee3f2beaeeedff570c5f5d76d98 ""
   "/usr/local/texlive/2019/texmf-var/web2c/euptex/uplatex.fmt" 1573005491 4553067 6bfd2d44f501852523d42dc3f56fd483 ""
   "/usr/local/texlive/2019/texmf.cnf" 1557341546 577 d150fef99ac436ad1156e86b0892f6ef ""
-  "main.aux" 1613442180 248 aca4b087e5ee3c32f3a65c91ea8ae90b "latex"
-  "main.tex" 1613442179 9252 5bafbbe93d0b95b5ec89c015fc4917d2 ""
+  "main.aux" 1613464383 961 c561242be0db50375406c7d6d6e827b8 "latex"
+  "main.tex" 1613464383 20820 951939a09b4808edd0151511f285d476 ""
   (generated)
-  "main.dvi"
-  "main.log"
   "main.aux"
+  "main.log"
+  "main.dvi"
