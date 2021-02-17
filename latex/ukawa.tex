@@ -144,41 +144,6 @@
 \section{記号の定義}
 本研究における変数と定数記号の定義をする. 本研究の変数の定義を表\ref{variable}に, 定数の定義を表\ref{const}に記載する. \\
 
-\subsection{制約}
-本研究で扱う制約の中で一般的な割当問題とは異なる独自の制約について説明する.
-
-\textgt{(a)自動車移動経路に関する制約} \\
-　ある港で注文が運搬船内の特定のホールドにおいて積み降ろしがあるとき,自動車がホールドへ到達するためには船の入り口とホールドの間で通過する任意のホールドに対して,自動車が通るための道を作る必要がある.従って,本研究では各ホールドに対して自動車の移動通路が十分確保出来る許容充填率を定義し,任意の港で各ホールドに注文を積むときや各ホールドから注文を降ろすときには,入口とそのホールドの間で通過する全てのホールドで現状の充填率が許容充填率以下であることが必要である.
-
-\textgt{(b)貨物の重量バランスに関する制約} \\
-　運搬船で自動車を運ぶ際に船の外側へ自動車を詰め込みすぎると船が航海の途中で割れてしまったり,船の上方へ自動車を詰め込みすぎると船が傾いたときにバランスを崩しそのまま横転してしまうというような問題がある[3].本研究ではこの問題を考慮するため,過去10回分の航海データを解析することによりその航海内での運搬船の重量バランスを数値化した.その結果得られた10回分の航海データの中で最も重量バランスが偏ったときを閾値とし,運搬船の上下方向と前後方向それぞれに対して,各港において運搬船からで降ろす注文を全て降ろしたとき,または港で載せる注文を全て載せたときについて重量バランスが閾値を超えてしまうような荷物の割当を禁止する.
-
-\textgt{(c)注文の分割ルールを守る} \\
-　最初に注文を100台以下の小さい注文と100台以上500台以下の大きい注文と500台以上の巨大な注文に分割する. 小さい注文についてはモデルSP1-1と同じようにギャングの効率を考え分割をしない. 大きい注文に関しては一つのホールドでは全ての自動車が入りきらないことがあるので, 1つのデッキ内に注文に含まれる全ての自動車が収まるようにする. 巨大な注文についてはユニット数が500台以上1000台以下の場合には二等分, 1000台以上1500台以下の場合には三等分し別々の注文としてから大きい注文に加える. また等分した注文は別々のデッキに載せ, 大きい注文と同様に1つのデッキ内に全ての自動車が収まるようにする.
-
-
-\subsection{目的関数}
-本研究で扱う目的関数について述べる. 席割に関するプランナーとの意見交換や,実際の席割作業を体験することで,プランナーは席割を考える上で注文の降ろし間違えが起こらないような席割を第一に目指していることが推測された.本研究では,このような席割を実現するために3つの目的関数のパラメータを提案する.
-
-\textgt{(a)一つのホールド内の降ろし地を揃える} \\
-　ある港においてホールドから注文を降ろす場合,同じホールド内に降ろし地の異なる注文が複数存在していると注文の降ろし間違いが発生する可能性がある. 本研究では降ろし地において注文を各ホールド内で降ろすときに,その降ろし地を通過する注文があるときにペナルティが発生する.またこのとき更に降ろす注文の中で載せた港が異なる注文が複数含まれていたとする.この場合,席割作業の次にホールド内のどの領域に自動車を一台ずつ詰めていくのかを考える際,手配師は降ろし間違えを防ぐため降ろし地が同じ注文は出来るだけホールド内の一つの領域に行き渡るようにホールド内のスペース配分などを考慮しなければならない.このような手配師の負担を考え,この場合は降ろす注文の中に含まれる相異なる載せ地の分だけ更にペナルティが加算される.
-
-\textgt{(b)船内で注文の積み降ろし地を揃える} \\
-　ギャング達とのヒアリングで,積み間違いや降ろし間違いを防ぐためになるべく積み降ろし地が同じ注文は船内の同じところで固めておきたいという要望があった.本研究ではこの要望に応えるために隣接ホールドペアを用意した.隣接ホールドペアとは,例えば4デッキの3ホールドと4デッキの2ホールドのような隣り合ったホールド同士のペアと, 5デッキの3ホールドと6デッキの1ホールドのようなスロープで繋がったホールド同士のペアのことである.このホールドペアの表を用いて各隣接ホールドペアに対して目的関数(a)と同様に,異なる積み降ろし地の数だけペナルティが加算される.
-
-\textgt{(c)作業効率充填率を考慮する} \\
-　ある港で注文の積み降ろしのために自動車をホールドから出すときやホールドに自動車を入れるときに,そのホールドと入口の間で通過するホールドの中にはその港を通過する注文が一定数割り当てられている.この注文がある一定量以上の場合,プランナーはそのホールドを自動車が通れるための道を作る必要がありホールド内における自動車のスペース配分を考える必要がある.またギャングは作られた道に自動車を通さなければいけないため,自動車の移動に慎重になり全体の作業効率が落ちる可能性が高い.本研究ではこのように作業効率が落ちないための各ホールド毎の作業効率充填率を設定し,これを上回ったホールドを自動車が通過する場合,通過する自動車の台数毎にペナルティが発生する.
-
-\textgt{(d)デッドスペースを作らない} \\
-　注文の合計資源要求量が船の合計収容量より十分小さい場合, 特定のホールドに空きスペースが出来る. このスペースが入口付近にあれば追い積みという港での突然の追加注文を積むことに対応出来るが, 空きスペースが出来たホールドに到達するまでに通るホールドが許容充填率を上回っている場合は, このスペースに追い積みをすることは出来ない. このような空きスペースのことをデッドスペースと言う. 目的関数(d)ではランプで繋がった船のホールドが許容充填率を超え特定デッキ間の移動ができない状態になったとき, そのホールドよりも奥にあるホールドの中で, 指定された最大許容デッドスペースよりも大きいデッドスペースがあるホールドが存在するときに大きいペナルティが発生する. \\
-
-\textgt{(e)残容量をなるべく入口付近に寄せる} \\
-　船の入口に近いホールドにまだ自動車を入れることのできるスペースがあると船への追い積みに対応できる. また, 研究で扱う船は追い積みに対応しやすい5デッキに残容量をなるべく残したいとのプランナーから要望があった. 目的関数(e)では, 積載自動車を全て積み終わる最後の積み地をチェックポイントとし, チェックポイントで5デッキや入口に近いホールドに対して残容量が多いほど全体目的関数のペナルティを減らす利得が発生する. \\
-
-%9ページ
-
-
-
 
 \clearpage
 
@@ -627,117 +592,93 @@ $b_{i}$ &
 
 
 \clearpage
+\subsection{制約}
+本研究で扱う制約の中で一般的な割当問題とは異なる独自の制約について説明する.
+
+\textgt{(a)自動車移動経路に関する制約} \\
+　ある港で注文が運搬船内の特定のホールドにおいて積み降ろしがあるとき,自動車がホールドへ到達するためには船の入り口とホールドの間で通過する任意のホールドに対して,自動車が通るための道を作る必要がある.従って,本研究では各ホールドに対して自動車の移動通路が十分確保出来る許容充填率を定義し,任意の港で各ホールドに注文を積むときや各ホールドから注文を降ろすときには,入口とそのホールドの間で通過する全てのホールドで現状の充填率が許容充填率以下であることが必要である.
+
+\textgt{(b)貨物の重量バランスに関する制約} \\
+　運搬船で自動車を運ぶ際に船の外側へ自動車を詰め込みすぎると船が航海の途中で割れてしまったり,船の上方へ自動車を詰め込みすぎると船が傾いたときにバランスを崩しそのまま横転してしまうというような問題がある[3].本研究ではこの問題を考慮するため,過去10回分の航海データを解析することによりその航海内での運搬船の重量バランスを数値化した.その結果得られた10回分の航海データの中で最も重量バランスが偏ったときを閾値とし,運搬船の上下方向と前後方向それぞれに対して,各港において運搬船からで降ろす注文を全て降ろしたとき,または港で載せる注文を全て載せたときについて重量バランスが閾値を超えてしまうような荷物の割当を禁止する.
+
+\textgt{(c)注文の分割ルールを守る} \\
+　最初に注文を100台以下の小さい注文と100台以上500台以下の大きい注文と500台以上の巨大な注文に分割する. 小さい注文についてはモデルSP1-1と同じようにギャングの効率を考え分割をしない. 大きい注文に関しては一つのホールドでは全ての自動車が入りきらないことがあるので, 1つのデッキ内に注文に含まれる全ての自動車が収まるようにする. 巨大な注文についてはユニット数が500台以上1000台以下の場合には二等分, 1000台以上1500台以下の場合には三等分し別々の注文としてから大きい注文に加える. また等分した注文は別々のデッキに載せ, 大きい注文と同様に1つのデッキ内に全ての自動車が収まるようにする.
+
+
+\subsection{目的関数}
+本研究で扱う目的関数について述べる. 席割に関するプランナーとの意見交換や,実際の席割作業を体験することで,プランナーは席割を考える上で注文の降ろし間違えが起こらないような席割を第一に目指していることが推測された.本研究では,このような席割を実現するために3つの目的関数のパラメータを提案する.
+
+\textgt{(a)一つのホールド内の降ろし地を揃える} \\
+　ある港においてホールドから注文を降ろす場合,同じホールド内に降ろし地の異なる注文が複数存在していると注文の降ろし間違いが発生する可能性がある. 本研究では降ろし地において注文を各ホールド内で降ろすときに,その降ろし地を通過する注文があるときにペナルティが発生する.またこのとき更に降ろす注文の中で載せた港が異なる注文が複数含まれていたとする.この場合,席割作業の次にホールド内のどの領域に自動車を一台ずつ詰めていくのかを考える際,手配師は降ろし間違えを防ぐため降ろし地が同じ注文は出来るだけホールド内の一つの領域に行き渡るようにホールド内のスペース配分などを考慮しなければならない.このような手配師の負担を考え,この場合は降ろす注文の中に含まれる相異なる載せ地の分だけ更にペナルティが加算される.
+
+\textgt{(b)船内で注文の積み降ろし地を揃える} \\
+　ギャング達とのヒアリングで,積み間違いや降ろし間違いを防ぐためになるべく積み降ろし地が同じ注文は船内の同じところで固めておきたいという要望があった.本研究ではこの要望に応えるために隣接ホールドペアを用意した.隣接ホールドペアとは,例えば4デッキの3ホールドと4デッキの2ホールドのような隣り合ったホールド同士のペアと, 5デッキの3ホールドと6デッキの1ホールドのようなスロープで繋がったホールド同士のペアのことである.このホールドペアの表を用いて各隣接ホールドペアに対して目的関数(a)と同様に,異なる積み降ろし地の数だけペナルティが加算される.
+
+\textgt{(c)作業効率充填率を考慮する} \\
+　ある港で注文の積み降ろしのために自動車をホールドから出すときやホールドに自動車を入れるときに,そのホールドと入口の間で通過するホールドの中にはその港を通過する注文が一定数割り当てられている.この注文がある一定量以上の場合,プランナーはそのホールドを自動車が通れるための道を作る必要がありホールド内における自動車のスペース配分を考える必要がある.またギャングは作られた道に自動車を通さなければいけないため,自動車の移動に慎重になり全体の作業効率が落ちる可能性が高い.本研究ではこのように作業効率が落ちないための各ホールド毎の作業効率充填率を設定し,これを上回ったホールドを自動車が通過する場合,通過する自動車の台数毎にペナルティが発生する.
+
+\textgt{(d)デッドスペースを作らない} \\
+　注文の合計資源要求量が船の合計収容量より十分小さい場合, 特定のホールドに空きスペースが出来る. このスペースが入口付近にあれば追い積みという港での突然の追加注文を積むことに対応出来るが, 空きスペースが出来たホールドに到達するまでに通るホールドが許容充填率を上回っている場合は, このスペースに追い積みをすることは出来ない. このような空きスペースのことをデッドスペースと言う. 目的関数(d)ではランプで繋がった船のホールドが許容充填率を超え特定デッキ間の移動ができない状態になったとき, そのホールドよりも奥にあるホールドの中で, 指定された最大許容デッドスペースよりも大きいデッドスペースがあるホールドが存在するときに大きいペナルティが発生する. \\
+
+\textgt{(e)残容量をなるべく入口付近に寄せる} \\
+　船の入口に近いホールドにまだ自動車を入れることのできるスペースがあると船への追い積みに対応できる. また, 研究で扱う船は追い積みに対応しやすい5デッキに残容量をなるべく残したいとのプランナーから要望があった. 目的関数(e)では, 積載自動車を全て積み終わる最後の積み地をチェックポイントとし, チェックポイントで5デッキや入口に近いホールドに対して残容量が多いほど全体目的関数のペナルティを減らす利得が発生する. \\
+
+\subsection{定式化}
+目的関数と制約の定式化を以下に示す．
+
+
 
 \begin{align}
   &\textrm{min} \hspace{0.4em} {w_1 p^{\rm{z}} \sum_{i \in I} \sum_{t_1 \in L}  \sum_{t_2 \in D} {z_{it_1t_2}}} \notag \\
 &\hspace{0.85em} + {w_2 \sum_{i_1 \in I} \sum_{i_2 \in I} (p_1^{\rm{z}} \sum_{t_1 \in L} {z_{i_1i_2t_1}^1} + p_2^{\rm{z}} \sum_{t_2 \in D} {z_{i_1i_2t_2}^2} )} \notag \\
 &\hspace{0.85em} + {w_3 \hspace{0.1em} \sum_{i \in I} \sum_{j\in J} \sum_{t \in T}  {m_{ijt}} }
 + {w_4 \hspace{0.1em} p^{\rm{k}} \sum_{i \in I^{\rm{lamp}}} \sum_{t \in L} {k_{it}^3}} \notag \\
-&\hspace{0.85em} - {w_5 \hspace{0.1em} \sum_{i \in I} \sum_{t \in T^{\rm{c}}} \delta_i^{\rm{n}} {n_{it}}} \\  %ここまで目的関数
-  &\textrm{s.t.} \hspace{0.5em} x_{ij} \in \{ 0 , 1 \}, {y_{it}^{\rm{keep}}} \in \{ 0 , 1 \}, \notag \\
-  &\hspace{1.5em}  {y_{it_1t_2}} \in \{ 0 , 1 \}, z_{it_1t_2} \in \{ 0 , 1 \},  {y_{i_1i_2t}^{\rm{load}}} \in \{ 0 , 1 \}, \notag \\
-  &\hspace{1.5em}  {y_{i_1i_2t}^{\rm{keep}}} \in \{ 0 , 1 \}, {y_{i_1i_2t}^{\rm{dis}}} \in \{ 0 , 1 \}, {m_{it}} \in \{ 0 , 1 \}, \notag \\
-  &\hspace{1.5em}{k^1_{it}} \in \{ 0 , 1 \}, {k^2_{it}} \in \{ 0 , 1 \}, \notag \\
-  &\hspace{1.5em} 0 \leq z_{i_1i_2t}^1, 0 \leq z_{i_1i_2t}^2, 0 \leq m_{ijt}, 0 \leq k^3_{it}, 0 \leq n_{it}, \notag \\
-  &\hspace{1.5em} 0 \leq v_{ij} \leq u_j, \hspace{3.85em} \forall i \in I, \forall j \in J, \forall t \in T. \\ 
-  %ここまで変数説明
-  &\hspace{0.6em} \sum_{i \in I} {\hspace{0.6em}v_{ij}} = u_j, \hspace{9.85em} j \in J. \\
-  &\hspace{0.6em} \sum_{j \in J} {\hspace{0.65em}a_{j}}{v_{ij}} \leq {b_{i}}, \hspace{9.2em} i \in I. \\
-  &\hspace{0.1em} \sum_{j \in {J_t}^{\rm{keep}}} \frac{a_{j} v_{ij}} {b_{i}} \geq \overline{q}_{i}^{\rm{s}} + {m_{it}}, \hspace{4.45em} i \in I, t \in T. \\
-  &\hspace{0.4em} \sum_{i_2 \in {I_{i_1}^*}} {m_{i_2t} v_{i_1j}} \leq {m_{i_1jt}}, \hspace{1.9em} i_1 \in I, j \in J_{t}^{\rm{ld}}, t \in T. \\
-  &\hspace{0.45em} \sum_{j \in J_{t}^{\rm{lk}}} \frac{a_{j} v_{ij}} {b_{i}} \leq k^1_{it} + \overline{q}_{i}, \hspace{3.75em} i \in I^{\rm{lamp}}, t \in L. \\
-  &\hspace{0.45em} \sum_{j \in J_{t}^{\rm{lk}}} a_{j} v_{ij}  \geq b_i - k^2_{it} - 1 \hspace{4.26em} i \in I, t \in L. \\
-  &\sum_{j_1\in {J_t}^{\rm{keep}}} \frac{a_{j_1} v_{i_1j_1}} {b_{i_1}} \leq \overline{q}_{i_2} + 1 - {x_{i_2j_2}}, \notag \\
-  &\hspace{6.9em} i_1 \in {I_{i_2}^*}, i_2 \in I, j_2 \in J_{t}^{\rm{ld}}, t \in T. \\
-  &| \sum_{j_1 \in {J_t}^{\rm{load}}} \sum_{i_1\in {I_k}} v_{i_1j_1} - \sum_{j_2 \in {J_t}^{\rm{load}}} \sum_{i_2\in {I_k}} v_{i_2j_2} \hspace{0.3em} | \leq 100, \notag \\
-  &\hspace{9.15em} k \in S_t, i_1, i_2 \in I_k, t \in T. \\
-  &n_{i} \leq b_{i} - \sum_{j \in J_{t}^{\rm{lk}}} a_j v_{ij}, \hspace{6.2em} i \in I, t \in L. \\
-  &k^3_{i_1t} \geq p^{\rm{k}} k^1_{i_1t} \sum_{i_2 \in I_{i_1}^{\rm{back}}} k^2_{i_2t}, \hspace{3.75em} i \in I^{\rm{lamp}}, t \in L.
+&\hspace{0.85em} - {w_5 \hspace{0.1em} \sum_{i \in I} \sum_{t \in T^{\rm{c}}} \delta_i^{\rm{n}} {n_{it}}}  \\ %ここまで目的関数
+&\textrm{s.t.} \hspace{0.5em} x_{ij} \in \{ 0 , 1 \}, {y_{it}^{\rm{keep}}} \in \{ 0 , 1 \}, \notag \\
+&\hspace{1.5em}  {y_{it_1t_2}} \in \{ 0 , 1 \}, z_{it_1t_2} \in \{ 0 , 1 \},  {y_{i_1i_2t}^{\rm{load}}} \in \{ 0 , 1 \}, \notag \\
+&\hspace{1.5em}  {y_{i_1i_2t}^{\rm{keep}}} \in \{ 0 , 1 \}, {y_{i_1i_2t}^{\rm{dis}}} \in \{ 0 , 1 \}, {m_{it}} \in \{ 0 , 1 \}, \notag \\
+&\hspace{1.5em}{k^1_{it}} \in \{ 0 , 1 \}, {k^2_{it}} \in \{ 0 , 1 \}, \notag \\
+&\hspace{1.5em} 0 \leq z_{i_1i_2t}^1, 0 \leq z_{i_1i_2t}^2, 0 \leq m_{ijt}, 0 \leq k^3_{it}, 0 \leq n_{it}, \notag \\
+&\hspace{1.5em} 0 \leq v_{ij} \leq u_j, \hspace{1.85em} \forall i \in I, \forall j \in J, \forall t \in T. \\
+&\hspace{1.0em} \sum_{i \in I} x_{ij} = 1, \hspace{8.34em} j \in J^{\rm{small}}. \\
+&\hspace{1.0em} \sum_{i \in I} {\hspace{0.6em}v_{ij}} = u_j, \hspace{8.33em} j \in J. \\
+&\hspace{1.0em} \sum_{j \in J} {\hspace{0.65em}a_{j}}{v_{ij}} \leq {b_{i}}, \hspace{8.7em} i \in I. \\
+&\hspace{0.5em} \sum_{j \in {J_t}^{\rm{keep}}} \frac{a_{j} v_{ij}} {b_{i}} \geq \overline{q}_{i}^{\rm{s}} + {m_{it}}, \hspace{3.76em} i \in I, t \in T. \\
+&\hspace{0.8em} \sum_{i_2 \in {I_{i_1}^*}} {m_{i_2t} v_{i_1j}} \leq {m_{i_1jt}}, \hspace{2.4em} i_1 \in I, j \in J_{t}^{\rm{ld}}, t \in T. \\
+&\hspace{1.0em} \sum_{j \in J_{t}^{\rm{lk}}} \frac{a_{j} v_{ij}} {b_{i}} \leq k^1_{it} + \overline{q}_{i}, \hspace{3.85em} i \in I^{\rm{lamp}}, t \in L.
+%ここまで変数説明
 \end{align}
+
 
 \newpage
 
 \begin{align}
-&\frac{v_{ij}} {u_j} \leq x_{ij}, \hspace{10em} i \in I, j \in J. \\
-&s^{\rm{h}} \leq {\delta_{i}^{\rm{h}}}{g_{j}} {v_{ij}} \leq s^{\rm{h}}, \hspace{0.5em} i \in I, j \in J_{t}^{\rm{keep}} \cup J_{t}^{\rm{lk}}, t \in T. \\
-&{\delta_{i}^{\rm{v}}}{g_{j}} {v_{ij}} \leq s^{\rm{v}}, \hspace{2.55em} i \in I, j \in J_{t}^{\rm{keep}} \cup J_{t}^{\rm{lk}}, t \in T.  \\
-&{x_{ij}} \leq {y_{it}^{\rm{keep}}}, \hspace{5.5em} i \in I, j \in J_{t}^{\rm{keep}}, t \in T. \\
-&{x_{ij}} \leq {y_{it_1t_2}}, \hspace{1.75em} i \in I, j \in J_{t_1}^{\rm{load}} \cap J_{t_2}^{\rm{dis}}, {t_1},{t_2} \in T. \\
-&{z_{it_1t_2}} \leq {y_{it_2}^{\rm{keep}}} ,  \hspace{3.45em} i \in I, j \in J_{t_2}^{\rm{keep}}, t_1,t_2 \in T. \\
-&{z_{it_1t_2}} \leq {y_{it_1t_2}} ,  \hspace{3.55em} i \in I, j \in J_{t_2}^{\rm{keep}}, t_1,t_2 \in T. \\
-&{y_{it_1t_2}} + y_{it_2}^{\rm{keep}} - 1 \leq {z_{it_1t_2}}, \hspace{2.95em} i \in I, t_1,t_2 \in T. \\
-&{x_{ij}} \leq {y_{i_1i_2t}^{\rm{keep}}},  \notag \\
-&\hspace{4.25em} i_1, i_2 \in \overline{I}, i \in i_1 \cup i_2, j \in J_{t}^{\rm{keep}}, t \in T. \\
-&{x_{ij}} \leq {y_{i_1i_2t_1t_2}}, \hspace{5.33em} i_1, i_2 \in \overline{I}, i \in i_1 \cup i_2, \notag \\
-&\hspace{8.59em} j \in J_{t_1}^{\rm{load}} \cup \{J_{t_1}^{\rm{load}} \cap J_{t_2}^{\rm{dis}} \}, \notag \\
-&\hspace{8.17em} {t_1},{t_2} \in L \cup {t_1} \in L , {t_2} \in D. \\
-&{z_{i_1i_2t_1t_2}} \leq p_1^{\rm{z}} \hspace{0.3em} {y_{i_1i_2t_2}^{\rm{keep}}}, \hspace{3.58em} i_1, i_2 \in \overline{I}, {t_1},{t_2} \in L. \\
-&{z_{i_1i_2t_1t_2}} \leq p_1^{\rm{z}} \hspace{0.3em} {y_{i_1i_2t_1t_2}}, \hspace{3.08em} i_1, i_2 \in \overline{I}, {t_1},{t_2} \in L. \\
-&p_1^{\rm{z}} \hspace{0.3em} ({y_{i_1i_2t_1t_2}} + y_{i_1i_2t_2}^{\rm{keep}} - 1) \leq {z_{i_1i_2t_1t_2}}, \notag \\
-&\hspace{10.8em}  i_1, i_2 \in \overline{I}, {t_1},{t_2} \in L. \\
-&{z_{i_1i_2t_1t_2}} \leq {p_2^{\rm{z}} \hspace{0.3em} y_{i_1i_2t_2}^{\rm{keep}}}, \hspace{1.68em} i_1, i_2 \in \overline{I}, {t_1} \in L , {t_2} \in D. \\
-&{z_{i_1i_2t_1t_2}} \leq {p_2^{\rm{z}} \hspace{0.3em} y_{i_1i_2t_1t_2}}, \hspace{1.18em} i_1, i_2 \in \overline{I}, {t_1} \in L , {t_2} \in D. \\
-&p_2^{\rm{z}} \hspace{0.3em} ({y_{i_1i_2t_1t_2}} + y_{i_1i_2t_2}^{\rm{keep}} - 1) \leq {z_{i_1i_2t_1t_2}}, \notag \\
-&\hspace{8.95em} i_1, i_2 \in \overline{I}, {t_1} \in L , {t_2} \in D. \\
-&{c_{ij}} \geq x_{ij} - \frac{v_{ij}} {100}, \hspace{5.78em} i \in I, j \in J^{\rm{large}}. \\
-&{c^1_{i_1i_2j}} \geq p_{\rm{large}}^{\rm{c1}} ({x_{i_1j}} + {x_{i_2j}} - 1), \notag \\
-&\hspace{10.76em} {i_1},{i_2} \in I, j \in J^{\rm{large}}. \\
-&{c^2_{i_1i_2j}} \leq n\_p_{\rm{large}}^{\rm{c2}} \hspace{0.15em}{x_{i_1j}}, \hspace{1.75em} {i_1},{i_2} \in I^{\rm{next}}, j \in J^{\rm{large}}. \\
-&{c^2_{i_1i_2j}} \leq n\_p_{\rm{large}}^{\rm{c2}} \hspace{0.15em}{x_{i_2j}}, \hspace{1.75em} {i_1},{i_2} \in I^{\rm{next}}, j \in J^{\rm{large}}. \\
-&{c^2_{i_1i_2j}} \leq s\_p_{\rm{large}}^{\rm{c2}} \hspace{0.15em}{x_{i_1j}}, \hspace{1.56em}  {i_1},{i_2} \in I^{\rm{same}}, j \in J^{\rm{large}}. \\
-&{c^2_{i_1i_2j}} \leq s\_p_{\rm{large}}^{\rm{c2}} \hspace{0.15em}{x_{i_2j}}, \hspace{1.56em} {i_1},{i_2} \in I^{\rm{same}}, j \in J^{\rm{large}}. \\
-&{c^1_{i_1i_2j}} \geq p_{\rm{small}}^{\rm{c1}} ({x_{i_1j}} + {x_{i_2j}} - 1), \notag \\
-&\hspace{10.62em} {i_1},{i_2} \in I, j \in J^{\rm{small}}. \\
-&{c^2_{i_1i_2j}} \leq n\_p_{\rm{small}}^{\rm{c2}} \hspace{0.15em}{x_{i_1j}}, \hspace{1.5em} {i_1},{i_2} \in I^{\rm{next}}, j \in J^{\rm{small}}. \\
-&{c^2_{i_1i_2j}} \leq n\_p_{\rm{small}}^{\rm{c2}} \hspace{0.15em}{x_{i_2j}}, \hspace{1.5em} {i_1},{i_2} \in I^{\rm{next}}, j \in J^{\rm{small}}. \\
-&{c^2_{i_1i_2j}} \leq s\_p_{\rm{small}}^{\rm{c2}} \hspace{0.15em}{x_{i_1j}}, \hspace{1.32em} {i_1},{i_2} \in I^{\rm{same}}, j \in J^{\rm{small}}. \\
-&{c^2_{i_1i_2j}} \leq s\_p_{\rm{small}}^{\rm{c2}} \hspace{0.15em}{x_{i_2j}}, \hspace{1.32em} {i_1},{i_2} \in I^{\rm{same}}, j \in J^{\rm{small}}.
+  &\hspace{1.0em} \sum_{j \in J_{t}^{\rm{lk}}} \frac{a_{j} v_{ij} + d^{\rm{s}}} {b_{i}}  \geq 1 - k^2_{it}  \hspace{3.28em} i \in I, t \in L. \\
+  &\hspace{1.0em} \sum_{j_1\in {J_t}^{\rm{keep}}} \frac{a_{j_1} v_{i_1j_1}} {b_{i_1}} \leq \overline{q}_{i_2} + 1 - {x_{i_2j_2}}, \notag \\
+  &\hspace{3.91em} i_1 \in {I_{i_2}^*}, i_2 \in I, j_2 \in J_{t}^{\rm{ld}}, t \in T. \\
+  &\hspace{1.0em} \sum_{j \in J_{t}^{\rm{lk}}} a_j v_{ij}  \leq b_{i} - n_{it}, \hspace{3.37em} i \in I, t \in T^{\rm{c}}. \\
+  &\hspace{1.0em} \sum_{i_2 \in I_{i_1}^{\rm{back}}} k^2_{i_2t} + I^{\rm{num}} (k^1_{i_1t} - 1) \leq  k^3_{i_1t}, \notag \\
+  &\hspace{12.91em} i \in I^{\rm{lamp}}, t \in L. \\
+  &\hspace{1.0em} \sum_{i_1 \in I_{k_{1}}^{\rm{deck}}} x_{i_1j} \sum_{i_2 \in I_{k_{2}}^{\rm{deck}}} x_{i_2j} \leq 0, \notag \\
+  &\hspace{6.91em} j \in J^{\rm{large}}, k_1, k_2 \in K, k_1 \neq k_2. \\
+  &\hspace{1.0em} \frac{v_{ij}} {u_j} \leq x_{ij}, \hspace{6.33em} i \in I, j \in J. \\
+  &\hspace{1.0em} {f^{\rm{h}}_1} \leq {\delta_{i}^{\rm{h}}}{g_{j}} {v_{ij}} \leq f^{\rm{h}}_2, \hspace{1.5em} i \in I, j \in J_{t}^{\rm{keep}} \cup J_{t}^{\rm{lk}}, t \in T. \\
+  &\hspace{1.0em} {\delta_{i}^{\rm{v}}}{g_{j}} {v_{ij}} \leq f^{\rm{v}}, \hspace{1.5em} i \in I, j \in J_{t}^{\rm{keep}} \cup J_{t}^{\rm{lk}}, t \in T. \\
+  &\hspace{1.0em} {x_{ij}} \leq {y_{it}^{\rm{keep}}}, \hspace{4.11em} i \in I, j \in J_{t}^{\rm{keep}}, t \in T. \\
+  &\hspace{1.0em} {x_{ij}} \leq {y_{it_1t_2}}, \hspace{1.61em} i \in I, j \in J_{t_1}^{\rm{load}} \cap J_{t_2}^{\rm{dis}}, {t_1},{t_2} \in T. \\
+  &\hspace{1.0em} {z_{it_1t_2}} \leq {y_{it_2}^{\rm{keep}}} ,  \hspace{2.50em} i \in I, j \in J_{t_2}^{\rm{keep}}, t_1,t_2 \in T. \\
+  &\hspace{1.0em} {z_{it_1t_2}} \leq {y_{it_1t_2}} ,  \hspace{3.49em} i \in I, j \in J_{t_2}^{\rm{keep}}, t_1,t_2 \in T. \\
+&\hspace{1.0em} {y_{it_1t_2}} + y_{it_2}^{\rm{keep}} - 1 \leq {z_{it_1t_2}}, \hspace{1.79em} i \in I, t_1,t_2 \in T. \\
+&\hspace{1.0em} {x_{i_1j}} + {x_{i_2j}} \leq 2{y_{i_1i_2t}^{\rm{load}}}, \hspace{1.71em} i_1, i_2 \in \overline{I}, j \in J_{t}^{\rm{load}}, t \in T. \\
+&\hspace{1.0em} {x_{i_1j}} + {x_{i_2j}} \leq 2{y_{i_1i_2t}^{\rm{keep}}}, \hspace{1.64em} i_1, i_2 \in \overline{I}, j \in J_{t}^{\rm{keep}}, t \in T. \\
+&\hspace{1.0em} {x_{i_1j}} + {x_{i_2j}} \leq 2{y_{i_1i_2t}^{\rm{dis}}}, \hspace{1.19em} i_1, i_2 \in \overline{I}, j \in J_{t}^{\rm{dis}}, t \in T. \\
+&\hspace{1.0em} {y_{i_1i_2t}^{\rm{load}}} + y_{i_1i_2t}^{\rm{keep}} - 1 \leq {z_{i_1i_2t}^1}, \hspace{1.77em}  i_1, i_2 \in \overline{I}, t \in L. \\
+&\hspace{1.0em} {y_{i_1i_2t}^{\rm{dis}}} + y_{i_1i_2t}^{\rm{keep}} - 1 \leq {z_{i_1i_2t}^2}, \hspace{1.58em}  i_1, i_2 \in \overline{I}, t \in D.
 \end{align}
 
-\clearpage
 
-\subsection{追加分}
-ペナルティの重みに具体的な値例を入力しました. \\
-\textgt{注文集合均等分割の制約} \\
-\begin{align}
-&| \sum_{j_1 \in {J_t}^{\rm{load}}} \sum_{i_1\in {I_k}} v_{i_1j_1} - \sum_{j_2 \in {J_t}^{\rm{load}}} \sum_{i_2\in {I_k}} v_{i_2j_2} \hspace{0.3em} | \leq 100, \notag \\
-&\hspace{9.15em} k \in S_t, i_1, i_2 \in I_k, t \in T.
-\end{align}
 
-\textgt{注文の分割ルールを守る目的関数} \\
-\begin{align}
-&\hspace{0.85em} + w_3  \hspace{0.1em} \sum_{i_1\in I} \sum_{i_2\in I} \hspace{0.1em} \sum_{j \in J} {c_{i_1i_2j}^1} - {c_{i_1i_2j}^2} \notag \\
-&\hspace{0.85em} + w_3 \hspace{0.1em} p^{\rm{c}} \sum_{i \in I} \sum_{j \in J^{\rm{large}}} \\
-&{c_{ij}} \geq x_{ij} - \frac{v_{ij}} {100}, \hspace{5.78em} i \in I, j \in J^{\rm{large}}. \\
-&{c^1_{i_1i_2j}} \geq 100 ({x_{i_1j}} + {x_{i_2j}} - 1), \notag \\
-&\hspace{10.76em} {i_1},{i_2} \in I, j \in J^{\rm{large}}. \\
-&{c^2_{i_1i_2j}} \leq 100 \hspace{0.15em}{x_{i_1j}}, \hspace{1.75em} {i_1},{i_2} \in I^{\rm{next}}, j \in J^{\rm{large}}. \\
-&{c^2_{i_1i_2j}} \leq 100 \hspace{0.15em}{x_{i_2j}}, \hspace{1.75em} {i_1},{i_2} \in I^{\rm{next}}, j \in J^{\rm{large}}. \\
-&{c^2_{i_1i_2j}} \leq 50 \hspace{0.15em}{x_{i_1j}}, \hspace{1.56em}  {i_1},{i_2} \in I^{\rm{same}}, j \in J^{\rm{large}}. \\
-&{c^2_{i_1i_2j}} \leq 50 \hspace{0.15em}{x_{i_2j}}, \hspace{1.56em} {i_1},{i_2} \in I^{\rm{same}}, j \in J^{\rm{large}}. \\
-&{c^1_{i_1i_2j}} \geq 10000 ({x_{i_1j}} + {x_{i_2j}} - 1), \notag \\
-&\hspace{10.62em} {i_1},{i_2} \in I, j \in J^{\rm{small}}. \\
-&{c^2_{i_1i_2j}} \leq 10000 \hspace{0.15em}{x_{i_1j}}, \hspace{1.5em} {i_1},{i_2} \in I^{\rm{next}}, j \in J^{\rm{small}}. \\
-&{c^2_{i_1i_2j}} \leq 10000 \hspace{0.15em}{x_{i_2j}}, \hspace{1.5em} {i_1},{i_2} \in I^{\rm{next}}, j \in J^{\rm{small}}. \\
-&{c^2_{i_1i_2j}} \leq 1000 \hspace{0.15em}{x_{i_1j}}, \hspace{1.32em} {i_1},{i_2} \in I^{\rm{same}}, j \in J^{\rm{small}}. \\
-&{c^2_{i_1i_2j}} \leq 1000 \hspace{0.15em}{x_{i_2j}}, \hspace{1.32em} {i_1},{i_2} \in I^{\rm{same}}, j \in J^{\rm{small}}.
-\end{align}
 
-\textgt{デッドスペースをなるべく作らない目的関数} \\
-\begin{align}
-&\hspace{0.85em}w_5 \hspace{0.1em}  \sum_{i \in I^{\rm{lamp}}} \sum_{t \in L} {k_{it}^3} \\
-&\hspace{0.45em} \sum_{j \in J_{t}^{\rm{lk}}} \frac{a_{j} v_{ij}} {b_{i}} \leq k^1_{it} + \overline{q}_{i}, \hspace{3.75em} i \in I^{\rm{lamp}}, t \in L. \\
-&\hspace{0.45em} \sum_{j \in J_{t}^{\rm{lk}}} a_{j} v_{ij}  \geq b_i - k^2_{it} - 1 \hspace{4.26em} i \in I, t \in L. \\
-&k^3_{i_1t} \geq 10000 k^1_{i_1t} \sum_{i_2 \in I_{i_1}^{\rm{back}}} k^2_{i_2t}, \hspace{2.35em} i \in I^{\rm{lamp}}, t \in L.
-\end{align}
-
-\newpage
-\textgt{残リソースをなるべく入口付近に寄せる目的関数} \\
-\begin{align}
-&w_6 \hspace{0.1em} \sum_{i \in I} \delta_i^{\rm{n}} {n_{i}} \\
-&n_{i} \geq b_{i} - \sum_{j \in J_{t}^{\rm{lk}}} a_j v_{ij}, \hspace{6.2em} i \in I, t \in L.
-\end{align}
-$ \delta_i^{\rm{n}} $は5-4が10, 5-3が5, 5-2, 5-1が3, 4-3, 3-3, 6-1, 7-1が1で他の重みは0です.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% References
 \begin{thebibliography}{2}
 \bibitem{SA} Kris Braekers，An Caris，and Gerrit K Janssens．Exact and meta-heuristic approach for a general heterogeneous dial-a-ride problem with multiple depots．Transportation Research Part B: Methodlological，Vol．67，pp．166--186，2014

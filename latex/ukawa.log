@@ -1,4 +1,4 @@
-This is e-upTeX, Version 3.14159265-p3.8.2-u1.25-190131-2.6 (utf8.uptex) (TeX Live 2019) (preloaded format=uplatex 2019.11.6)  17 FEB 2021 16:19
+This is e-upTeX, Version 3.14159265-p3.8.2-u1.25-190131-2.6 (utf8.uptex) (TeX Live 2019) (preloaded format=uplatex 2019.11.6)  17 FEB 2021 17:10
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -362,132 +362,134 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [2]
-Underfull \vbox (badness 10000) has occurred while \output is active []
+ [2] [3
 
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [3]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [4]
+]
 LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
-(Font)              scaled to size 8.32214pt on input line 186.
+(Font)              scaled to size 8.32214pt on input line 151.
 LaTeX Font Info:    Font shape `JY2/mc/m/n' will be
-(Font)              scaled to size 8.32214pt on input line 186.
+(Font)              scaled to size 8.32214pt on input line 151.
 
-Overfull \hbox (3.76826pt too wide) in paragraph at lines 192--195
+Overfull \hbox (3.76826pt too wide) in paragraph at lines 157--160
 [][][][]| 
  []
 
 
-Overfull \hbox (8.51558pt too wide) in paragraph at lines 211--215
+Overfull \hbox (8.51558pt too wide) in paragraph at lines 176--180
 [][][][]| 
  []
 
 LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
-(Font)              scaled to size 6.47278pt on input line 232.
+(Font)              scaled to size 6.47278pt on input line 197.
 LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
-(Font)              scaled to size 4.62341pt on input line 232.
+(Font)              scaled to size 4.62341pt on input line 197.
 
-Overfull \hbox (11.69606pt too wide) in paragraph at lines 251--256
+Overfull \hbox (11.69606pt too wide) in paragraph at lines 216--221
 [][][][]| 
  []
 
 
-LaTeX Warning: Float too large for page by 2.51166pt on input line 259.
+LaTeX Warning: Float too large for page by 2.51166pt on input line 224.
 
 
-Overfull \hbox (5.68922pt too wide) in paragraph at lines 267--271
+Overfull \hbox (5.68922pt too wide) in paragraph at lines 232--236
 [][][][]| 
  []
 
 
-Overfull \hbox (5.09775pt too wide) in paragraph at lines 274--277
+Overfull \hbox (5.09775pt too wide) in paragraph at lines 239--242
 [][][][]| 
  []
 
 
-Overfull \hbox (5.68922pt too wide) in paragraph at lines 280--285
+Overfull \hbox (5.68922pt too wide) in paragraph at lines 245--250
 [][][][]| 
  []
 
 
-Overfull \hbox (5.68922pt too wide) in paragraph at lines 288--291
+Overfull \hbox (5.68922pt too wide) in paragraph at lines 253--256
 [][][][]| 
  []
 
 
-Overfull \hbox (30.53606pt too wide) in paragraph at lines 294--298
+Overfull \hbox (30.53606pt too wide) in paragraph at lines 259--263
 [][][][]| 
  []
 
 
-Overfull \hbox (28.00288pt too wide) in paragraph at lines 301--305
+Overfull \hbox (28.00288pt too wide) in paragraph at lines 266--270
 [][][][]| 
  []
 
 
-Overfull \hbox (18.04903pt too wide) in paragraph at lines 308--312
+Overfull \hbox (18.04903pt too wide) in paragraph at lines 273--277
 [][][][]| 
  []
 
 
-Overfull \hbox (36.54268pt too wide) in paragraph at lines 315--319
+Overfull \hbox (36.54268pt too wide) in paragraph at lines 280--284
 [][][][]| 
  []
 
 
-Overfull \hbox (27.29585pt too wide) in paragraph at lines 322--326
+Overfull \hbox (27.29585pt too wide) in paragraph at lines 287--291
 [][][][]| 
  []
 
 
-Overfull \hbox (36.54268pt too wide) in paragraph at lines 329--333
+Overfull \hbox (36.54268pt too wide) in paragraph at lines 294--298
 [][][][]| 
  []
 
 
-Overfull \hbox (36.54268pt too wide) in paragraph at lines 336--340
+Overfull \hbox (36.54268pt too wide) in paragraph at lines 301--305
 [][][][]| 
  []
 
-[5]
-Overfull \hbox (19.19606pt too wide) in paragraph at lines 384--386
-[][][][]| 
- []
-
-
-Overfull \hbox (19.19606pt too wide) in paragraph at lines 389--391
+[4]
+Overfull \hbox (19.19606pt too wide) in paragraph at lines 349--351
 [][][][]| 
  []
 
 
-Overfull \hbox (8.44289pt too wide) in paragraph at lines 434--436
+Overfull \hbox (19.19606pt too wide) in paragraph at lines 354--356
 [][][][]| 
  []
 
 
-Overfull \hbox (43.96336pt too wide) in paragraph at lines 459--461
+Overfull \hbox (8.44289pt too wide) in paragraph at lines 399--401
 [][][][]| 
  []
 
-[6
+
+Overfull \hbox (43.96336pt too wide) in paragraph at lines 424--426
+[][][][]| 
+ []
+
+[5
 
 
-] [7
+]
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-] [8
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [6
+
+]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [7] [8
 
 ] (./ukawa.aux) ) 
 Here is how much of TeX's memory you used:
  3068 strings out of 492752
  36060 string characters out of 6140168
- 129904 words of memory out of 5000000
+ 121904 words of memory out of 5000000
  7487 multiletter control sequences out of 15000+600000
  24512 words of font info for 93 fonts, out of 8000000 for 9000
  934 hyphenation exceptions out of 8191
  30i,20n,25p,1658b,380s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on ukawa.dvi (8 pages, 58540 bytes).
+Output written on ukawa.dvi (8 pages, 48536 bytes).
