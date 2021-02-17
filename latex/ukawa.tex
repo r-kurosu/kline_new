@@ -142,7 +142,7 @@
 \section{定式化}
 この章では各注文に含まれる自動車を, どのホールドに何台割り当てるかを最適化する複数の数理モデルを提案する. モデルは二種類ありプランナー側の要望を全て目的関数で表したモデルSP1-1と,
 \section{記号の定義}
-本研究における変数と定数記号の定義をする. 本研究の変数の定義を表\ref{table31}に, 定数の定義を表\ref{table31}に記載する. \\
+本研究における変数と定数記号の定義をする. 本研究の変数の定義を表\ref{variable}に, 定数の定義を表\ref{const}に記載する. \\
 
 \subsection{制約}
 本研究で扱う制約の中で一般的な割当問題とは異なる独自の制約について説明する.
@@ -152,6 +152,9 @@
 
 \textgt{(b)貨物の重量バランスに関する制約} \\
 　運搬船で自動車を運ぶ際に船の外側へ自動車を詰め込みすぎると船が航海の途中で割れてしまったり,船の上方へ自動車を詰め込みすぎると船が傾いたときにバランスを崩しそのまま横転してしまうというような問題がある[3].本研究ではこの問題を考慮するため,過去10回分の航海データを解析することによりその航海内での運搬船の重量バランスを数値化した.その結果得られた10回分の航海データの中で最も重量バランスが偏ったときを閾値とし,運搬船の上下方向と前後方向それぞれに対して,各港において運搬船からで降ろす注文を全て降ろしたとき,または港で載せる注文を全て載せたときについて重量バランスが閾値を超えてしまうような荷物の割当を禁止する.
+
+\textgt{(c)注文の分割ルールを守る} \\
+　最初に注文を100台以下の小さい注文と100台以上500台以下の大きい注文と500台以上の巨大な注文に分割する. 小さい注文についてはモデルSP1-1と同じようにギャングの効率を考え分割をしない. 大きい注文に関しては一つのホールドでは全ての自動車が入りきらないことがあるので, 1つのデッキ内に注文に含まれる全ての自動車が収まるようにする. 巨大な注文についてはユニット数が500台以上1000台以下の場合には二等分, 1000台以上1500台以下の場合には三等分し別々の注文としてから大きい注文に加える. また等分した注文は別々のデッキに載せ, 大きい注文と同様に1つのデッキ内に全ての自動車が収まるようにする.
 
 
 \subsection{目的関数}
@@ -165,6 +168,7 @@
 
 \textgt{(c)作業効率充填率を考慮する} \\
 　ある港で注文の積み降ろしのために自動車をホールドから出すときやホールドに自動車を入れるときに,そのホールドと入口の間で通過するホールドの中にはその港を通過する注文が一定数割り当てられている.この注文がある一定量以上の場合,プランナーはそのホールドを自動車が通れるための道を作る必要がありホールド内における自動車のスペース配分を考える必要がある.またギャングは作られた道に自動車を通さなければいけないため,自動車の移動に慎重になり全体の作業効率が落ちる可能性が高い.本研究ではこのように作業効率が落ちないための各ホールド毎の作業効率充填率を設定し,これを上回ったホールドを自動車が通過する場合,通過する自動車の台数毎にペナルティが発生する.
+
 \textgt{(d)デッドスペースを作らない} \\
 　注文の合計資源要求量が船の合計収容量より十分小さい場合, 特定のホールドに空きスペースが出来る. このスペースが入口付近にあれば追い積みという港での突然の追加注文を積むことに対応出来るが, 空きスペースが出来たホールドに到達するまでに通るホールドが許容充填率を上回っている場合は, このスペースに追い積みをすることは出来ない. このような空きスペースのことをデッドスペースと言う. 目的関数(d)ではランプで繋がった船のホールドが許容充填率を超え特定デッキ間の移動ができない状態になったとき, そのホールドよりも奥にあるホールドの中で, 指定された最大許容デッドスペースよりも大きいデッドスペースがあるホールドが存在するときに大きいペナルティが発生する. \\
 
@@ -173,24 +177,16 @@
 
 %9ページ
 
-\textgt{(f)注文の分割ルールを守る} \\
-　注文の資源要求量は, あるホールドに割り当てる注文の車のユニット数とその自動車一台のRTの積で表現する. 従って注文に含まれる自動車のユニット数が膨大な場合, どのホールドにもその注文を割り当てることが出来ないという問題が発生する. この場合は注文の容量を適当な大きさに分割して複数ホールドへ収容する必要がある. 実際の席割プランニング上ではこの場合, まず注文に含まれる合計ユニット数が100台以上の大きい注文と小さい注文に分類する. 小さい注文については, 分割して異なるホールドに入れるとギャングが自動車を積むときに混乱を招きやすいため基本的には分割をすることはないが, 隣りあったホールド同士にちょうど良いスペースがあるときだけは分割してそれぞれのホールドに入れる. 目的関数(f)では小さい注文に関して, 隣り合ったホールド同士以外に分割して注文を入れる場合は大きいペナルティが発生する. 大きい注文については一つのホールドに全てを入れることは不可能なため分割が必要であるが,  100台以下の小さいサイズに分割してしまうとホールドの挿入先が増えてギャングの負担が増えるため, 100台以下で分割した場合はペナルティが発生する. 更に分割した注文を二つの異なるデッキ内のホールドに分割した場合, 同デッキ内の隣接しないホールドに分割した場合, 同デッキ内の隣接ホールドに分割した場合の順に大きいペナルティがかかる. \\
 
 
-\subsection{記号の定義と定式化}
-本研究における変数と定数記号の定義と定式化をする.最初に本研究の変数の定義を表1に,定数の定義を表2に記載する.
 
 \clearpage
 
 \begin{table}[htb]
 \caption{変数の定義}
 \begin{tabular}{cp{17em}} \hline
+\label{variable}
 変数 & \hspace{0.55em}変数の説明  \\ \hline
-$n_{i}$ &
-\begin{tabular}{l}
-ホールド$i$の残容量が$b'_i$のとき \\
-$n_{i} =  b'_i$ \\
-\end{tabular} \\ \hline
 
 $v_{ij}$ &
 \begin{tabular}{l}
@@ -203,6 +199,12 @@ $x_{ij}$ &
 注文$j$をホールド$i$に割り当てるとき \\
 $x_{ij} = 1$ \\
 そうでないとき$x_{ij} = 0$ \\
+\end{tabular} \\ \hline
+
+$n_{i}$ &
+\begin{tabular}{l}
+ホールド$i$の残容量が$b'_i$のとき \\
+$n_{i} =  b'_i$ \\
 \end{tabular} \\ \hline
 
 $c_{ij}$ &
@@ -284,50 +286,57 @@ $k_{it}^3 = p^k b'_i$ \\
 
 $y_{it}^{\rm{keep}}$ &
 \begin{tabular}{l}
-ホールド$i$の中で港$t$を通過する注文 \\
-があるとき$y_{it}^{\rm{keep}} = 1$ \\
+ホールド$i$の中で港$t$を通過する注文が\\ あるとき$y_{it}^{\rm{keep}} = 1$\\
 そうでないとき$y_{it}^{\rm{keep}} = 0$ \\
-\end{tabular} \\ \hline
-
-$y_{i_1i_2t}^{\rm{keep}}$ &
-\begin{tabular}{l}
-隣接ホールドペア$(i_1,i_2)$の中で港$t$を \\
-通過する注文があるとき$y_{i_1i_2t}^{\rm{keep}} = 1$ \\
-そうでないとき$y_{i_1i_2t}^{\rm{keep}} = 0$ \\
 \end{tabular} \\ \hline
 
 $y_{it_1t_2}$ &
 \begin{tabular}{l}
-ホールド$i$の中で港$t_1$で積んで港$t_2$で \\
-降ろす注文があるとき$y_{it_1t_2} = 1$ \\
+ホールド$i$の中で港$t_1$で積んで港$t_2$で降ろす\\
+注文があるとき$y_{it_1t_2} = 1$ \\
 そうでないとき$y_{it_1t_2} = 0$ \\
-\end{tabular} \\ \hline
-
-$y_{i_1i_2t_1t_2}$ &
-\begin{tabular}{l}
-隣接ホールドペア$(i_1, i_2)$の中で港$t_1$で \\
-積んで港$t_2$で降ろす注文があるとき \\
-$y_{i_1i_2it_1t_2} = 1$ \\
-そうでないとき$y_{i_1i_2t_1t_2} = 0$ \\
 \end{tabular} \\ \hline
 
 $z_{it_1t_2}$ &
 \begin{tabular}{l}
-ホールド$i$の中で港$t_2$を通過する注文 \\
-があり港$t_2$で降ろす注文の中に港$t_1$で \\
-積んだ注文があるとき$z_{i_1i_2t_1t_2} = 1$ \\
+ホールド$i$の中で港$t_2$を通過する注文があり\\港$t_2$で降ろす注文の中に港$t_1$ \\
+で積んだ注文があるとき$z_{i_1i_2t_1t_2} = 1$ \\
 そうでないとき$z_{it_1t_2} = 0$ \\
 \end{tabular} \\ \hline
 
-$z_{i_1i_2t_1t_2}$ &
+$y_{i_1i_2t}^{\rm{load}}$ &
 \begin{tabular}{l}
-隣接ホールドペア$(i_1, i_2)$の中で \\
-1. 港$t_2$で注文を積む際に既に港$t_1$で \\
-積んだ注文があるとき$z_{i_1i_2t_1t_2} = p_1^{\rm{z}}$\\
-2. 港$t_2$を通過する注文があり港$t_2$で \\
-降ろす注文の中に港$t_1$で積んだ注文 \\
-があるとき$z_{i_1i_2t_1t_2} = p_2^{\rm{z}}$ \\
-3. それ以外のとき$z_{i_1i_2t_1t_2} = 0$ \\
+隣接ホールドペア$(i_1, i_2)$の中で港$t$で積む\\
+注文があるとき$y_{i_1i_2t}^{\rm{load}} = 1$ \\
+そうでないとき$y_{i_1i_2t}^{\rm{load}} = 0$ \\
+\end{tabular} \\ \hline
+
+$y_{i_1i_2t}^{\rm{keep}}$ &
+\begin{tabular}{l}
+隣接ホールドペア$(i_1, i_2)$の中で港$t$を通過する\\注文が
+あるとき$y_{i_1i_2t}^{\rm{keep}} = 1$ \\
+そうでないとき$y_{i_1i_2t}^{\rm{keep}} = 0$ \\
+\end{tabular} \\ \hline
+
+$y_{i_1i_2t}^{\rm{dis}}$ &
+\begin{tabular}{l}
+隣接ホールドペア$(i_1, i_2)$の中で港$t$で降ろす\\
+注文があるとき$y_{i_1i_2t}^{\rm{dis}} = 1$ \\
+そうでないとき$y_{i_1i_2t}^{\rm{dis}} = 0$ \\
+\end{tabular} \\ \hline
+
+$z_{i_1i_2t}^1$ &
+\begin{tabular}{l}
+隣接ホールドペア$(i_1, i_2)$の中で港$t$を通過する\\注文と積む注文があるとき \\
+$z_{i_1i_2t}^1 = 1$ \\
+そうでないとき$z_{i_1i_2t}^1 = 0$ \\
+\end{tabular} \\ \hline
+
+$z_{i_1i_2t}^2$ &
+\begin{tabular}{l}
+隣接ホールドペア$(i_1, i_2)$の中で港$t$を通過する\\注文と降ろす注文があるとき \\
+$z_{i_1i_2t}^2 = 1$ \\
+そうでないとき$z_{i_1i_2t}^2 = 0$ \\
 \end{tabular} \\ \hline
 
 \end{tabular}
@@ -338,11 +347,17 @@ $z_{i_1i_2t_1t_2}$ &
 \begin{table}[htb]
 \caption{定数の定義}
 \begin{tabular}{cp{17em}} \hline
+\label{const}
 定数 & \hspace{0.55em}定数の説明  \\ \hline
 
 $T$ &
 \begin{tabular}{l}
 港の集合
+\end{tabular} \\ \hline
+
+$T^{\rm{c}}$ &
+\begin{tabular}{l}
+チェックポイント港の集合
 \end{tabular} \\ \hline
 
 $L$ &
@@ -352,7 +367,12 @@ $L$ &
 
 $D$ &
 \begin{tabular}{l}
-降ろし地の集合
+揚げ地の集合
+\end{tabular} \\ \hline
+
+$K$ &
+\begin{tabular}{l}
+船のデッキの集合
 \end{tabular} \\ \hline
 
 $J$ &
@@ -362,14 +382,17 @@ $J$ &
 
 $J^{\rm{large}}$ &
 \begin{tabular}{l}
-注文台数100台以上の大きい注文 \\
-の集合
+ユニット数100台以上の大きい注文の集合
 \end{tabular} \\ \hline
 
 $J^{\rm{small}}$ &
 \begin{tabular}{l}
-注文台数100台以下の小さい注文 \\
-の集合
+ユニット数100台以下の小さい注文の集合
+\end{tabular} \\ \hline
+
+$J_{t}^{\rm{load}}$ &
+\begin{tabular}{l}
+港$t$で載せる注文の集合
 \end{tabular} \\ \hline
 
 $J_{t}^{\rm{keep}}$ &
@@ -380,11 +403,6 @@ $J_{t}^{\rm{keep}}$ &
 $J_{t}^{\rm{dis}}$ &
 \begin{tabular}{l}
 港$t$で降ろす注文の集合
-\end{tabular} \\ \hline
-
-$J_{t}^{\rm{load}}$ &
-\begin{tabular}{l}
-港$t$で載せる注文の集合
 \end{tabular} \\ \hline
 
 $J_{t}^{\rm{lk}}$ &
@@ -402,9 +420,9 @@ $I$ &
 船のホールドの集合
 \end{tabular} \\ \hline
 
-$ \overline{I}$ &
+$I^{\rm{lamp}}$ &
 \begin{tabular}{l}
-隣接しているホールドペアの集合
+ランプがついているホールドの集合
 \end{tabular} \\ \hline
 
 $ I^{\rm{next}}$ &
@@ -417,10 +435,19 @@ $ I^{\rm{same}}$ &
 同一デッキ内にあるホールドペアの集合
 \end{tabular} \\ \hline
 
-$I^{\rm{lamp}}$ &
+$ \overline{I}$ &
 \begin{tabular}{l}
-スロープで繋がっているホールドペア \\
-の集合
+隣接しているホールドペアの集合
+\end{tabular} \\ \hline
+
+$ I^{\rm{num}}$ &
+ \begin{tabular}{l}
+船のホールド総数
+\end{tabular} \\ \hline
+
+$I_{k}^{\rm{deck}}$  &
+ \begin{tabular}{l}
+デッキ$k$のホールドの集合
 \end{tabular} \\ \hline
 
 $I_{i}^{\rm{back}}$  &
@@ -430,19 +457,7 @@ $I_{i}^{\rm{back}}$  &
 
 $I^{*}_i$ &
  \begin{tabular}{l}
-ホールド$i$に辿り着くまでに通る \\
-ホールドの集合
-\end{tabular} \\ \hline
-
-$I_k$ &
- \begin{tabular}{l}
-ギャング数$k$のときの各領域の \\
-ホールド集合
-\end{tabular} \\ \hline
-
-$S_{t}$ &
-\begin{tabular}{l}
-港$t$で必要なギャング数
+ホールド$i$に辿り着くまでに通るホールドの集合
 \end{tabular} \\ \hline
 
 $u_{j}$ &
@@ -457,13 +472,17 @@ $g_{j}$ &
 
 $a_{j}$ &
 \begin{tabular}{l}
-注文$j$における自動車一台の要求面積
+注文$j$における自動車一台のRT
 \end{tabular} \\ \hline
 
 $b_{i}$ &
 \begin{tabular}{l}
-ホールド$i$における総面積
+ホールド$i$の総面積
 \end{tabular} \\ \hline
+
+
+
+
 
 \end{tabular}
 \end{table}
@@ -473,163 +492,167 @@ $b_{i}$ &
 \begin{table}[htb]
 \begin{tabular}{cp{17em}} \hline
 
-$\delta_{i}^{\rm{h}}$ &
-\begin{tabular}{l}
-船の横方向のホールド$i$の重み
-\end{tabular} \\ \hline
+  $\delta_{i}^{\rm{h}}$ &
+  \begin{tabular}{l}
+  船の横方向のホールド$i$の重み
+  \end{tabular} \\ \hline
 
-$f_1^{\rm{h}}$ &
-\begin{tabular}{l}
-船の横方向の後方許容値
-\end{tabular} \\ \hline
+  $d^{\rm{s}}$ &
+  \begin{tabular}{l}
+最大許容デッドスペース
+  \end{tabular} \\ \hline
 
-$f_2^{\rm{h}}$ &
-\begin{tabular}{l}
-船の横方向の前方許容値
-\end{tabular} \\ \hline
+  $f_1^{\rm{h}}$ &
+  \begin{tabular}{l}
+  船の横方向の後方許容値
+  \end{tabular} \\ \hline
 
-$\delta_{i}^{\rm{v}}$ &
-\begin{tabular}{l}
-船の縦方向のホールド$i$の重み
-\end{tabular} \\ \hline
+  $f_2^{\rm{h}}$ &
+  \begin{tabular}{l}
+  船の横方向の前方許容値
+  \end{tabular} \\ \hline
 
-$f^{\rm{v}}$ &
-\begin{tabular}{l}
-船の縦方向の上方許容値
-\end{tabular} \\ \hline
+  $\delta_{i}^{\rm{v}}$ &
+  \begin{tabular}{l}
+  船の縦方向のホールド$i$の重み
+  \end{tabular} \\ \hline
 
-$q_{it}$ &
-\begin{tabular}{l}
-港$t$でのホールド$i$における現在の\\
-充填率
-\end{tabular} \\ \hline
+  $f^{\rm{v}}$ &
+  \begin{tabular}{l}
+  船の縦方向の上方許容値
+  \end{tabular} \\ \hline
 
-$ \overline{q}_{i}$ &
-\begin{tabular}{l}
-ホールド$i$における許容充填率
-\end{tabular} \\ \hline
+  $ \overline{q}_{i}$ &
+  \begin{tabular}{l}
+  ホールド$i$における許容充填率
+  \end{tabular} \\ \hline
 
-$ \overline{q}^{\rm{s}}_{i}$ &
-\begin{tabular}{l}
-ホールド$i$における作業効率充填率
-\end{tabular} \\ \hline
+  $ \overline{q}^{\rm{s}}_{i}$ &
+  \begin{tabular}{l}
+  ホールド$i$における作業効率充填率
+  \end{tabular} \\ \hline
 
-$\delta_i^{\rm{n}}$ &
-\begin{tabular}{l}
-ホールド$i$の残RT利得の重み
-\end{tabular} \\ \hline
+  $\delta_i^{\rm{n}}$ &
+  \begin{tabular}{l}
+  ホールド$i$の残RT利得
+  \end{tabular} \\ \hline
 
-$p^{\rm{c}}$ &
-\begin{tabular}{l}
-変数$c_{ij}$のペナルティ重み
-\end{tabular} \\ \hline
+  $p^{\rm{c}}$ &
+  \begin{tabular}{l}
+  変数$c_{ij}$のペナルティ重み
+  \end{tabular} \\ \hline
 
-$p^{\rm{k}}$ &
-\begin{tabular}{l}
-変数$k_{it}$のペナルティ重み
-\end{tabular} \\ \hline
+  $p^{\rm{k}}$ &
+  \begin{tabular}{l}
+  変数$k_{it}^3$のペナルティ重み
+  \end{tabular} \\ \hline
 
-$p^{\rm{z}}_1$ &
-\begin{tabular}{l}
-変数$z_{i_1i_2t_1t_2}$のペナルティ1
-\end{tabular} \\ \hline
+  $p^{\rm{z}}$ &
+  \begin{tabular}{l}
+変数$z_{it_1t_2}$のペナルティ重み
+  \end{tabular} \\ \hline
 
-$p^{\rm{z}}_2$ &
-\begin{tabular}{l}
-変数$z_{i_1i_2t_1t_2}$のペナルティ2
-\end{tabular} \\ \hline
+  $p^{\rm{z}}_1$ &
+  \begin{tabular}{l}
+変数$z_{i_1i_2t_1t_2}^1$のペナルティ1
+  \end{tabular} \\ \hline
 
-$p_{\rm{large}}^{\rm{c1}}$ &
-\begin{tabular}{l}
-大きい注文の変数$c_{i_1i_2j}$のペナルティ
-\end{tabular} \\ \hline
+  $p^{\rm{z}}_2$ &
+  \begin{tabular}{l}
+  変数$z_{i_1i_2t_1t_2}^2$のペナルティ
+  \end{tabular} \\ \hline
 
-$p_{\rm{small}}^{\rm{c1}}$ &
-\begin{tabular}{l}
-小さい注文の変数$c_{i_1i_2j}$のペナルティ
-\end{tabular} \\ \hline
+  $p_{\rm{large}}^{\rm{c1}}$ &
+  \begin{tabular}{l}
+  大きい注文の変数$c_{i_1i_2j}^1$のペナルティ
+  \end{tabular} \\ \hline
 
-$s\_p_{\rm{large}}^{\rm{c2}}$ &
-\begin{tabular}{l}
-大きい注文の変数$c_{i_1i_2j}$の緩和量1
-\end{tabular} \\ \hline
+  $p_{\rm{small}}^{\rm{c1}}$ &
+  \begin{tabular}{l}
+  小さい注文の変数$c_{i_1i_2j}^1$のペナルティ
+  \end{tabular} \\ \hline
 
-$n\_p_{\rm{large}}^{\rm{c2}}$ &
-\begin{tabular}{l}
-大きい注文の変数$c_{i_1i_2j}$の緩和量2
-\end{tabular} \\ \hline
+  $p_{\rm{large}}^{\rm{sc2}}$ &
+  \begin{tabular}{l}
+  大きい注文の変数$c_{i_1i_2j}^2$の緩和量1
+  \end{tabular} \\ \hline
 
-$s\_p_{\rm{small}}^{\rm{c2}}$ &
-\begin{tabular}{l}
-小さい注文の変数$c_{i_1i_2j}$の緩和量1
-\end{tabular} \\ \hline
+  $p_{\rm{large}}^{\rm{nc2}}$ &
+  \begin{tabular}{l}
+  大きい注文の変数$c_{i_1i_2j}^2$の緩和量2
+  \end{tabular} \\ \hline
 
-$n\_p_{\rm{small}}^{\rm{c2}}$ &
-\begin{tabular}{l}
-小さい注文の変数$c_{i_1i_2j}$の緩和量2
-\end{tabular} \\ \hline
+  $p_{\rm{small}}^{\rm{sc2}}$ &
+  \begin{tabular}{l}
+小さい注文の変数$c_{i_1i_2j}^2$の緩和量1
+  \end{tabular} \\ \hline
 
-$w_1$ &
-\begin{tabular}{l}
-目的関数(a)の重み
-\end{tabular} \\ \hline
+  $p_{\rm{small}}^{\rm{nc2}}$ &
+  \begin{tabular}{l}
+小さい注文の変数$c_{i_1i_2j}^2$の緩和量2
+  \end{tabular} \\ \hline
 
-$w_2$ &
-\begin{tabular}{l}
+  $w_1$ &
+  \begin{tabular}{l}
+  目的関数(a)の重み
+  \end{tabular} \\ \hline
+
+  $w_2$ &
+  \begin{tabular}{l}
 目的関数(b)の重み
-\end{tabular} \\ \hline
+  \end{tabular} \\ \hline
 
-$w_3$ &
-\begin{tabular}{l}
-目的関数(c)の重み
-\end{tabular} \\ \hline
+  $w_3$ &
+  \begin{tabular}{l}
+  目的関数(c)の重み
+  \end{tabular} \\ \hline
 
-$w_4$ &
-\begin{tabular}{l}
+  $w_4$ &
+  \begin{tabular}{l}
 目的関数(d)の重み
-\end{tabular} \\ \hline
+  \end{tabular} \\ \hline
 
-$w_5$ &
-\begin{tabular}{l}
-目的関数(e)の重み
-\end{tabular} \\ \hline
+  $w_5$ &
+  \begin{tabular}{l}
+  目的関数(e)の重み
+  \end{tabular} \\ \hline
 
-$w_6$ &
-\begin{tabular}{l}
-目的関数(f)の重み
-\end{tabular} \\ \hline
+  $w_6$ &
+  \begin{tabular}{l}
+  目的関数(f)の重み
+  \end{tabular} \\ \hline
 
 \end{tabular}
 \end{table}
 
-次に表1と表2の記号を用いて本研究の問題を以下のように定式化する: \\
-メモ : 最初に全体の式の定式化を載せます.その後追加した分の定式化分だけもう一回載せます.
+
 \clearpage
 
 \begin{align}
-&\textrm{min} \hspace{0.4em} w_1 \sum_{i \in I} \sum_{t_2 \in T}  \sum_{t_1 \in T} {z_{it_1t_2}} + w_2 \sum_{i_1 \in I} \sum_{i_2 \in I} \sum_{t_2 \in T} \sum_{t_1 \in T} {z_{i_1i_2t_1t_2}} \notag \\
-&\hspace{0.85em} + w_3  \hspace{0.1em} \sum_{i_1\in I} \sum_{i_2\in I} \hspace{0.1em} \sum_{j \in J} {c_{i_1i_2j}^1} - {c_{i_1i_2j}^2} \notag \\
-&\hspace{0.85em} + w_3 \hspace{0.1em} p^{\rm{c}} \sum_{i \in I} \sum_{j \in J^{\rm{large}}} {c_{ij}} + w_4 \hspace{0.1em} \sum_{i \in I} \sum_{j\in J} \sum_{t \in T}  {m_{ijt}} \notag \\
-&\hspace{0.85em}  + w_5 \hspace{0.1em}  \sum_{i \in I^{\rm{lamp}}} \sum_{t \in L} {k_{it}^3} + w_6 \hspace{0.1em} \sum_{i \in I} \delta_i^{\rm{n}} {n_{i}} \\  %ここまで目的関数
-&\textrm{s.t.} \hspace{0.5em} 0 \leq v_{ij} \leq u_j, x_{ij} \in \{ 0 , 1 \}, \notag \\
-&\hspace{1.5em} {y_{it_1t_2}} \in \{ 0 , 1 \}, {y_{i_1i_2t_1t_2}} \in \{ 0 , 1 \}, z_{it_1t_2} \in \{ 0 , 1 \}, \notag \\
-&\hspace{1.5em} {y_{it}^{\rm{keep}}} \in \{ 0 , 1 \}, {y_{i_1i_2t_1t_2}^{\rm{keep}}} \in \{ 0 , 1 \}, 0 \leq z_{i_1i_2t_1t_2} \leq p_2^{\rm{z}}, \notag \\
-&\hspace{1.7em} 0 \leq c^1_{i_1i_2j} \leq p_{\rm{small}}^{\rm{c1}}, 0 \leq c^2_{i_1i_2j} \leq n\_p_{\rm{small}}^{\rm{c2}}, \notag \\
-&\hspace{1.7em} c_{ij} \in \{ 0 , 1 \}, {m_{it}} \in \{ 0 , 1 \}, 0 \leq m_{ijt}, \notag \\
-&\hspace{1.5em} {k^1_{it}} \in \{ 0 , 1 \}, 0 \leq {k^2_{it}}, 0 \leq k^3_{it}, 0 \leq n_{i}, \notag \\
-&\hspace{9.76em} \forall i \in I, \forall j \in J, \forall t \in T. \\ %ここまで変数説明
-&\hspace{0.6em} \sum_{i \in I} {\hspace{0.6em}v_{ij}} = u_j, \hspace{9.85em} j \in J. \\
-&\hspace{0.6em} \sum_{j \in J} {\hspace{0.65em}a_{j}}{v_{ij}} \leq {b_{i}}, \hspace{9.2em} i \in I. \\
-&\hspace{0.1em} \sum_{j \in {J_t}^{\rm{keep}}} \frac{a_{j} v_{ij}} {b_{i}} \geq \overline{q}_{i}^{\rm{s}} + {m_{it}}, \hspace{4.45em} i \in I, t \in T. \\
-&\hspace{0.4em} \sum_{i_2 \in {I_{i_1}^*}} {m_{i_2t} v_{i_1j}} \leq {m_{i_1jt}}, \hspace{1.9em} i_1 \in I, j \in J_{t}^{\rm{ld}}, t \in T. \\
-&\hspace{0.45em} \sum_{j \in J_{t}^{\rm{lk}}} \frac{a_{j} v_{ij}} {b_{i}} \leq k^1_{it} + \overline{q}_{i}, \hspace{3.75em} i \in I^{\rm{lamp}}, t \in L. \\
-&\hspace{0.45em} \sum_{j \in J_{t}^{\rm{lk}}} a_{j} v_{ij}  \geq b_i - k^2_{it} - 1 \hspace{4.26em} i \in I, t \in L. \\
-&\sum_{j_1\in {J_t}^{\rm{keep}}} \frac{a_{j_1} v_{i_1j_1}} {b_{i_1}} \leq \overline{q}_{i_2} + 1 - {x_{i_2j_2}}, \notag \\
-&\hspace{6.9em} i_1 \in {I_{i_2}^*}, i_2 \in I, j_2 \in J_{t}^{\rm{ld}}, t \in T. \\
-&| \sum_{j_1 \in {J_t}^{\rm{load}}} \sum_{i_1\in {I_k}} v_{i_1j_1} - \sum_{j_2 \in {J_t}^{\rm{load}}} \sum_{i_2\in {I_k}} v_{i_2j_2} \hspace{0.3em} | \leq 100, \notag \\
-&\hspace{9.15em} k \in S_t, i_1, i_2 \in I_k, t \in T. \\
-&n_{i} \leq b_{i} - \sum_{j \in J_{t}^{\rm{lk}}} a_j v_{ij}, \hspace{6.2em} i \in I, t \in L. \\
-&k^3_{i_1t} \geq p^{\rm{k}} k^1_{i_1t} \sum_{i_2 \in I_{i_1}^{\rm{back}}} k^2_{i_2t}, \hspace{3.75em} i \in I^{\rm{lamp}}, t \in L.
+  &\textrm{min} \hspace{0.4em} {w_1 p^{\rm{z}} \sum_{i \in I} \sum_{t_1 \in L}  \sum_{t_2 \in D} {z_{it_1t_2}}} \notag \\
+&\hspace{0.85em} + {w_2 \sum_{i_1 \in I} \sum_{i_2 \in I} (p_1^{\rm{z}} \sum_{t_1 \in L} {z_{i_1i_2t_1}^1} + p_2^{\rm{z}} \sum_{t_2 \in D} {z_{i_1i_2t_2}^2} )} \notag \\
+&\hspace{0.85em} + {w_3 \hspace{0.1em} \sum_{i \in I} \sum_{j\in J} \sum_{t \in T}  {m_{ijt}} }
++ {w_4 \hspace{0.1em} p^{\rm{k}} \sum_{i \in I^{\rm{lamp}}} \sum_{t \in L} {k_{it}^3}} \notag \\
+&\hspace{0.85em} - {w_5 \hspace{0.1em} \sum_{i \in I} \sum_{t \in T^{\rm{c}}} \delta_i^{\rm{n}} {n_{it}}} \\  %ここまで目的関数
+  &\textrm{s.t.} \hspace{0.5em} x_{ij} \in \{ 0 , 1 \}, {y_{it}^{\rm{keep}}} \in \{ 0 , 1 \}, \notag \\
+  &\hspace{1.5em}  {y_{it_1t_2}} \in \{ 0 , 1 \}, z_{it_1t_2} \in \{ 0 , 1 \},  {y_{i_1i_2t}^{\rm{load}}} \in \{ 0 , 1 \}, \notag \\
+  &\hspace{1.5em}  {y_{i_1i_2t}^{\rm{keep}}} \in \{ 0 , 1 \}, {y_{i_1i_2t}^{\rm{dis}}} \in \{ 0 , 1 \}, {m_{it}} \in \{ 0 , 1 \}, \notag \\
+  &\hspace{1.5em}{k^1_{it}} \in \{ 0 , 1 \}, {k^2_{it}} \in \{ 0 , 1 \}, \notag \\
+  &\hspace{1.5em} 0 \leq z_{i_1i_2t}^1, 0 \leq z_{i_1i_2t}^2, 0 \leq m_{ijt}, 0 \leq k^3_{it}, 0 \leq n_{it}, \notag \\
+  &\hspace{1.5em} 0 \leq v_{ij} \leq u_j, \hspace{3.85em} \forall i \in I, \forall j \in J, \forall t \in T. \\ 
+  %ここまで変数説明
+  &\hspace{0.6em} \sum_{i \in I} {\hspace{0.6em}v_{ij}} = u_j, \hspace{9.85em} j \in J. \\
+  &\hspace{0.6em} \sum_{j \in J} {\hspace{0.65em}a_{j}}{v_{ij}} \leq {b_{i}}, \hspace{9.2em} i \in I. \\
+  &\hspace{0.1em} \sum_{j \in {J_t}^{\rm{keep}}} \frac{a_{j} v_{ij}} {b_{i}} \geq \overline{q}_{i}^{\rm{s}} + {m_{it}}, \hspace{4.45em} i \in I, t \in T. \\
+  &\hspace{0.4em} \sum_{i_2 \in {I_{i_1}^*}} {m_{i_2t} v_{i_1j}} \leq {m_{i_1jt}}, \hspace{1.9em} i_1 \in I, j \in J_{t}^{\rm{ld}}, t \in T. \\
+  &\hspace{0.45em} \sum_{j \in J_{t}^{\rm{lk}}} \frac{a_{j} v_{ij}} {b_{i}} \leq k^1_{it} + \overline{q}_{i}, \hspace{3.75em} i \in I^{\rm{lamp}}, t \in L. \\
+  &\hspace{0.45em} \sum_{j \in J_{t}^{\rm{lk}}} a_{j} v_{ij}  \geq b_i - k^2_{it} - 1 \hspace{4.26em} i \in I, t \in L. \\
+  &\sum_{j_1\in {J_t}^{\rm{keep}}} \frac{a_{j_1} v_{i_1j_1}} {b_{i_1}} \leq \overline{q}_{i_2} + 1 - {x_{i_2j_2}}, \notag \\
+  &\hspace{6.9em} i_1 \in {I_{i_2}^*}, i_2 \in I, j_2 \in J_{t}^{\rm{ld}}, t \in T. \\
+  &| \sum_{j_1 \in {J_t}^{\rm{load}}} \sum_{i_1\in {I_k}} v_{i_1j_1} - \sum_{j_2 \in {J_t}^{\rm{load}}} \sum_{i_2\in {I_k}} v_{i_2j_2} \hspace{0.3em} | \leq 100, \notag \\
+  &\hspace{9.15em} k \in S_t, i_1, i_2 \in I_k, t \in T. \\
+  &n_{i} \leq b_{i} - \sum_{j \in J_{t}^{\rm{lk}}} a_j v_{ij}, \hspace{6.2em} i \in I, t \in L. \\
+  &k^3_{i_1t} \geq p^{\rm{k}} k^1_{i_1t} \sum_{i_2 \in I_{i_1}^{\rm{back}}} k^2_{i_2t}, \hspace{3.75em} i \in I^{\rm{lamp}}, t \in L.
 \end{align}
 
 \newpage
@@ -717,9 +740,7 @@ $w_6$ &
 $ \delta_i^{\rm{n}} $は5-4が10, 5-3が5, 5-2, 5-1が3, 4-3, 3-3, 6-1, 7-1が1で他の重みは0です.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% References
 \begin{thebibliography}{2}
-\bibitem{割当問題とは, 仕事の割当個数と資源に関する制約 条件の下で複数の仕事を複数のエージェントに割り 当て, 割当に伴うコストを最小化する問題である} 柳浦睦憲, 茨木俊秀, 組合せ最適化 メタ戦略を中心として, 朝倉書店, 2001
-\bibitem{席割作業(Stowage Plan)という} [貿易関連用語集(日本橋海運株式会社)]  \\http://nihonbashi-shipping.co.jp/lexicon/50\_su/ \\ (2020/7/19アクセス)
-\bibitem{運搬船で自動車を運ぶ際に船の外側へ自動車を詰め込みすぎると船が航海の途中で割れてしまったり,船の上方へ自動車を詰め込みすぎると船が傾いたときにバランスを崩しそのまま横転してしまうというような問題がある} Bernt {\O}lav Ovsteb{\o}, Lars Magnus, Computers \& Operations Research: Optimization of stowage \\ plans for RoRo ships, 2011.
+\bibitem{SA} Kris Braekers，An Caris，and Gerrit K Janssens．Exact and meta-heuristic approach for a general heterogeneous dial-a-ride problem with multiple depots．Transportation Research Part B: Methodlological，Vol．67，pp．166--186，2014
 \end{thebibliography}
 \end{document}
 
