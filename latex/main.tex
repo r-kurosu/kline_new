@@ -132,6 +132,81 @@
 
 \end{itemize}
 
+\clearpage
+\begin{table}[htb]
+\caption{変数の定義}
+\begin{tabular}{cp{17em}} \hline
+変数 & \hspace{0.55em}変数の説明  \\ \hline
+$n_{i}$ &
+\begin{tabular}{l}
+ホールド$i$の残容量が$b'_i$のとき \\
+$n_{i} =  b'_i$ \\
+\end{tabular} \\ \hline
+
+$v_{ij}$ &
+\begin{tabular}{l}
+注文$j$をホールド$i$に$n$台($0 \leq n \leq u_j$) \\
+割り当てるとき$v_{ij} = n$ \\
+\end{tabular} \\ \hline
+
+$x_{ij}$ &
+\begin{tabular}{l}
+注文$j$をホールド$i$に割り当てるとき \\
+$x_{ij} = 1$ \\
+そうでないとき$x_{ij} = 0$ \\
+\end{tabular} \\ \hline
+
+$c_{ij}$ &
+\begin{tabular}{l}
+ホールド$i$に大きい注文$j$を100台以下 \\
+に分割して積むとき$c_{ij} = 1$ \\
+そうでないとき$c_{ij} = 0$ \\
+\end{tabular} \\ \hline
+
+$c_{i_1i_2j}^1$ &
+\begin{tabular}{l}
+ホールドペア$(i_1, i_2)$に \\
+1.大きい注文$j_1$を分割して積むとき \\
+$c_{i_1i_2j_1}^1 = p_{\rm{large}}^{\rm{c1}}$ \\
+2.小さい注文$j_2$を分割して積むとき \\
+$c_{i_1i_2j_2}^1 = p_{\rm{small}}^{\rm{c1}}$ \\
+3.それ以外のとき$c_{i_1i_2j}^1 = 0$ \\
+\end{tabular} \\ \hline
+
+$c_{i_1i_2j}^2$ &
+\begin{tabular}{l}
+ホールドペア$(i_1, i_2)$に \\
+分割した大きい注文$j_1$を \\
+1.隣のホールド同士に積むとき \\
+$c_{i_1i_2j_1}^2 = n\_p_{\rm{large}}^{\rm{c2}}$ \\
+2.同デッキの隣ではないホールド同士 \\
+に積むとき$c_{i_1i_2j_2}^2 = s\_p_{\rm{large}}^{\rm{c2}}$ \\
+分割した小さい注文$j_2$を \\
+3.隣のホールド同士に積むとき \\
+$c_{i_1i_2j_2}^2 = n\_p_{\rm{small}}^{\rm{c2}}$ \\
+4.同デッキの隣ではないホールド同士 \\
+に積むとき$c_{i_1i_2j_2}^2 = s\_p_{\rm{small}}^{\rm{c2}}$ \\
+5.それ以外のとき$c_{i_1i_2j}^2 = 0$ \\
+\end{tabular} \\ \hline
+
+$m_{it}$ &
+\begin{tabular}{l}
+ホールド$i$が港$t$で作業効率充填率を \\
+超えているとき$m_{it} = 1$ \\
+そうでないとき$m_{it} = 0$ \\
+\end{tabular} \\ \hline
+
+$m_{ijt}$ &
+\begin{tabular}{l}
+港$t$で注文$j$をホールド$i$から積み降ろ \\
+しを行う際, $n$個の通過ホールドで作業効 \\
+率充填率を超えそこを$v$台車が通るとき \\
+$m_{ijt} = v n$ \\
+\end{tabular} \\ \hline
+
+\end{tabular}
+\end{table}
+
 
 
 \subsection{出力}
