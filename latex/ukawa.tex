@@ -140,8 +140,9 @@
 
 
 \section{定式化}
-この章では各注文に含まれる自動車を, どのホールドに何台割り当てるかを最適化する複数の数理モデルを提案する. モデルは二種類ありプランナー側の要望を全て目的関数で表したモデルSP1-1と,
-\section{記号の定義}
+この章では各注文に含まれる自動車を, どのホールドに何台割り当てるかを最適化する数理モデルを提案する. モデルは，鵜川らによって提案されたモデル\cite{ukawa}に複数の制約を加えたものを示す．
+
+\subsection{記号の定義}
 本研究における変数と定数記号の定義をする. 本研究の変数の定義を表\ref{variable}に, 定数の定義を表\ref{const}に記載する. \\
 
 
@@ -149,8 +150,8 @@
 
 \begin{table}[htb]
 \caption{変数の定義}
-\begin{tabular}{cp{17em}} \hline
 \label{variable}
+\begin{tabular}{cp{17em}} \hline
 変数 & \hspace{0.55em}変数の説明  \\ \hline
 
 $v_{ij}$ &
@@ -422,7 +423,7 @@ $I_{i}^{\rm{back}}$  &
 
 $I^{*}_i$ &
  \begin{tabular}{l}
-ホールド$i$に辿り着くまでに通るホールドの集合
+ホールド$i$に辿り着くまでに通る \\ ホールドの集合
 \end{tabular} \\ \hline
 
 $u_{j}$ &
@@ -500,6 +501,21 @@ $b_{i}$ &
   $\delta_i^{\rm{n}}$ &
   \begin{tabular}{l}
   ホールド$i$の残RT利得
+  \end{tabular} \\ \hline
+
+  $p^{\rm{c}}$ &
+  \begin{tabular}{l}
+  変数$c_{ij}$のペナルティ重み
+  \end{tabular} \\ \hline
+
+  $H_i^{\rm{h}}$ &
+  \begin{tabular}{l}
+  ホールド$i$の高さ
+  \end{tabular} \\ \hline
+
+  $H_j^{\rm{v}}$ &
+  \begin{tabular}{l}
+  注文$j$に含まれる自動車の高さ
   \end{tabular} \\ \hline
 
   $p^{\rm{c}}$ &
@@ -604,6 +620,8 @@ $b_{i}$ &
 \textgt{(c)注文の分割ルールを守る} \\
 　最初に注文を100台以下の小さい注文と100台以上500台以下の大きい注文と500台以上の巨大な注文に分割する. 小さい注文についてはモデルSP1-1と同じようにギャングの効率を考え分割をしない. 大きい注文に関しては一つのホールドでは全ての自動車が入りきらないことがあるので, 1つのデッキ内に注文に含まれる全ての自動車が収まるようにする. 巨大な注文についてはユニット数が500台以上1000台以下の場合には二等分, 1000台以上1500台以下の場合には三等分し別々の注文としてから大きい注文に加える. また等分した注文は別々のデッキに載せ, 大きい注文と同様に1つのデッキ内に全ての自動車が収まるようにする.
 
+\textgt{(d)船内の高さに関する制約} \\
+　それぞれのホールドには高さがあるため，積載する自動車の高さがホールドの高さを超えない必要がある．
 
 \subsection{目的関数}
 本研究で扱う目的関数について述べる. 席割に関するプランナーとの意見交換や,実際の席割作業を体験することで,プランナーは席割を考える上で注文の降ろし間違えが起こらないような席割を第一に目指していることが推測された.本研究では,このような席割を実現するために3つの目的関数のパラメータを提案する.
@@ -643,16 +661,15 @@ $b_{i}$ &
 &\hspace{1.0em} \sum_{i \in I} x_{ij} = 1, \hspace{8.34em} j \in J^{\rm{small}}. \\
 &\hspace{1.0em} \sum_{i \in I} {\hspace{0.6em}v_{ij}} = u_j, \hspace{8.33em} j \in J. \\
 &\hspace{1.0em} \sum_{j \in J} {\hspace{0.65em}a_{j}}{v_{ij}} \leq {b_{i}}, \hspace{8.7em} i \in I. \\
-&\hspace{0.5em} \sum_{j \in {J_t}^{\rm{keep}}} \frac{a_{j} v_{ij}} {b_{i}} \geq \overline{q}_{i}^{\rm{s}} + {m_{it}}, \hspace{3.76em} i \in I, t \in T. \\
-&\hspace{0.8em} \sum_{i_2 \in {I_{i_1}^*}} {m_{i_2t} v_{i_1j}} \leq {m_{i_1jt}}, \hspace{2.4em} i_1 \in I, j \in J_{t}^{\rm{ld}}, t \in T. \\
-&\hspace{1.0em} \sum_{j \in J_{t}^{\rm{lk}}} \frac{a_{j} v_{ij}} {b_{i}} \leq k^1_{it} + \overline{q}_{i}, \hspace{3.85em} i \in I^{\rm{lamp}}, t \in L.
-%ここまで変数説明
+&\hspace{0.5em} \sum_{j \in {J_t}^{\rm{keep}}} \frac{a_{j} v_{ij}} {b_{i}} \geq \overline{q}_{i}^{\rm{s}} + {m_{it}}, \hspace{3.76em} i \in I, t \in T.
 \end{align}
 
 
 \newpage
 
 \begin{align}
+  &\hspace{0.8em} \sum_{i_2 \in {I_{i_1}^*}} {m_{i_2t} v_{i_1j}} \leq {m_{i_1jt}}, \hspace{2.4em} i_1 \in I, j \in J_{t}^{\rm{ld}}, t \in T. \\
+  &\hspace{1.0em} \sum_{j \in J_{t}^{\rm{lk}}} \frac{a_{j} v_{ij}} {b_{i}} \leq k^1_{it} + \overline{q}_{i}, \hspace{3.85em} i \in I^{\rm{lamp}}, t \in L. \\
   &\hspace{1.0em} \sum_{j \in J_{t}^{\rm{lk}}} \frac{a_{j} v_{ij} + d^{\rm{s}}} {b_{i}}  \geq 1 - k^2_{it}  \hspace{3.28em} i \in I, t \in L. \\
   &\hspace{1.0em} \sum_{j_1\in {J_t}^{\rm{keep}}} \frac{a_{j_1} v_{i_1j_1}} {b_{i_1}} \leq \overline{q}_{i_2} + 1 - {x_{i_2j_2}}, \notag \\
   &\hspace{3.91em} i_1 \in {I_{i_2}^*}, i_2 \in I, j_2 \in J_{t}^{\rm{ld}}, t \in T. \\
@@ -673,15 +690,18 @@ $b_{i}$ &
 &\hspace{1.0em} {x_{i_1j}} + {x_{i_2j}} \leq 2{y_{i_1i_2t}^{\rm{keep}}}, \hspace{1.64em} i_1, i_2 \in \overline{I}, j \in J_{t}^{\rm{keep}}, t \in T. \\
 &\hspace{1.0em} {x_{i_1j}} + {x_{i_2j}} \leq 2{y_{i_1i_2t}^{\rm{dis}}}, \hspace{1.19em} i_1, i_2 \in \overline{I}, j \in J_{t}^{\rm{dis}}, t \in T. \\
 &\hspace{1.0em} {y_{i_1i_2t}^{\rm{load}}} + y_{i_1i_2t}^{\rm{keep}} - 1 \leq {z_{i_1i_2t}^1}, \hspace{1.77em}  i_1, i_2 \in \overline{I}, t \in L. \\
-&\hspace{1.0em} {y_{i_1i_2t}^{\rm{dis}}} + y_{i_1i_2t}^{\rm{keep}} - 1 \leq {z_{i_1i_2t}^2}, \hspace{1.58em}  i_1, i_2 \in \overline{I}, t \in D.
+&\hspace{1.0em} {y_{i_1i_2t}^{\rm{dis}}} + y_{i_1i_2t}^{\rm{keep}} - 1 \leq {z_{i_1i_2t}^2}, \hspace{1.58em}  i_1, i_2 \in \overline{I}, t \in D. \\
+&\hspace{1.0em} \sum_{j \in J} \sum_{i \in I} H_j^{\rm{v}} {x_{ij}} \leq H_i^{\rm{h}},  \hspace{3.5em} i \in I, j \in J
 \end{align}
 
+\newpage
 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% References
 \begin{thebibliography}{2}
 \bibitem{SA} Kris Braekers，An Caris，and Gerrit K Janssens．Exact and meta-heuristic approach for a general heterogeneous dial-a-ride problem with multiple depots．Transportation Research Part B: Methodlological，Vol．67，pp．166--186，2014
+\bibitem{ukawa} 鵜川知哉, 自動車運搬船における貨物積載プランニングの席割問題に対する数理モデリング, 修士論文，名古屋大学情報学研究科, 2020
 \end{thebibliography}
 \end{document}
 
