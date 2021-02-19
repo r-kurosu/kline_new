@@ -1,9 +1,9 @@
 # Fdb version 3
-["dvipdf"] 1613630548 "ukawa.dvi" "ukawa.pdf" "ukawa" 1613630549
-  "ukawa.dvi" 1613630548 49640 fc5ed0cbed569372fbe8eb4f6714172d "latex"
+["dvipdf"] 1613727435 "ukawa.dvi" "ukawa.pdf" "ukawa" 1613727437
+  "ukawa.dvi" 1613727435 55188 a767a8dbf9c0084da0332da9f2d35a93 "latex"
   (generated)
   "ukawa.pdf"
-["latex"] 1613630548 "ukawa.tex" "ukawa.dvi" "ukawa" 1613630549
+["latex"] 1613727435 "ukawa.tex" "ukawa.dvi" "ukawa" 1613727437
   "/usr/local/texlive/2019/texmf-dist/fonts/map/fontname/texfonts.map" 1511824771 3332 103109f5612ad95229751940c61aada0 ""
   "/usr/local/texlive/2019/texmf-dist/fonts/tfm/public/cm/cmr8.tfm" 1136768653 1292 21c1c5bfeaebccffdb478fd231a0997d ""
   "/usr/local/texlive/2019/texmf-dist/fonts/tfm/public/txfonts/txb.tfm" 1136768653 2452 76194099b4f1c022cb59f4564251c4fe ""
@@ -60,9 +60,9 @@
   "/usr/local/texlive/2019/texmf-dist/web2c/texmf.cnf" 1570742662 39452 758acee3f2beaeeedff570c5f5d76d98 ""
   "/usr/local/texlive/2019/texmf-var/web2c/euptex/uplatex.fmt" 1573005491 4553067 6bfd2d44f501852523d42dc3f56fd483 ""
   "/usr/local/texlive/2019/texmf.cnf" 1557341546 577 d150fef99ac436ad1156e86b0892f6ef ""
-  "ukawa.aux" 1613630548 1385 0dd62730f1c9ab67f45bb3c6ae52fa2a "latex"
-  "ukawa.tex" 1613630548 36004 cddbfc6a2e576997113eb52b2e40007a ""
+  "ukawa.aux" 1613727435 2117 b0c1f53cf5078b96567c6ab0e7bcdf31 "latex"
+  "ukawa.tex" 1613727436 40015 69058e5202f64a0f727562efa0676278 ""
   (generated)
+  "ukawa.aux"
   "ukawa.log"
   "ukawa.dvi"
-  "ukawa.aux"
