@@ -1,0 +1,142 @@
+File:book/booking1.csv
+Academic license - for non-commercial use only - expires 2021-04-02
+Using license file /home/takeda/gurobi.lic
+Changed value of parameter TimeLimit to 86400.0
+   Prev: inf  Min: 0.0  Max: inf  Default: inf
+Changed value of parameter MIPFocus to 1
+   Prev: 0  Min: 0  Max: 3  Default: 0
+No parameters matching 'LPMethod' found
+
+Statistics for model Unnamed :
+  Linear constraint matrix    : 0 Constrs, 0 Vars, 0 NZs
+  Matrix coefficient range    : [ 0, 0 ]
+  Objective coefficient range : [ 0, 0 ]
+  Variable bound range        : [ 0, 0 ]
+  RHS coefficient range       : [ 0, 0 ]
+
+========================= Solve Assignment Problem =========================
+Gurobi Optimizer version 9.1.1 build v9.1.1rc0 (linux64)
+Thread count: 4 physical cores, 8 logical processors, using up to 8 threads
+Optimize a model with 441623 rows, 374977 columns and 14568906 nonzeros
+Model fingerprint: 0x6b067927
+Model has 29920 quadratic constraints
+Variable types: 242249 continuous, 132728 integer (117592 binary)
+Coefficient statistics:
+  Matrix range     [4e-03, 2e+05]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [1e+00, 1e+03]
+  Bounds range     [1e+00, 3e+02]
+  RHS range        [1e-01, 4e+07]
+  QRHS range       [1e+00, 3e+02]
+Presolve removed 16978 rows and 310987 columns (presolve time = 6s) ...
+Presolve removed 16978 rows and 310987 columns (presolve time = 10s) ...
+Presolve removed 22382 rows and 311073 columns (presolve time = 16s) ...
+Presolve removed 22382 rows and 311073 columns (presolve time = 20s) ...
+Presolve removed 25091 rows and 311116 columns (presolve time = 26s) ...
+Presolve removed 25091 rows and 311116 columns (presolve time = 30s) ...
+Presolve removed 27869 rows and 313894 columns (presolve time = 37s) ...
+Presolve removed 18485 rows and 310984 columns
+Presolve time: 36.94s
+Presolved: 610850 rows, 197987 columns, 10778972 nonzeros
+Variable types: 26 continuous, 197961 integer (27259 binary)
+
+Deterministic concurrent LP optimizer: primal simplex, dual simplex, and barrier
+Showing barrier log only...
+
+Root barrier log...
+
+Elapsed ordering time = 5s
+Ordering time: 9.82s
+
+Barrier statistics:
+ Dense cols : 94
+ Free vars  : 429
+ AA' NZ     : 1.111e+07
+ Factor NZ  : 6.799e+07 (roughly 900 MBytes of memory)
+ Factor Ops : 3.830e+11 (roughly 40 seconds per iteration)
+ Threads    : 1
+
+                  Objective                Residual
+Iter       Primal          Dual         Primal    Dual     Compl     Time
+   0  -3.15816623e+11 -0.00000000e+00  3.49e+06 3.25e+03  2.95e+07   201s
+   1  -1.63866685e+11  2.64929716e+08  1.27e+06 1.84e+04  1.60e+07   251s
+   2  -1.08393692e+11  2.75647102e+08  5.55e+05 1.29e+04  1.01e+07   307s
+   3  -8.93279405e+10  2.10881391e+08  2.68e+05 8.54e+03  6.63e+06   368s
+   4  -6.76749888e+10  1.40902598e+08  8.48e+04 5.23e+03  4.04e+06   427s
+   5  -5.43527504e+10  1.09365323e+08  5.09e+04 3.86e+03  2.95e+06   484s
+   6  -4.62390190e+10  8.75390426e+07  3.91e+04 3.06e+03  2.34e+06   543s
+   7  -3.88956575e+10  6.83302538e+07  2.24e+04 2.35e+03  1.83e+06   598s
+   8  -3.18887147e+10  5.59990600e+07  1.15e+04 1.90e+03  1.47e+06   654s
+   9  -2.43696120e+10  3.48185406e+07  3.24e+03 1.16e+03  8.97e+05   729s
+  10  -1.84847044e+10  1.53297704e+07  9.32e+02 4.85e+02  3.87e+05   802s
+  11  -1.36819259e+10  8.43099492e+06  3.39e+02 2.47e+02  1.99e+05   864s
+  12  -9.83375522e+09  3.79748457e+06  1.65e+02 9.12e+01  7.79e+04   923s
+  13  -7.35030630e+09  2.76048563e+06  9.14e+01 5.69e+01  4.87e+04   984s
+  14  -4.48161600e+09  1.83000402e+06  3.09e+01 2.62e+01  2.27e+04  1044s
+  15  -1.96676486e+09  1.25814232e+06  3.53e+00 7.69e+00  6.88e+03  1093s
+  16  -8.97140448e+08  1.04987815e+06  6.22e-01 1.84e+00  1.89e+03  1145s
+  17  -5.75259502e+08  9.90680995e+05  3.14e-01 6.82e-01  9.22e+02  1192s
+  18  -1.24368394e+08  9.28873363e+05  1.99e-02 5.36e-02  1.47e+02  1245s
+  19  -4.00264515e+06  6.34888387e+05  3.59e-04 1.93e-02  5.21e+00  1299s
+  20  -5.84516052e+05  1.09448168e+05  4.29e-05 3.86e-03  7.79e-01  1342s
+
+Barrier performed 20 iterations in 1342.07 seconds
+Barrier solve interrupted - model solved by another algorithm
+
+Concurrent spin time: 802.41s (can be avoided by choosing Method=3)
+
+Solved with primal simplex
+
+Root relaxation: objective -6.698000e+02, 81022 iterations, 1206.47 seconds
+Total elapsed time = 1342.88s
+Total elapsed time = 2504.33s
+Total elapsed time = 2593.47s
+Total elapsed time = 2685.72s
+Total elapsed time = 2730.23s
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0 -669.80000    0 2166          - -669.80000      -     - 2736s
+     0     0 -669.80000    0 4987          - -669.80000      -     - 19959s
+     0     0 -669.80000    0 3945          - -669.80000      -     - 30085s
+     0     0 -669.80000    0 4799          - -669.80000      -     - 43893s
+     0     0 -669.80000    0 4766          - -669.80000      -     - 52301s
+     0     0 -669.80000    0 5660          - -669.80000      -     - 67279s
+     0     0 -669.80000    0 6056          - -669.80000      -     - 82239s
+     0     0          -    0               - -669.80000      -     - 86400s
+
+Cutting planes:
+  Learned: 1
+  Gomory: 5
+  Cover: 11
+  Implied bound: 8
+  Clique: 7
+  MIR: 499
+  StrongCG: 188
+  Flow cover: 56
+  Zero half: 712
+  Network: 7
+  RLT: 308
+  Relax-and-lift: 32
+  BQP: 41
+
+Explored 1 nodes (9317088 simplex iterations) in 86400.01 seconds
+Thread count was 8 (of 8 available processors)
+
+Solution count 0
+
+Time limit reached
+Best objective -, best bound -6.698000000197e+02, gap -
+-----------------------------------------------------------------
+penalty count => 
+Traceback (most recent call last):
+  File "SP1-2.py", line 745, in <module>
+    main()
+  File "SP1-2.py", line 622, in main
+    if Z_it1t2[i,t1,t2].X > 0:
+  File "src/gurobipy/var.pxi", line 91, in gurobipy.Var.__getattr__
+  File "src/gurobipy/var.pxi", line 119, in gurobipy.Var.getAttr
+  File "src/gurobipy/attrutil.pxi", line 100, in gurobipy.__getattr
+AttributeError: Unable to retrieve attribute 'X'
