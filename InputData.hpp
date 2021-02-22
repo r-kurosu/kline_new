@@ -10,6 +10,7 @@ private:
     vector<int> T;
     vector<int> L;
     vector<int> D;
+    vector<int> Check_port;
 
 public:
     void Read_booking();
