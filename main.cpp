@@ -8,5 +8,5 @@ int main()
 {
     cout << "test" << endl;
     InputData inputData;
-    inputData.setInputData();
+    inputData.Read_booking();
 }

@@ -7,8 +7,10 @@ using namespace std;
 class InputData
 {
 private:
-    int test;
+    vector<int> T;
+    vector<int> L;
+    vector<int> D;
 
 public:
-    void setInputData();
+    void Read_booking();
 };
