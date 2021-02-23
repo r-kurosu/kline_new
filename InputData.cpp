@@ -21,18 +21,22 @@ void InputData::Read_booking() {
     }
 
     int lport_idx, dport_idx;
+    int unit_idx;
     int i, j;
+    int tmp;
     vector<string> lport_name;
     vector<string> dport_name;
     cout << vv.size() << endl;
     // カラム名のインデックスを取得するforループ
     for (i = 0; i < vv[0].size(); i++) {
-        cout << vv[0][i] << endl;
         if (vv[0][i] == "PORT_L") {
             lport_idx = i;
         }
         if (vv[0][i] == "PORT_D") {
             dport_idx = i;
+        }
+        if (vv[0][i] == "Units") {
+            unit_idx = i;
         }
     }
 
@@ -52,25 +56,10 @@ void InputData::Read_booking() {
         this->D.push_back(i + this->L.size());
         this->T.push_back(i + this->L.size());
     }
-    // for (i = 0; i < this->T.size(); i++)
-    // {
-    //   cout << this->T[i] << " ";
-    // }
-    // cout << endl;
-    // for (i = 0; i < this->L.size(); i++)
-    // {
-    //   cout << this->L[i] << " ";
-    // }
-    // cout << endl;
-    // for (i = 0; i < this->D.size(); i++)
-    // {
-    //   cout << this->D[i] << " ";
-    // }
-    // cout << endl;
-    // T,L,Dまでok
 
     int cport_idx = vv[0].size() - 1;
     this->Check_port.push_back(lport_name.size() - 1);
+    // TODO 複雑な航海ではcheck_portの実装が必要
 
     for (i = 0; i < vv.size(); i++) {
         for (j = 0; j < vv[i].size(); j++) {
@@ -87,5 +76,43 @@ void InputData::Read_booking() {
         }
     }
 
-    // 港番号のエンコードまで終わり
+    vector<int> divided_j;
+    vector<vector<int>> divided_dic;
+    vector<int> tmpVec;
+    tmpVec.push_back(0);
+    tmpVec.push_back(0);
+    vector<vector<int>> divide_df;
+    for (i = 1; i < vv.size(); i++) {
+        tmp = stoi(vv[i][unit_idx]);
+        int u_num_1, u_num_2;
+        if ((500 < tmp) && (tmp <= 1000)) {
+            if (tmp % 2 == 0) {
+                u_num_1 = tmp / 2;
+                u_num_2 = tmp / 2;
+            } else {
+                u_num_1 = (tmp / 2) + 1;
+                u_num_2 = (tmp / 2);
+            }
+            divided_j.push_back(i);
+            tmpVec[0] = i;
+            tmpVec[1] = tmp;
+            divided_dic.push_back(tmpVec);
+
+            vector<string> divided;
+            for (j = 0; j < vv[i].size(); j++) {
+                divided.push_back(vv[i][j]);
+            }
+            divided[unit_idx] = to_string(u_num_1);
+            vv.push_back(divided);
+            divided[unit_idx] = to_string(u_num_2);
+            vv.push_back(divided);
+        }
+    }
+    for (i = divided_j.size() - 1; i >= 0; i--) {
+        vv.erase(vv.begin() + divided_j[i]);
+    }
+    cout << vv.size() << endl;
+    for (i = 0; i < vv.size(); i++) {
+        cout << vv[i][0] << endl;
+    }
 }
