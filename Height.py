@@ -32,18 +32,20 @@ def Read_booking(BookingFileName):
         D.append(t + max(L) + 1)
 
     T = L + D
-
     Check_port = []
     key1 = Booking_df.columns.get_loc('CPORT')
     for j in range(len(Booking_df)):
         count = 0
+        print(str(Booking_df.iloc[j, key1]))
         if str(Booking_df.iloc[j, key1]) != 'nan':
             for p in lport_name:
                 if p == str(Booking_df.iloc[j, key1]):
                     Check_port.append(count)
                 else:
                     count = count + 1
+    # print(Check_port)
 
+    # exit()
     # 港番号のエンコード
     for k in range(len(lport_name)):
         Booking_df = Booking_df.replace(lport_name[k], L[k])
@@ -218,13 +220,13 @@ def main():
     # ==============================================================================================
 
     # ファイルロード
-    # BookingFile = "book/exp_height2.csv"
-    BookingFile = args[1]
-    HoldFile = "revised_data/hold.csv"
-    MainLampFile = "revised_data/mainlamp.csv"
-    BackMainLampFile = "revised_data/back_mainlamp.csv"
-    AfrMainLampFile = "revised_data/afr_mainlamp.csv"
-    StressFile = "revised_data/stress_mainlamp.csv"
+    BookingFile = "book/exp_full_height.csv"
+    # BookingFile = args[1]
+    HoldFile = "data/hold_with_height.csv"
+    MainLampFile = "data/mainlamp.csv"
+    BackMainLampFile = "data/back_mainlamp.csv"
+    AfrMainLampFile = "data/afr_mainlamp.csv"
+    StressFile = "data/stress_mainlamp.csv"
     Gang2File = "data/gangnum_2.csv"
     Gang3File = "data/gangnum_3.csv"
 
@@ -336,7 +338,7 @@ def main():
 
     # Gurobiパラメータ設定
     GAP_SP = gp.Model()
-    GAP_SP.setParam("TimeLimit", 3600)
+    GAP_SP.setParam("TimeLimit", 86400)
     GAP_SP.setParam("MIPFocus", 1)
     GAP_SP.setParam("LPMethod", 1)
     GAP_SP.printStats()
@@ -762,7 +764,7 @@ def main():
 
         key = Booking.columns.get_loc('Index')
         i_t = answer[k][0]
-        j_t = Booking.iloc[answer[k][1], key]
+        j_t = int(Booking.iloc[answer[k][1], key])
 
         # hold_ID
         assign[k][0] = Hold.iloc[i_t, 0]
