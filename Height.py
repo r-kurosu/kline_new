@@ -464,7 +464,7 @@ def main():
     for i in range(len(HoldHeight)):
         for j in range(len(VehicleHeight)):
             GAP_SP.addConstr(
-                VehicleHeightVar[i]*X_ij[i, j] <= HoldHeightVar[i])
+                VehicleHeightVar[j]*X_ij[i, j] <= HoldHeightVar[i])
 
     # 割当てた注文がコンパートメント毎にリソースを超えない
     GAP_SP.addConstrs(gp.quicksum(V_ij[i, j] * A[j]
