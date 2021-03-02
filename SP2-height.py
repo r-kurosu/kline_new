@@ -245,10 +245,10 @@ def main():
     # ==============================================================================================
 
     # ファイルロード
-    # File1 = "book/exp_full_height.csv"
-    File1 = "/Users/takedakiyoshi/lab/kline/KLINE/高さ制約を比較するフォルダ/exp_full_height.csv"
-    # File2 = "data/hold_with_height.csv.csv"
-    File2 = "/Users/takedakiyoshi/lab/kline/KLINE/高さ制約を比較するフォルダ/hold_with_height.csv"
+    File1 = "book/exp_full_height.csv"
+    # File1 = "/Users/takedakiyoshi/lab/kline/KLINE/高さ制約を比較するフォルダ/exp_full_height.csv"
+    File2 = "data/hold_with_height.csv.csv"
+    # File2 = "/Users/takedakiyoshi/lab/kline/KLINE/高さ制約を比較するフォルダ/hold_with_height.csv"
     File3 = "data/mainlamp.csv"
     File4 = "data/back_mainlamp.csv"
     File5 = "data/afr_mainlamp.csv"
@@ -360,7 +360,7 @@ def main():
 
     # Gurobiパラメータ設定
     GAP_SP = gp.Model()
-    GAP_SP.setParam("TimeLimit", 3600)
+    GAP_SP.setParam("TimeLimit", 7200)
     GAP_SP.setParam("MIPFocus", 1)
     GAP_SP.setParam("LPMethod", 1)
     GAP_SP.printStats()
