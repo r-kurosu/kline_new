@@ -86,26 +86,31 @@ def Read_booking(FileName):
     key4 = Booking.columns.get_loc('Units')
     key5 = Booking.columns.get_loc('RT')
     key6 = Booking.columns.get_loc('Weight')
-
+    heightKey = Booking.columns.get_loc('Height')
+    print(len(Booking))
+    HeightList = [180, 200, 220]
     count1 = 0
     for col1 in L:
         for col2 in D:
-            units = rt = weight = count2 = 0
-            for k in range(len(Booking_df)):
-                if Booking_df.iloc[k, key2] == col1 and Booking_df.iloc[k, key3] == col2:
-                    count2 += 1
-                    units += Booking_df.iloc[k, key4]
-                    rt += Booking_df.iloc[k, key4] * Booking_df.iloc[k, key5]
-                    weight += Booking_df.iloc[k,
-                                              key4] * Booking_df.iloc[k, key6]
+            for height in HeightList:
+                units = rt = weight = count2 = 0
+                for k in range(len(Booking_df)):
+                    if Booking_df.iloc[k, key2] == col1 and Booking_df.iloc[k, key3] == col2 and Booking_df.iloc[k, heightKey] == height:
+                        count2 += 1
+                        units += Booking_df.iloc[k, key4]
+                        rt += Booking_df.iloc[k, key4] * \
+                            Booking_df.iloc[k, key5]
+                        weight += Booking_df.iloc[k,
+                                                  key4] * Booking_df.iloc[k, key6]
 
-            if count2 > 0:
-                Booking.iloc[count1, key2] = col1
-                Booking.iloc[count1, key3] = col2
-                Booking.iloc[count1, key4] = units
-                Booking.iloc[count1, key5] = rt
-                Booking.iloc[count1, key6] = int(weight / units)
-                count1 += 1
+                if count2 > 0:
+                    Booking.iloc[count1, key2] = col1
+                    Booking.iloc[count1, key3] = col2
+                    Booking.iloc[count1, key4] = units
+                    Booking.iloc[count1, key5] = rt
+                    Booking.iloc[count1, key6] = int(weight / units)
+                    Booking.iloc[count1, heightKey] = height
+                    count1 += 1
 
     for t in range(count1, len(Booking_df)):
         Booking = Booking.drop(Booking.index[count1])
@@ -113,7 +118,8 @@ def Read_booking(FileName):
     Booking["Index"] = 0
     for k in range(len(Booking)):
         Booking.iloc[k, Booking.columns.get_loc('Index')] = k
-
+    print(len(Booking))
+    print(Booking)
     A = list(Booking["RT"])
     J = list(Booking["Index"])
     U = list(Booking["Units"])
@@ -245,10 +251,10 @@ def main():
     # ==============================================================================================
 
     # ファイルロード
-    File1 = "book/exp_full_height.csv"
-    # File1 = "/Users/takedakiyoshi/lab/kline/KLINE/高さ制約を比較するフォルダ/exp_full_height.csv"
-    File2 = "data/hold_with_height.csv.csv"
-    # File2 = "/Users/takedakiyoshi/lab/kline/KLINE/高さ制約を比較するフォルダ/hold_with_height.csv"
+    # File1 = "book/exp_full_height.csv"
+    File1 = "/Users/takedakiyoshi/lab/kline/KLINE/高さ制約を比較するフォルダ/exp_full_height.csv"
+    # File2 = "data/hold_with_height.csv"
+    File2 = "/Users/takedakiyoshi/lab/kline/KLINE/高さ制約を比較するフォルダ/hold_with_height.csv"
     File3 = "data/mainlamp.csv"
     File4 = "data/back_mainlamp.csv"
     File5 = "data/afr_mainlamp.csv"
@@ -601,8 +607,8 @@ def main():
     GAP_SP.addConstrs(gp.quicksum(X_ij[i, j] for i in I) == 1 for j in J_small)
 
     # 10RT以下に分割しない
-    GAP_SP.addConstrs(V_ij[i, j] + v_min * (1 - X_ij[i, j])
-                      >= v_min for i in I for j in J)
+    # GAP_SP.addConstrs(V_ij[i, j] + v_min * (1 - X_ij[i, j])
+    #                   >= v_min for i in I for j in J)
 
     # 特殊制約2(移動経路制約)
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -607,8 +607,8 @@ def main():
     GAP_SP.addConstrs(gp.quicksum(X_ij[i, j] for i in I) == 1 for j in J_small)
 
     # 10RT以下に分割しない
-    GAP_SP.addConstrs(V_ij[i, j] + v_min * (1 - X_ij[i, j])
-                      >= v_min for i in I for j in J)
+    # GAP_SP.addConstrs(V_ij[i, j] + v_min * (1 - X_ij[i, j])
+    #                   >= v_min for i in I for j in J)
 
     # 特殊制約2(移動経路制約)
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
