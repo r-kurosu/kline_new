@@ -246,7 +246,7 @@ def main():
     # ==============================================================================================
 
     # ファイルロード
-    File1 = "book/exp.csv"
+    File1 = "/Users/takedakiyoshi/lab/kline/KLINE/高さ制約を比較するフォルダ/exp_height.csv"
     File2 = "data/hold.csv"
     File3 = "data/mainlamp.csv"
     File4 = "data/back_mainlamp.csv"
@@ -400,7 +400,7 @@ def main():
 
     # Gurobiパラメータ設定
     GAP_SP = gp.Model()
-    GAP_SP.setParam("TimeLimit", 3600)
+    GAP_SP.setParam("TimeLimit", 600)
     GAP_SP.setParam("MIPFocus", 1)
     GAP_SP.setParam("LPMethod", 1)
     GAP_SP.printStats()
@@ -809,7 +809,7 @@ def main():
 
         key = Booking.columns.get_loc('Index')
         i_t = answer[k][0]
-        j_t = Booking.iloc[answer[k][1], key]
+        j_t = int(Booking.iloc[answer[k][1], key])
 
         # hold_ID
         assign[k][0] = Hold.iloc[i_t, 0]
@@ -851,9 +851,9 @@ def main():
     c_list.append("DPORT")
     c_list.append("Cost")
     assign_data = pd.DataFrame(assign, columns=c_list)
-    assign_data.to_excel('result/exp_assignment_latest.xlsx',
+    assign_data.to_excel('exp_assignment.xlsx',
                          index=False, columns=c_list)
-    I_left_data.to_excel('result/exp_leftRT_latest.xlsx', index=False)
+    I_left_data.to_excel('exp_leftRT.xlsx', index=False)
 
 
 if __name__ == "__main__":
