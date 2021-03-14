@@ -218,13 +218,13 @@ def main():
     # ==============================================================================================
 
     # ファイルロード
-    BookingFile = "book/exp_height.csv"
-    # BookingFile = args[1]
-    HoldFile = "revised_data/hold.csv"
-    MainLampFile = "revised_data/mainlamp.csv"
-    BackMainLampFile = "revised_data/back_mainlamp.csv"
-    AfrMainLampFile = "revised_data/afr_mainlamp.csv"
-    StressFile = "revised_data/stress_mainlamp.csv"
+    # BookingFile = "book/exp_full_height.csv"
+    BookingFile = args[1]
+    HoldFile = "data/hold_with_height.csv"
+    MainLampFile = "data/mainlamp.csv"
+    BackMainLampFile = "data/back_mainlamp.csv"
+    AfrMainLampFile = "data/afr_mainlamp.csv"
+    StressFile = "data/stress_mainlamp.csv"
     Gang2File = "data/gangnum_2.csv"
     Gang3File = "data/gangnum_3.csv"
 
