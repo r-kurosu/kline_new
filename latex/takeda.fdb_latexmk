@@ -1,9 +1,9 @@
 # Fdb version 3
-["dvipdf"] 1617246764 "takeda.dvi" "takeda.pdf" "takeda" 1617246803
-  "takeda.dvi" 1617246764 57568 00c8f7a0b264fc1ddaeaaf6804458347 "latex"
+["dvipdf"] 1617255146 "takeda.dvi" "takeda.pdf" "takeda" 1617255204
+  "takeda.dvi" 1617255146 57556 12ea90ae3f3f8c9497851a0e802c9233 "latex"
   (generated)
   "takeda.pdf"
-["latex"] 1617246763 "takeda.tex" "takeda.dvi" "takeda" 1617246803
+["latex"] 1617255145 "takeda.tex" "takeda.dvi" "takeda" 1617255204
   "/usr/local/texlive/2019/texmf-dist/fonts/map/fontname/texfonts.map" 1511824771 3332 103109f5612ad95229751940c61aada0 ""
   "/usr/local/texlive/2019/texmf-dist/fonts/tfm/public/cm/cmr8.tfm" 1136768653 1292 21c1c5bfeaebccffdb478fd231a0997d ""
   "/usr/local/texlive/2019/texmf-dist/fonts/tfm/public/txfonts/txb.tfm" 1136768653 2452 76194099b4f1c022cb59f4564251c4fe ""
@@ -60,8 +60,8 @@
   "/usr/local/texlive/2019/texmf-dist/web2c/texmf.cnf" 1570742662 39452 758acee3f2beaeeedff570c5f5d76d98 ""
   "/usr/local/texlive/2019/texmf-var/web2c/euptex/uplatex.fmt" 1573005491 4553067 6bfd2d44f501852523d42dc3f56fd483 ""
   "/usr/local/texlive/2019/texmf.cnf" 1557341546 577 d150fef99ac436ad1156e86b0892f6ef ""
-  "takeda.aux" 1617246764 2435 38cce8e8f4517f0bb534dd724fd71fe9 "latex"
-  "takeda.tex" 1617246802 43042 54362f5d8badcd9ca00c508944090722 ""
+  "takeda.aux" 1617255146 2415 0606b0293eba2668245b2ca040844757 "latex"
+  "takeda.tex" 1617255204 43269 9035662506b3c7d59bf9dff08ec44e57 ""
   (generated)
   "takeda.aux"
   "takeda.log"
