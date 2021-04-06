@@ -1,0 +1,153 @@
+File:book/takibayashi_revised.csv
+
+--------------------------------------------
+Warning: your license will expire in 8 days
+--------------------------------------------
+
+Academic license - for non-commercial use only - expires 2021-04-02
+Using license file /home/takeda/gurobi.lic
+Changed value of parameter TimeLimit to 86400.0
+   Prev: inf  Min: 0.0  Max: inf  Default: inf
+Changed value of parameter MIPFocus to 1
+   Prev: 0  Min: 0  Max: 3  Default: 0
+No parameters matching 'LPMethod' found
+
+Statistics for model Unnamed :
+  Linear constraint matrix    : 0 Constrs, 0 Vars, 0 NZs
+  Matrix coefficient range    : [ 0, 0 ]
+  Objective coefficient range : [ 0, 0 ]
+  Variable bound range        : [ 0, 0 ]
+  RHS coefficient range       : [ 0, 0 ]
+
+========================= Solve Assignment Problem =========================
+Gurobi Optimizer version 9.1.1 build v9.1.1rc0 (linux64)
+Thread count: 4 physical cores, 8 logical processors, using up to 8 threads
+Optimize a model with 152263 rows, 90188 columns and 4749749 nonzeros
+Model fingerprint: 0x0138d311
+Model has 17085 quadratic constraints
+Variable types: 43288 continuous, 46900 integer (38257 binary)
+Coefficient statistics:
+  Matrix range     [3e-03, 1e+05]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [1e+00, 1e+03]
+  Bounds range     [1e+00, 4e+02]
+  RHS range        [1e-01, 4e+07]
+  QRHS range       [1e+00, 4e+02]
+Presolve removed 42341 rows and 54712 columns (presolve time = 6s) ...
+Presolve removed 42836 rows and 55207 columns (presolve time = 12s) ...
+Presolve removed 39538 rows and 54639 columns
+Presolve time: 12.39s
+Presolved: 226259 rows, 117442 columns, 2616710 nonzeros
+Variable types: 0 continuous, 117442 integer (13347 binary)
+
+Deterministic concurrent LP optimizer: primal simplex, dual simplex, and barrier
+Showing barrier log only...
+
+Root barrier log...
+
+Elapsed ordering time = 5s
+Elapsed ordering time = 10s
+Elapsed ordering time = 15s
+Elapsed ordering time = 20s
+Ordering time: 21.56s
+
+Barrier performed 0 iterations in 59.76 seconds
+Barrier solve interrupted - model solved by another algorithm
+
+Concurrent spin time: 0.02s
+
+Solved with dual simplex
+
+Root relaxation: objective -2.825000e+03, 11788 iterations, 26.66 seconds
+Total elapsed time = 59.93s
+Total elapsed time = 94.02s
+Total elapsed time = 115.11s
+Total elapsed time = 129.16s
+Total elapsed time = 135.94s
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0 -2825.0000    0  989          - -2825.0000      -     -  140s
+     0     0 -2825.0000    0 1467          - -2825.0000      -     -  857s
+     0     0 -2825.0000    0 1841          - -2825.0000      -     - 1034s
+     0     0 -2825.0000    0 2306          - -2825.0000      -     - 1781s
+     0     0 -2825.0000    0 1723          - -2825.0000      -     - 2932s
+     0     0 -2825.0000    0 2035          - -2825.0000      -     - 4187s
+     0     0 -2825.0000    0 2282          - -2825.0000      -     - 5342s
+     0     0 -2825.0000    0 2236          - -2825.0000      -     - 6603s
+     0     0 -2825.0000    0 3021          - -2825.0000      -     - 8090s
+H    0     0                    1411359.3500 -2825.0000   100%     - 8102s
+     0     0 -2825.0000    0 2710 1411359.35 -2825.0000   100%     - 8847s
+H    0     0                    377819.35000 -2825.0000   101%     - 9455s
+H    0     0                    27838.850000 -2825.0000   110%     - 38965s
+H    0     0                    27690.760000 -2825.0000   110%     - 39058s
+     0     2 -2825.0000    0 2699 27690.7600 -2825.0000   110%     - 39136s
+H    1     4                    24473.790000 -2825.0000   112% 14828 42194s
+H    2     4                    24455.080000 -2825.0000   112% 151264 42194s
+     3     8 -2825.0000    2 2395 24455.0800 -2825.0000   112% 380360 45461s
+     7    12 -2825.0000    3 2920 24455.0800 -2825.0000   112% 411834 48364s
+    11    16 -2825.0000    3 2293 24455.0800 -2825.0000   112% 375156 53836s
+    15    20 -2825.0000    4 2668 24455.0800 -2825.0000   112% 393951 53915s
+    19    24 -2825.0000    5 2631 24455.0800 -2825.0000   112% 313090 53997s
+    23    32 -2825.0000    6 2546 24455.0800 -2825.0000   112% 259183 54145s
+H   31    36                    23628.710000 -2825.0000   112% 193003 60716s
+H   32    36                    -1308.320000 -2825.0000   116% 187159 60716s
+    35    84 -2825.0000    9 2354 -1308.3200 -2825.0000   116% 171389 61510s
+H   83   143                    -1653.080000 -2825.0000  70.9% 74372 63173s
+H  109   143                    -2420.080000 -2825.0000  16.7% 57976 63173s
+   142   390 -2825.0000   20 1905 -2420.0800 -2825.0000  16.7% 45443 67126s
+H  162   390                    -2517.900000 -2825.0000  12.2% 40116 67126s
+   389   556 -2824.7729   72 1451 -2517.9000 -2825.0000  12.2% 20624 73301s
+H  398   556                    -2529.850000 -2825.0000  11.7% 20246 73301s
+H  555   765                    -2531.750000 -2825.0000  11.6% 16844 80740s
+H  556   765                    -2534.550000 -2825.0000  11.5% 16835 80740s
+H  728   765                    -2587.800000 -2825.0000  9.17% 14218 80740s
+H  764  1153                    -2589.000000 -2825.0000  9.12% 13792 85458s
+H  896  1153                    -2589.900000 -2825.0000  9.08% 12418 85458s
+H 1051  1153                    -2601.100000 -2825.0000  8.61% 11453 85458s
+H 1152  1566                    -2601.550000 -2825.0000  8.59% 11156 86400s
+H 1200  1566                    -2603.350000 -2825.0000  8.51% 10810 86400s
+
+Cutting planes:
+  Learned: 5
+  Cover: 6
+  Implied bound: 1117
+  Clique: 1
+  MIR: 129
+  StrongCG: 11
+  Flow cover: 41
+  Zero half: 39
+  Network: 2
+  RLT: 142
+  Relax-and-lift: 10
+  BQP: 10
+
+Explored 1565 nodes (17208286 simplex iterations) in 86400.31 seconds
+Thread count was 8 (of 8 available processors)
+
+Solution count 10: -2603.35 -2601.55 -2601.1 ... -2517.9
+
+Time limit reached
+Best objective -2.603350000000e+03, best bound -2.825000000000e+03, gap 8.5140%
+-----------------------------------------------------------------
+penalty count => 
+
+[weight]
+Object1's weight : 1
+Object2's weight : 1
+Object3's weight : 1
+Object4's weight : 1
+Object5's weight : 1
+
+[penalty & benefit]
+Different discharge port in one hold                  : 10 × 5.0
+Different loading port in pair hold                   : 1 × 23
+Different discharge port in pair hold                 : 10 × 12
+The number of cars passed holds that exceed threshold : 0
+The benefit remaining RT of hold near the entrance    : 279.65
+The penalty of total dead space                       : 1000 × 0
+
+ => Total penalty is -2603.3500000000004
+-----------------------------------------------------------------
