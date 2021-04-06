@@ -227,17 +227,17 @@ def main():
     Gang3File = "data/gangnum_3.csv"
 
     print("File:" + BookingFile)
-
+    booking_name = BookingFile.split("/")[1].split(".")[0]
     # 注文情報の読み込み
-    T, L, D, J, U, A, G, J_small, J_medium, J_large, Port, Check_port, Booking, divide_dic \
+    T, L, D, J, U, A, G, J_small, J_medium, J_large, Port, Check_port, Booking, divide_dic\
         = Read_booking(BookingFile)
 
     # 船体情報の読み込み1
-    I, B, I_pair, I_next, I_same, I_lamp, I_deck, RT_benefit, delta_s, min_s, max_s, delta_h, max_h, Hold_encode, Hold \
+    I, B, I_pair, I_next, I_same, I_lamp, I_deck, RT_benefit, delta_s, min_s, max_s, delta_h, max_h, Hold_encode, Hold\
         = Read_hold(HoldFile)
 
     # 船体情報の読み込み2
-    Ml_Load, Ml_Back, Ml_Afr, Stress, GANG2, GANG3 \
+    Ml_Load, Ml_Back, Ml_Afr, Stress, GANG2, GANG3\
         = Read_other(MainLampFile, BackMainLampFile, AfrMainLampFile, StressFile, Gang2File, Gang3File, Hold_encode)
 
     J_t_load = []  # J_t_load:港tで積む注文の集合
@@ -300,7 +300,7 @@ def main():
         if J_N > 1000:
             gang_num[t] = 3
 
-    """     
+    """
     J_large_divide = [] #大きい注文の分割サイズ指定
     for j in J_large:
         tmp = []
@@ -310,9 +310,9 @@ def main():
                 if U[j] % gang_num[p] == 0:
                     for k in range(int(gang_num[p])):
                         tmp.append(int(U[j] / gang_num[p]))
-                    J_large_divide.append(tmp)  
+                    J_large_divide.append(tmp)
                 if U[j] % gang_num[p] == 1:
-                    num = int(U[j] / gang_num[p])   
+                    num = int(U[j] / gang_num[p])
                     tmp_num = U[j]
                     while tmp_num > num + 1:
                         tmp.append(num)
@@ -320,7 +320,7 @@ def main():
                     tmp.append(tmp_num)
                     J_large_divide.append(tmp)
                 if U[j] % gang_num[p] == 2:
-                   num = int(U[j] / gang_num[p]) + 1  
+                   num = int(U[j] / gang_num[p]) + 1
                    tmp_num = U[j]
                    while tmp_num > num:
                        tmp.append(num)
@@ -550,15 +550,17 @@ def main():
 
     # J_small
     # 分割しない
-    # GAP_SP.addConstrs(gp.quicksum(X_ij[i,j] for i in I) == 1 for j in J_small)
+    GAP_SP.addConstrs(gp.quicksum(X_ij[i, j] for i in I) == 1 for j in J_small)
 
     # J_medium
-    # GAP_SP.addConstrs(gp.quicksum(X_ij[i,j] for i in I) == 1 for j in J_medium)
+    GAP_SP.addConstrs(gp.quicksum(X_ij[i, j]
+                                  for i in I) == 1 for j in J_medium)
 
     # J_large
-    # for k1 in range(len(I_deck)):
-    #     for k2 in range(k1):
-    #         GAP_SP.addConstrs(gp.quicksum(X_ij[i1,j] for i1 in I_deck[k1]) * gp.quicksum(X_ij[i2,j] for i2 in I_deck[k2]) <= 0 for j in J_large)
+    for k1 in range(len(I_deck)):
+        for k2 in range(k1):
+            GAP_SP.addConstrs(gp.quicksum(X_ij[i1, j] for i1 in I_deck[k1]) * gp.quicksum(
+                X_ij[i2, j] for i2 in I_deck[k2]) <= 0 for j in J_large)
 
     # 特殊制約2(移動経路制約)
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -621,7 +623,7 @@ def main():
            gang_low = GANG2[0]
            gang_high = GANG2[1]
             
-           #ギャングの担当領域毎に均等に注文を分ける
+           # ギャングの担当領域毎に均等に注文を分ける
            GAP_SP.addConstr(gp.quicksum(V_ij[i1,j] for i1 in gang_low for j in J_t_load[t]) - gp.quicksum(V_ij[i2,j] for i2 in gang_high for j in J_t_load[t]) <= 100)
            GAP_SP.addConstr(gp.quicksum(V_ij[i1,j] for i1 in gang_low for j in J_t_load[t]) - gp.quicksum(V_ij[i2,j] for i2 in gang_high for j in J_t_load[t]) >= -100)
               
@@ -630,7 +632,7 @@ def main():
            gang_mid = GANG3[1]
            gang_high = GANG3[2]
            
-           #ギャングの担当領域毎に均等に注文を分ける
+           # ギャングの担当領域毎に均等に注文を分ける
            GAP_SP.addConstr(gp.quicksum(V_ij[i1,j] for i1 in gang_low for j in J_t_load[t]) - gp.quicksum(V_ij[i2,j] for i2 in gang_mid for j in J_t_load[t]) <= 100)
            GAP_SP.addConstr(gp.quicksum(V_ij[i1,j] for i1 in gang_low for j in J_t_load[t]) - gp.quicksum(V_ij[i2,j] for i2 in gang_mid for j in J_t_load[t]) >= -100)
            GAP_SP.addConstr(gp.quicksum(V_ij[i1,j] for i1 in gang_low for j in J_t_load[t]) - gp.quicksum(V_ij[i2,j] for i2 in gang_high for j in J_t_load[t]) <= 100)
@@ -740,7 +742,7 @@ def main():
 
         key = Booking.columns.get_loc('Index')
         i_t = answer[k][0]
-        j_t = Booking.iloc[answer[k][1], key]
+        j_t = int(Booking.iloc[answer[k][1], key])
 
         # hold_ID
         assign[k][0] = Hold.iloc[i_t, 0]
