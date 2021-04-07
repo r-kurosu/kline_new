@@ -24,6 +24,14 @@ for row in leftRT.itertuples():
         Ldict[row[1]] = {}
         Ldict[row[1]]["left"] = row[2]
 
+PercentDict = {}
 for k, v in Ldict.items():
-    # print(k, v)
+    total = sum(v.values())
+    PercentDict[k] = {}
+    for k2, v2 in v.items():
+        PercentDict[k][k2] = v2/total * 100
     tmpDict = v
+sortedLDict = sorted(PercentDict.items(), key=lambda x: x[0])
+print(sortedLDict)
+for item in sortedLDict:
+    print(item)
