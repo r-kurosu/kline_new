@@ -1,4 +1,4 @@
-This is e-upTeX, Version 3.14159265-p3.8.2-u1.25-190131-2.6 (utf8.uptex) (TeX Live 2019) (preloaded format=uplatex 2019.11.6)  1 APR 2021 14:32
+This is e-upTeX, Version 3.14159265-p3.8.2-u1.25-190131-2.6 (utf8.uptex) (TeX Live 2019) (preloaded format=uplatex 2019.11.6)  6 MAY 2021 17:13
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -322,26 +322,7 @@ LaTeX Font Info:    Font shape `OT1/txss/m/n' will be
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-LaTeX Font Info:    Font shape `JY2/mc/m/n' will be
-(Font)              scaled to size 6.47278pt on input line 80.
-LaTeX Font Info:    Font shape `JY2/mc/m/n' will be
-(Font)              scaled to size 4.62341pt on input line 80.
-LaTeX Font Info:    Trying to load font information for U+txmia on input line 80.
- (/usr/local/texlive/2019/texmf-dist/tex/latex/txfonts/utxmia.fd
-File: utxmia.fd 2000/12/15 v3.1
-)
-LaTeX Font Info:    Trying to load font information for U+txsya on input line 80.
- (/usr/local/texlive/2019/texmf-dist/tex/latex/txfonts/utxsya.fd
-File: utxsya.fd 2000/12/15 v3.1
-)
-LaTeX Font Info:    Trying to load font information for U+txsyb on input line 80.
- (/usr/local/texlive/2019/texmf-dist/tex/latex/txfonts/utxsyb.fd
-File: utxsyb.fd 2000/12/15 v3.1
-)
-LaTeX Font Info:    Trying to load font information for U+txsyc on input line 80.
- (/usr/local/texlive/2019/texmf-dist/tex/latex/txfonts/utxsyc.fd
-File: utxsyc.fd 2000/12/15 v3.1
-)
+
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [1
@@ -359,17 +340,31 @@ LaTeX Font Info:    Font shape `OMS/txr/m/n' in size <10> not available
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [2] [3
-
-]
+ [2]
 LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
 (Font)              scaled to size 8.32214pt on input line 154.
 LaTeX Font Info:    Font shape `JY2/mc/m/n' will be
 (Font)              scaled to size 8.32214pt on input line 154.
-
+LaTeX Font Info:    Font shape `JY2/mc/m/n' will be
+(Font)              scaled to size 6.47278pt on input line 156.
+LaTeX Font Info:    Font shape `JY2/mc/m/n' will be
+(Font)              scaled to size 4.62341pt on input line 156.
+LaTeX Font Info:    Trying to load font information for U+txmia on input line 156.
+ (/usr/local/texlive/2019/texmf-dist/tex/latex/txfonts/utxmia.fd
+File: utxmia.fd 2000/12/15 v3.1
+)
+LaTeX Font Info:    Trying to load font information for U+txsya on input line 156.
+ (/usr/local/texlive/2019/texmf-dist/tex/latex/txfonts/utxsya.fd
+File: utxsya.fd 2000/12/15 v3.1
+)
+LaTeX Font Info:    Trying to load font information for U+txsyb on input line 156.
+ (/usr/local/texlive/2019/texmf-dist/tex/latex/txfonts/utxsyb.fd
+File: utxsyb.fd 2000/12/15 v3.1
+)
+LaTeX Font Info:    Trying to load font information for U+txsyc on input line 156.
+ (/usr/local/texlive/2019/texmf-dist/tex/latex/txfonts/utxsyc.fd
+File: utxsyc.fd 2000/12/15 v3.1
+)
 Overfull \hbox (3.76826pt too wide) in paragraph at lines 160--163
 [][][][]| 
  []
@@ -446,7 +441,7 @@ Overfull \hbox (36.54268pt too wide) in paragraph at lines 304--308
 [][][][]| 
  []
 
-[4]
+[3]
 Overfull \hbox (19.19606pt too wide) in paragraph at lines 352--354
 [][][][]| 
  []
@@ -461,7 +456,7 @@ Overfull \hbox (8.44289pt too wide) in paragraph at lines 402--404
 [][][][]| 
  []
 
-[5
+[4
 
 
 ]
@@ -470,12 +465,12 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [6
+ [5
 
 ]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [7] [8]
+ [6] [7]
 
 LaTeX Warning: No positions in optional float specifier.
                Default added (so using `tbp') on input line 751.
@@ -490,7 +485,7 @@ Underfull \hbox (badness 5077) in paragraph at lines 775--776
 []\JY2/mc/m/n/10 「 商船三井 プレスリリ ース \OT1/txr/m/n/10 2019 \JY2/mc/m/n/10 年 」
  []
 
-[9] (./takeda.aux) ) 
+[8] (./takeda.aux) ) 
 Here is how much of TeX's memory you used:
  3073 strings out of 492752
  36122 string characters out of 6140168
@@ -498,6 +493,6 @@ Here is how much of TeX's memory you used:
  7492 multiletter control sequences out of 15000+600000
  24512 words of font info for 93 fonts, out of 8000000 for 9000
  934 hyphenation exceptions out of 8191
- 30i,20n,25p,1659b,380s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 30i,20n,25p,1401b,380s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on takeda.dvi (9 pages, 57556 bytes).
+Output written on takeda.dvi (8 pages, 55348 bytes).
