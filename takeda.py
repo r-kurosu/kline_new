@@ -221,7 +221,8 @@ def main():
     HoldFile = "data/hold.csv"
     MainLampFile = "data/mainlamp.csv"
     BackMainLampFile = "data/back_mainlamp.csv"
-    AfrMainLampFile = "data/afr_mainlamp.csv"
+    # AfrMainLampFile = "data/afr_mainlamp.csv"
+    AfrMainLampFile = "data/new_road_restriction.csv"
     StressFile = "data/stress_mainlamp.csv"
     Gang2File = "data/gangnum_2.csv"
     Gang3File = "data/gangnum_3.csv"
@@ -506,22 +507,22 @@ def main():
                 GAP_SP.addConstr(
                     Z2_i1i2t[i1, i2, t] >= Y_dis_i1i2t[i1, i2, t] + Y_keep_i1i2t[i1, i2, t] - 1)
 
-    # 目的関数3の制約
-    for t in T:
-        GAP_SP.addConstrs(M_it[i, t] >= - Stress[i] + (gp.quicksum(V_ij[i, j] * A[j]
-                                                                   for j in J_t_keep[t]) / B[i]) for i in I)
+    # # 目的関数3の制約
+    # for t in T:
+    #     GAP_SP.addConstrs(M_it[i, t] >= - Stress[i] + (gp.quicksum(V_ij[i, j] * A[j]
+    #                                                                for j in J_t_keep[t]) / B[i]) for i in I)
 
-        for i1 in I:
+    #     for i1 in I:
 
-            I_primetmp = []
-            for k in Ml_Load.iloc[i1, :]:
-                I_primetmp.append(k)
+    #         I_primetmp = []
+    #         for k in Ml_Load.iloc[i1, :]:
+    #             I_primetmp.append(k)
 
-            I_prime = [x for x in I_primetmp if str(x) != 'nan']
-            I_prime.pop(0)
+    #         I_prime = [x for x in I_primetmp if str(x) != 'nan']
+    #         I_prime.pop(0)
 
-            GAP_SP.addConstrs(M_ijt[i1, j, t] >= V_ij[i1, j] *
-                              gp.quicksum(M_it[i2, t] for i2 in I_prime) for j in J_ld[t])
+    #         GAP_SP.addConstrs(M_ijt[i1, j, t] >= V_ij[i1, j] *
+    #                           gp.quicksum(M_it[i2, t] for i2 in I_prime) for j in J_ld[t])
 
     # 目的関数4の制約
     for t in check_point:
