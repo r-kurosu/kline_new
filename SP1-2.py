@@ -334,7 +334,7 @@ def main():
 
     # Gurobiパラメータ設定
     GAP_SP = gp.Model()
-    GAP_SP.setParam("TimeLimit", 86400)
+    GAP_SP.setParam("TimeLimit", 3600)
     GAP_SP.setParam("MIPFocus", 1)
     GAP_SP.setParam("LPMethod", 1)
     GAP_SP.printStats()
@@ -783,7 +783,7 @@ def main():
     c_list.append("LPORT")
     c_list.append("DPORT")
     c_list.append("Cost")
-    booking_name = BookingFile.split(".")[0]
+    booking_name = BookingFile.split("/")[1].split(".")[0]
     assignment_result_name = "result/"+booking_name+"_assignment.xlsx"
     leftRT_result_name = "result/"+booking_name+"_leftRT.xlsx"
     assign_data = pd.DataFrame(assign, columns=c_list)
