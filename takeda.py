@@ -351,62 +351,81 @@ def main():
 
     Z_it1t2 = np.zeros((len(I), len(L), len(D)), dtype=np.int)
 
-    OBJ1 = gp.quicksum(
-        w1 * penal1_z * Z_it1t2[i, t1, t2] for i in I for t1 in L for t2 in D)
+    # OBJ1 = gp.quicksum(
+    #     w1 * penal1_z * Z_it1t2[i, t1, t2] for i in I for t1 in L for t2 in D)
+
+    OBJ1 = np.sum(Z_it1t2)*w1*penal1_z
 
     # 目的関数2
     # Y_load_i1i2t:港tにおいてホールドペア(i1,i2)で積む注文があるなら1
-    Y_load_i1i2t = GAP_SP.addVars(I, I, L, vtype=gp.GRB.BINARY)
+    # Y_load_i1i2t = GAP_SP.addVars(I, I, L, vtype=gp.GRB.BINARY)
+
+    Y_load_i1i2t = np.zeros((len(I), len(I), len(L)), dtype=np.int)
 
     # Y_keep_i1i2t:港tにおいてホールドペア(i1,i2)を通過する注文があるなら1
-    Y_keep_i1i2t = GAP_SP.addVars(I, I, T, vtype=gp.GRB.BINARY)
+    # Y_keep_i1i2t = GAP_SP.addVars(I, I, T, vtype=gp.GRB.BINARY)
+    Y_keep_i1i2t = np.zeros((len(I), len(I), len(T)), dtype=np.int)
 
     # Y_dis_i1i2t:港tにおいてホールドペア(i1,i2)で揚げる注文があるなら1
-    Y_dis_i1i2t = GAP_SP.addVars(I, I, D, vtype=gp.GRB.BINARY)
+    # Y_dis_i1i2t = GAP_SP.addVars(I, I, D, vtype=gp.GRB.BINARY)
+    Y_dis_i1i2t = np.zeros((len(I), len(I), len(D)), dtype=np.int)
 
     # ホールドペア(i1,i2)においてtで注文を積む際に既にtで積んだ注文があるときのペナルティ
-    Z1_i1i2t = GAP_SP.addVars(I, I, L, vtype=gp.GRB.BINARY)
+    # Z1_i1i2t = GAP_SP.addVars(I, I, L, vtype=gp.GRB.BINARY)
+    Z1_i1i2t = np.zeros((len(I), len(I), len(L)), dtype=np.int)
 
     # ホールドペア(i1,i2)においてtで注文を揚げる際にtを通過する注文があるときのペナルティ
-    Z2_i1i2t = GAP_SP.addVars(I, I, D, vtype=gp.GRB.BINARY)
+    # Z2_i1i2t = GAP_SP.addVars(I, I, D, vtype=gp.GRB.BINARY)
+    Z2_i1i2t = np.zeros((len(I), len(I), len(D)), dtype=np.int)
 
-    OBJ2_1 = gp.quicksum(
-        penal2_load * Z1_i1i2t[i1, i2, t] for i1 in I for i2 in I for t in L)
-    OBJ2_2 = gp.quicksum(
-        penal2_dis * Z2_i1i2t[i1, i2, t] for i1 in I for i2 in I for t in D)
+    # OBJ2_1 = gp.quicksum(
+    #     penal2_load * Z1_i1i2t[i1, i2, t] for i1 in I for i2 in I for t in L)
+    # OBJ2_2 = gp.quicksum(
+    #     penal2_dis * Z2_i1i2t[i1, i2, t] for i1 in I for i2 in I for t in D)
+    OBJ2_1 = np.sum(Z1_i1i2t)*penal2_load
+    OBJ2_2 = np.sun(Z2_i1i2t)*penal2_dis
     OBJ2 = w2 * (OBJ2_1 + OBJ2_2)
 
     # 目的関数3
     # M_it:港tにおいてホールドiが作業効率充填率を超えたら1
-    M_it = GAP_SP.addVars(I, T, vtype=gp.GRB.BINARY)
+    # M_it = GAP_SP.addVars(I, T, vtype=gp.GRB.BINARY)
+    M_it = np.zeros((len(I), len(T)), dtype=np.int)
 
     # M_ijt:港tにおいてホールドiに自動車を積むまでに作業効率充填率を上回ったホールドに自動車を通すペナルティ
-    M_ijt = GAP_SP.addVars(I, J, T, lb=0, vtype=gp.GRB.CONTINUOUS)
+    # M_ijt = GAP_SP.addVars(I, J, T, lb=0, vtype=gp.GRB.CONTINUOUS)
+    M_ijt = np.zeros((len(I), len(J), len(T)), dtype=np.int)
 
-    OBJ3 = gp.quicksum(w3 * M_ijt[i, j, t] for i in I for j in J for t in T)
+    # OBJ3 = gp.quicksum(w3 * M_ijt[i, j, t] for i in I for j in J for t in T)
+    OBJ3 = np.sum(M_ijt)*w3
 
     # 目的関数4 残容量のやつ
     # N_jt:チェックポイントにおけるホールドiの残容量
-    N_it = GAP_SP.addVars(I, check_point, lb=0, vtype=gp.GRB.CONTINUOUS)
+    # N_it = GAP_SP.addVars(I, check_point, lb=0, vtype=gp.GRB.CONTINUOUS)
+    N_it = np.zeros((len(I)), dtype=np.int)
 
-    OBJ4 = gp.quicksum(w4 * N_it[i, t] * RT_benefit[i]
-                       for i in I for t in check_point)
+    # OBJ4 = gp.quicksum(w4 * N_it[i, t] * RT_benefit[i]
+    #                    for i in I for t in check_point)
+    OBJ4 = np.sum(N_it)*w4
 
     # 目的関数5 デッドスペース，たぶん
     # K1_it:lampで繋がっている次ホールドが充填率75%を上回ったら1、そうでなければ0
-    K1_it = GAP_SP.addVars(I_lamp, L, vtype=gp.GRB.BINARY)
+    # K1_it = GAP_SP.addVars(I_lamp, L, vtype=gp.GRB.BINARY)
+    K1_it = np.zeros((len(I_lamp)), dtype=np.int)
 
     # K2_it:ホールドiが1RT以上のスペースがあったら1、そうでなければ0
-    K2_it = GAP_SP.addVars(I, L, lb=0, vtype=gp.GRB.BINARY)
+    # K2_it = GAP_SP.addVars(I, L, lb=0, vtype=gp.GRB.BINARY)
+    K2_it = np.zeros((len(I), len(L)), dtype=np.int)
 
     # K3_it:目的関数5のペナルティ
-    K3_it = GAP_SP.addVars(I_lamp, L, lb=0, vtype=gp.GRB.CONTINUOUS)
+    # K3_it = GAP_SP.addVars(I_lamp, L, lb=0, vtype=gp.GRB.CONTINUOUS)
+    K3_it = np.zeros((len(I_lamp), len(L)), dtype=np.int)
 
-    OBJ5 = gp.quicksum(w5 * penal5_k * K3_it[i, t] for i in I_lamp for t in L)
+    # OBJ5 = gp.quicksum(w5 * penal5_k * K3_it[i, t] for i in I_lamp for t in L)
+    OBJ5 = np.sum(K3_it)*w5*penal5_k
 
     # 目的関数の設計
     OBJ = OBJ1 + OBJ2 + OBJ3 - OBJ4 + OBJ5
-    GAP_SP.setObjective(OBJ, gp.GRB.MINIMIZE)
+    # GAP_SP.setObjective(OBJ, gp.GRB.MINIMIZE)
 
     # モデリング2(制約)
     # ==============================================================================================
