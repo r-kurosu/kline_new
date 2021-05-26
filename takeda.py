@@ -221,8 +221,8 @@ def main():
     HoldFile = "data/hold.csv"
     MainLampFile = "data/mainlamp.csv"
     BackMainLampFile = "data/back_mainlamp.csv"
-    # AfrMainLampFile = "data/afr_mainlamp.csv"
-    AfrMainLampFile = "data/new_road_restriction.csv"
+    AfrMainLampFile = "data/afr_mainlamp.csv"
+    # AfrMainLampFile = "data/new_road_restriction.csv"
     StressFile = "data/stress_mainlamp.csv"
     Gang2File = "data/gangnum_2.csv"
     Gang3File = "data/gangnum_3.csv"
@@ -289,47 +289,6 @@ def main():
         J_lk.append(lk)
         J_ld.append(ld)
 
-    gang_num = np.zeros(len(L))  # 各港のギャング数
-    J_N = 0
-    for t in L:
-        for j in J_t_load[t]:
-            J_N = J_N + U[j]
-        if J_N <= 500:
-            gang_num[t] = 1
-        if J_N > 500 and J_N <= 1000:
-            gang_num[t] = 2
-        if J_N > 1000:
-            gang_num[t] = 3
-
-    """
-    J_large_divide = [] #大きい注文の分割サイズ指定
-    for j in J_large:
-        tmp = []
-        for t in L:
-            if j in J_t_load[t]:
-                p = t
-                if U[j] % gang_num[p] == 0:
-                    for k in range(int(gang_num[p])):
-                        tmp.append(int(U[j] / gang_num[p]))
-                    J_large_divide.append(tmp)
-                if U[j] % gang_num[p] == 1:
-                    num = int(U[j] / gang_num[p])
-                    tmp_num = U[j]
-                    while tmp_num > num + 1:
-                        tmp.append(num)
-                        tmp_num = tmp_num - num
-                    tmp.append(tmp_num)
-                    J_large_divide.append(tmp)
-                if U[j] % gang_num[p] == 2:
-                   num = int(U[j] / gang_num[p]) + 1
-                   tmp_num = U[j]
-                   while tmp_num > num:
-                       tmp.append(num)
-                       tmp_num = tmp_num - num
-                   tmp.append(tmp_num)
-                   J_large_divide.append(tmp)
-    """
-
     # モデリング1(定数・変数の設定)
     # ==============================================================================================
 
@@ -363,24 +322,34 @@ def main():
 
     # 最適化変数
     # V_ij:注文jをホールドiにk(kはUnit数)台割り当てる
-    V_ij = {}
-    for i in I:
-        for j in J:
-            V_ij[i, j] = GAP_SP.addVar(
-                lb=0, ub=U[j], vtype=gp.GRB.INTEGER, name=f"V_ij({i},{j})")
+    # V_ij = {}
+    # for i in I:
+    #     for j in J:
+    #         V_ij[i, j] = GAP_SP.addVar(
+    #             lb=0, ub=U[j], vtype=gp.GRB.INTEGER, name=f"V_ij({i},{j})")
+
+    V_ij = np.zeros((len(I), len(J)), dtype=np.int)
 
     # 目的関数1
     # X_ij:注文jをホールドiに割り当てるなら1、そうでなければ0
-    X_ij = GAP_SP.addVars(I, J, vtype=gp.GRB.BINARY)
+    # X_ij = GAP_SP.addVars(I, J, vtype=gp.GRB.BINARY)
+
+    X_ij = np.zeros((len(I), len(J)), dtype=np.int)
 
     # Y_keep_it:港tにおいてホールドiを通過する注文があるなら1、そうでなければ0
-    Y_keep_it = GAP_SP.addVars(I, T, vtype=gp.GRB.BINARY)
+    # Y_keep_it = GAP_SP.addVars(I, T, vtype=gp.GRB.BINARY)
+
+    Y_keep_it = np.zeros((len(I), len(T)))
 
     # Y_it1t2:ホールドiにおいてt1で積んでt2で降ろす注文があるなら1、そうでなければ0
-    Y_it1t2 = GAP_SP.addVars(I, T, T, vtype=gp.GRB.BINARY)
+    # Y_it1t2 = GAP_SP.addVars(I, T, T, vtype=gp.GRB.BINARY)
+
+    Y_it1t2 = np.zeros((len(I), len(T), len(T)), dtype=np.int)
 
     # Z_it1t2:ホールドiにおいてt2を通過する注文があるとき異なる乗せ港t1の数分のペナルティ
-    Z_it1t2 = GAP_SP.addVars(I, L, D, vtype=gp.GRB.BINARY)
+    # Z_it1t2 = GAP_SP.addVars(I, L, D, vtype=gp.GRB.BINARY)
+
+    Z_it1t2 = np.zeros((len(I), len(L), len(D)), dtype=np.int)
 
     OBJ1 = gp.quicksum(
         w1 * penal1_z * Z_it1t2[i, t1, t2] for i in I for t1 in L for t2 in D)
@@ -508,28 +477,28 @@ def main():
                     Z2_i1i2t[i1, i2, t] >= Y_dis_i1i2t[i1, i2, t] + Y_keep_i1i2t[i1, i2, t] - 1)
 
     # # 目的関数3の制約
-    # for t in T:
-    #     GAP_SP.addConstrs(M_it[i, t] >= - Stress[i] + (gp.quicksum(V_ij[i, j] * A[j]
-    #                                                                for j in J_t_keep[t]) / B[i]) for i in I)
+    for t in T:
+        GAP_SP.addConstrs(M_it[i, t] >= - Stress[i] + (gp.quicksum(V_ij[i, j] * A[j]
+                                                                   for j in J_t_keep[t]) / B[i]) for i in I)
 
-    #     for i1 in I:
+        for i1 in I:
 
-    #         I_primetmp = []
-    #         for k in Ml_Load.iloc[i1, :]:
-    #             I_primetmp.append(k)
+            I_primetmp = []
+            for k in Ml_Load.iloc[i1, :]:
+                I_primetmp.append(k)
 
-    #         I_prime = [x for x in I_primetmp if str(x) != 'nan']
-    #         I_prime.pop(0)
+            I_prime = [x for x in I_primetmp if str(x) != 'nan']
+            I_prime.pop(0)
 
-    #         GAP_SP.addConstrs(M_ijt[i1, j, t] >= V_ij[i1, j] *
-    #                           gp.quicksum(M_it[i2, t] for i2 in I_prime) for j in J_ld[t])
+            GAP_SP.addConstrs(M_ijt[i1, j, t] >= V_ij[i1, j] *
+                              gp.quicksum(M_it[i2, t] for i2 in I_prime) for j in J_ld[t])
 
-    # 目的関数4の制約
+    # 目的関数4の制約 残容量
     for t in check_point:
         GAP_SP.addConstrs(
             N_it[i, t] <= B[i] - gp.quicksum(V_ij[i, j] * A[j] for j in J_lk[t]) for i in I)
 
-    # 目的関数5の制約
+    # 目的関数5の制約 デッドスペース
     GAP_SP.addConstrs(K1_it[i, t] >= - 0.75 + gp.quicksum(V_ij[i, j] * A[j]
                                                           for j in J_lk[t]) / B[i] for i in I_lamp for t in L)
     GAP_SP.addConstrs(K2_it[i, t] >= 1 - (gp.quicksum(V_ij[i, j] * A[j]
@@ -567,8 +536,8 @@ def main():
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     # 港を通過する荷物が移動の邪魔をしない
-    for t in T:
-        for i1 in I:
+    for t in T:  # 港
+        for i1 in I:  # ホールド
 
             I_primetmp = []
             Frtmp = []
@@ -611,36 +580,6 @@ def main():
             delta_s[i] * G[j] * V_ij[i, j] for j in J_lk[t] for i in I) <= max_s)
         GAP_SP.addConstr(gp.quicksum(
             delta_s[i] * G[j] * V_ij[i, j] for j in J_lk[t] for i in I) >= min_s)
-
-    # 特殊制約4(ギャングの制約)
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    """
-    count = 0
-    for t in L:
-       gang = gang_num[count] 
-       
-       if gang == 2:
-           gang_low = GANG2[0]
-           gang_high = GANG2[1]
-            
-           # ギャングの担当領域毎に均等に注文を分ける
-           GAP_SP.addConstr(gp.quicksum(V_ij[i1,j] for i1 in gang_low for j in J_t_load[t]) - gp.quicksum(V_ij[i2,j] for i2 in gang_high for j in J_t_load[t]) <= 100)
-           GAP_SP.addConstr(gp.quicksum(V_ij[i1,j] for i1 in gang_low for j in J_t_load[t]) - gp.quicksum(V_ij[i2,j] for i2 in gang_high for j in J_t_load[t]) >= -100)
-              
-       if gang == 3:
-           gang_low = GANG3[0]
-           gang_mid = GANG3[1]
-           gang_high = GANG3[2]
-           
-           # ギャングの担当領域毎に均等に注文を分ける
-           GAP_SP.addConstr(gp.quicksum(V_ij[i1,j] for i1 in gang_low for j in J_t_load[t]) - gp.quicksum(V_ij[i2,j] for i2 in gang_mid for j in J_t_load[t]) <= 100)
-           GAP_SP.addConstr(gp.quicksum(V_ij[i1,j] for i1 in gang_low for j in J_t_load[t]) - gp.quicksum(V_ij[i2,j] for i2 in gang_mid for j in J_t_load[t]) >= -100)
-           GAP_SP.addConstr(gp.quicksum(V_ij[i1,j] for i1 in gang_low for j in J_t_load[t]) - gp.quicksum(V_ij[i2,j] for i2 in gang_high for j in J_t_load[t]) <= 100)
-           GAP_SP.addConstr(gp.quicksum(V_ij[i1,j] for i1 in gang_low for j in J_t_load[t]) - gp.quicksum(V_ij[i2,j] for i2 in gang_high for j in J_t_load[t]) >= -100)
-           GAP_SP.addConstr(gp.quicksum(V_ij[i1,j] for i1 in gang_mid for j in J_t_load[t]) - gp.quicksum(V_ij[i2,j] for i2 in gang_high for j in J_t_load[t]) <= 100)
-           GAP_SP.addConstr(gp.quicksum(V_ij[i1,j] for i1 in gang_mid for j in J_t_load[t]) - gp.quicksum(V_ij[i2,j] for i2 in gang_high for j in J_t_load[t]) >= -100)
-    """
 
     # 最適化計算
     # ==============================================================================================
