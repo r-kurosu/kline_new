@@ -4,3 +4,5 @@ result/*
 *.o
 a.out
 mip1.log
+
+*.pyc
