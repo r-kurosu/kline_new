@@ -38,7 +38,54 @@ def main():
     # 船体情報の読み込み2
     Ml_Load, Ml_Back, Ml_Afr, Stress, GANG2, GANG3\
         = read_other.Read_other(MainLampFile, BackMainLampFile, AfrMainLampFile, StressFile, Gang2File, Gang3File, Hold_encode)
+    
+    J_t_load = []  # J_t_load:港tで積む注文の集合
+    J_t_keep = []  # J_t_keep:港tを通過する注文の集合
+    J_t_dis = []  # J_t_dis:港tで降ろす注文の集合
+    J_lk = []  # J_lk:J_t_load + J_t_keep
+    J_ld = []  # J_ld:J_t_load + J_t_dis
+    for t in T:
+        J_load = []
+        J_keep = []
+        J_dis = []
+        lk = []
+        ld = []
+        tmp_load = list(Port.iloc[:, 0])
+        tmp_dis = list(Port.iloc[:, 1])
+        N = len(J)
 
+        k = 0
+        for i in L:
+            if k < i:
+                k = i
+
+        count = 0
+        for t_l in tmp_load:
+            if t == t_l:
+                J_load.append(count)
+                lk.append(count)
+                ld.append(count)
+            count = count + 1
+
+        count = 0
+        for t_d in tmp_dis:
+            if t == t_d:
+                J_dis.append(count)
+                ld.append(count)
+            count = count + 1
+
+        for t_k in range(N):
+            if t > tmp_load[t_k] and t < tmp_dis[t_k]:
+                J_keep.append(J[t_k])
+                lk.append(t_k)
+
+        J_t_load.append(J_load)
+        J_t_keep.append(J_keep)
+        J_t_dis.append(J_dis)
+        J_lk.append(lk)
+        J_ld.append(ld)
+
+        
     def evaluate(assignment_list):
         print("evaluate")
         total_unassigned_space = 0
