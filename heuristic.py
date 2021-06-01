@@ -39,6 +39,9 @@ def main():
     Ml_Load, Ml_Back, Ml_Afr, Stress, GANG2, GANG3\
         = read_other.Read_other(MainLampFile, BackMainLampFile, AfrMainLampFile, StressFile, Gang2File, Gang3File, Hold_encode)
 
+    SEGENT_COUNT = 18
+    HOLD_COUNT = 43
+
     segments = np.array([[1, 0],
                          [2, 3],
                          [4],
@@ -60,7 +63,7 @@ def main():
                         )
     # 分割したホールドで，奥から詰める順番で配列を作成
     each_segments_size = []
-    for i in range(len(segments)):
+    for i in range(SEGENT_COUNT):
         each_segments_size.append([])
         for j in range(len(segments[i])):
             each_segments_size[i].append(B[segments[i][j]])
