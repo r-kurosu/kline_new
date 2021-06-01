@@ -130,7 +130,9 @@ def main():
     SEGMENT_COUNT = 18
     HOLD_COUNT = 43
     ORDER_COUNT = len(J)
-
+    
+    
+    # 分割したホールドで，奥から詰める順番で配列を作成
     segments = np.array([[1, 0],
                          [2, 3],
                          [4],
@@ -150,12 +152,12 @@ def main():
                          [39, 40],
                          [42, 41]]
                         )
-    # 分割したホールドで，奥から詰める順番で配列を作成
-    # each_segments_size = []
-    # for i in range(SEGMENT_COUNT):
-    #     each_segments_size.append([])
-    #     for j in range(len(segments[i])):
-    #         each_segments_size[i].append(B[segments[i][j]])
+    each_segments_size = []
+    for i in range(SEGMENT_COUNT):
+        total_size = 0
+        for j in range(len(segments[i])):
+            total_size += B[segments[i][j]]
+        each_segments_size.append(total_size)
 
     '''
     解の持ち方 3次元配列で持つ
@@ -176,9 +178,8 @@ def main():
     
     for i in range(len(L)):
         randomed_J = random.sample(J_t_load[i], len(J_t_load[i]))
-        for j in randomed_J:
-            randomed_seg = random.randint(0, SEGMENT_COUNT-1)
-            assignment[randomed_seg][i].append(j)
+        for j in range(len(randomed_J)):
+            assignment[j%SEGMENT_COUNT][i].append(randomed_J[j])
     print(assignment)
     
 
