@@ -39,6 +39,8 @@ def main():
     Ml_Load, Ml_Back, Ml_Afr, Stress, GANG2, GANG3\
         = read_other.Read_other(MainLampFile, BackMainLampFile, AfrMainLampFile, StressFile, Gang2File, Gang3File, Hold_encode)
 
+    random.seed(1)
+
     SEGMENT_COUNT = 18
     HOLD_COUNT = 43
 
