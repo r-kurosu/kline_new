@@ -7,7 +7,7 @@ from sklearn.preprocessing import LabelEncoder
 import read_booking
 import read_hold
 import read_other
-
+import random
 import sys
 args = sys.argv
 
@@ -39,7 +39,7 @@ def main():
     Ml_Load, Ml_Back, Ml_Afr, Stress, GANG2, GANG3\
         = read_other.Read_other(MainLampFile, BackMainLampFile, AfrMainLampFile, StressFile, Gang2File, Gang3File, Hold_encode)
 
-    SEGENT_COUNT = 18
+    SEGMENT_COUNT = 18
     HOLD_COUNT = 43
 
     segments = np.array([[1, 0],
@@ -63,12 +63,24 @@ def main():
                         )
     # 分割したホールドで，奥から詰める順番で配列を作成
     each_segments_size = []
-    for i in range(SEGENT_COUNT):
+    for i in range(SEGMENT_COUNT):
         each_segments_size.append([])
         for j in range(len(segments[i])):
             each_segments_size[i].append(B[segments[i][j]])
 
-    print(each_segments_size)
+    # 解の初期化
+    assignment = []
+    # とりあえず空で初期化
+    for i in range(SEGMENT_COUNT):
+        tmp = []
+        assignment.append(tmp)
+
+    # ランダムに挿入
+    randomed_J = random.sample(J, len(J))
+    for j in randomed_J:
+        randomed_seg = random.randint(0, SEGMENT_COUNT-1)
+        assignment[randomed_seg].append(j)
+    print(assignment)
 
 
 if __name__ == "__main__":
