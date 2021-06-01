@@ -39,10 +39,47 @@ def main():
     Ml_Load, Ml_Back, Ml_Afr, Stress, GANG2, GANG3\
         = read_other.Read_other(MainLampFile, BackMainLampFile, AfrMainLampFile, StressFile, Gang2File, Gang3File, Hold_encode)
 
+    def evaluate(assignment_list):
+        print("evaluate")
+        total_unassigned_space = 0
+        for segment_num in range(SEGMENT_COUNT):
+            segment = segments[segment_num]
+            assignment = assignment_list[segment_num]
+            assignment_RT = []
+            assignment_unit = []
+            assignment_total_space = []
+            #assignment_total_space: そのセグメントに割当てられた注文の，台数×サイズ
+            for order in assignment:
+                assignment_RT.append(A[order])
+                assignment_unit.append(int(U[order]))
+                assignment_total_space.append(A[order]*int(U[order]))
+            print(assignment_total_space)
+            #注文情報を揃えた
+            
+            #ホールドに，入る限り注文をたくさんつめこんでいく
+            assignment_size = len(assignment_total_space)
+            assignment_cnt = 0
+            for hold in segment:
+                space_left = B[hold]
+                # 全部詰め切るか，そのホールドに注文をまるごと詰め込めなくなったらwhileを抜ける
+                while (assignment_cnt<assignment_size and assignment_total_space[assignment_cnt] < space_left):
+                    space_left -= assignment_total_space[assignment_cnt]
+                    assignment_total_space[assignment_cnt] = 0
+                    assignment_cnt += 1
+                # まるごとは注文を詰め込めなくても，一部なら可能なら一部を詰め込む
+                if assignment_cnt < assignment_size:
+                    possible_unit_cnt = int(space_left // assignment_RT[assignment_cnt])
+                    assignment_total_space[assignment_cnt] -= assignment_RT[assignment_cnt] * possible_unit_cnt
+            print(assignment_total_space)
+            total_unassigned_space += sum(assignment_total_space)
+            print("--------")
+        return total_unassigned_space
+
     random.seed(1)
 
     SEGMENT_COUNT = 18
     HOLD_COUNT = 43
+    ORDER_COUNT = len(J)
 
     segments = np.array([[1, 0],
                          [2, 3],
@@ -83,6 +120,9 @@ def main():
         randomed_seg = random.randint(0, SEGMENT_COUNT-1)
         assignment[randomed_seg].append(j)
     print(assignment)
+
+    penalty = evaluate(assignment)
+    print(penalty)
 
 
 if __name__ == "__main__":
