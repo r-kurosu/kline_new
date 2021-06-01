@@ -10,6 +10,7 @@ import read_other
 import random
 import sys
 args = sys.argv
+import itertools
 
 warnings.filterwarnings("ignore")
 
@@ -92,6 +93,8 @@ def main():
         for segment_num in range(SEGMENT_COUNT):
             segment = segments[segment_num]
             assignment = assignment_list[segment_num]
+            # 積み港ごとに分かれているものを1次元化
+            assignment = list(itertools.chain.from_iterable(assignment))
             assignment_RT = []
             assignment_unit = []
             assignment_total_space = []
@@ -148,25 +151,36 @@ def main():
                          [42, 41]]
                         )
     # 分割したホールドで，奥から詰める順番で配列を作成
-    each_segments_size = []
-    for i in range(SEGMENT_COUNT):
-        each_segments_size.append([])
-        for j in range(len(segments[i])):
-            each_segments_size[i].append(B[segments[i][j]])
+    # each_segments_size = []
+    # for i in range(SEGMENT_COUNT):
+    #     each_segments_size.append([])
+    #     for j in range(len(segments[i])):
+    #         each_segments_size[i].append(B[segments[i][j]])
 
+    '''
+    解の持ち方 3次元配列で持つ
+    assignment[i]で，セグメントiに割り振られた注文を見れる
+    assignment[i][j]で，セグメントiに割り振られた注文の，なかで，j個目の積み地のものを見れる
+    assignment[i][j][k]で，j個目の港でk個目に積み込む注文を見れる
+    '''
+    
     # 解の初期化
     assignment = []
     # とりあえず空で初期化
     for i in range(SEGMENT_COUNT):
         tmp = []
+        for j in range(len(L)): #積み地の数だけ空配列を追加
+            tmp.append([])
         assignment.append(tmp)
-
-    # ランダムに挿入
-    randomed_J = random.sample(J, len(J))
-    for j in randomed_J:
-        randomed_seg = random.randint(0, SEGMENT_COUNT-1)
-        assignment[randomed_seg].append(j)
+    
+    
+    for i in range(len(L)):
+        randomed_J = random.sample(J_t_load[i], len(J_t_load[i]))
+        for j in randomed_J:
+            randomed_seg = random.randint(0, SEGMENT_COUNT-1)
+            assignment[randomed_seg][i].append(j)
     print(assignment)
+    
 
     penalty = evaluate(assignment)
     print(penalty)
