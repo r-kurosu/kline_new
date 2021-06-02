@@ -34,4 +34,4 @@ def create_shift_neighbor(order_count,segment_count):
         for segment in range(segment_count):
             lis.append([order,segment])
     random.shuffle(lis)
-    return random
+    return lis
