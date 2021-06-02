@@ -45,21 +45,21 @@ def Read_booking(FileName):
     divided_j = []
     divide_dic = []
     divide_df = Booking_df.iloc[0, :]
-
+    SMALL_UNIT = 10
     for j in range(len(Booking_df)):
-        tmp = Booking_df.iloc[j, Booking_df.columns.get_loc('Units')]
-        if 500 < tmp and tmp <= 1000:
-            if tmp % 2 == 0:
-                u_num = [int(tmp / 2), int(tmp / 2)]
-            if tmp % 2 == 1:
-                u_num = [int(tmp / 2) + 1, int(tmp / 2)]
-            concat1 = concat2 = Booking_df.iloc[j, :]
-            concat1["Units"] = u_num[0]
-            concat2["Units"] = u_num[1]
-            divide_df = pd.concat([divide_df, concat1, concat2], axis=1)
-            divided_j.append(j)
-            divide_dic.append([j, tmp])
-
+        unit = Booking_df.iloc[j, Booking_df.columns.get_loc('Units')]
+        if 200 < unit:
+            divied_u_num = int(unit // SMALL_UNIT)
+            if (unit % SMALL_UNIT) != 0:
+                divied_u_num += 1
+            for i in range(divied_u_num):
+                concat = Booking_df.iloc[j, :]
+                concat["Units"] = SMALL_UNIT
+                if (unit % SMALL_UNIT) != 0 and i==(divied_u_num-1):
+                    concat["Units"] = unit % SMALL_UNIT
+                divide_df = pd.concat([divide_df, concat], axis=1)
+                divided_j.append(j)
+                divide_dic.append([j, unit])
     divide_df = divide_df.T
     divide_df = divide_df.drop(divide_df.index[[0]])
 
