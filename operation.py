@@ -27,11 +27,10 @@ def shift(assignment,order_num,next_segment_num,loading_port):
     return assignment
 
 def create_shift_neighbor(order_count,segment_count):
-    print(order_count)
-    print(segment_count)
     lis = []
     for order in range(order_count):
         for segment in range(segment_count):
             lis.append([order,segment])
+            
     random.shuffle(lis)
     return lis

@@ -7,10 +7,12 @@ from sklearn.preprocessing import LabelEncoder
 import read_booking
 import read_hold
 import read_other
+import operation
 import random
 import sys
 args = sys.argv
 import itertools
+import copy
 
 warnings.filterwarnings("ignore")
 
@@ -88,7 +90,7 @@ def main():
 
         
     def evaluate(assignment_list):
-        print("evaluate")
+        # print("evaluate")
         total_unassigned_space = 0
         for segment_num in range(SEGMENT_COUNT):
             segment = segments[segment_num]
@@ -103,7 +105,7 @@ def main():
                 assignment_RT.append(A[order])
                 assignment_unit.append(int(U[order]))
                 assignment_total_space.append(A[order]*int(U[order]))
-            print(assignment_total_space)
+            # print(assignment_total_space)
             #注文情報を揃えた
             
             #ホールドに，入る限り注文をたくさんつめこんでいく
@@ -120,9 +122,9 @@ def main():
                 if assignment_cnt < assignment_size:
                     possible_unit_cnt = int(space_left // assignment_RT[assignment_cnt])
                     assignment_total_space[assignment_cnt] -= assignment_RT[assignment_cnt] * possible_unit_cnt
-            print(assignment_total_space)
+            # print(assignment_total_space)
             total_unassigned_space += sum(assignment_total_space)
-            print("--------")
+            # print("--------")
         return total_unassigned_space
 
     random.seed(1)
@@ -180,11 +182,35 @@ def main():
         randomed_J = random.sample(J_t_load[i], len(J_t_load[i]))
         for j in range(len(randomed_J)):
             assignment[j%SEGMENT_COUNT][i].append(randomed_J[j])
-    print(assignment)
     
-
+    #初期解のペナルティ
     penalty = evaluate(assignment)
     print(penalty)
+    
+    shift_neighbor_list = operation.create_shift_neighbor(ORDER_COUNT,SEGMENT_COUNT)
+    shift_count = 0
+    
+    total_count = 0
+    while(shift_count < len(shift_neighbor_list)):
+        shift_order = shift_neighbor_list[shift_count][0]
+        shift_seg = shift_neighbor_list[shift_count][1]
+        tmp_assignment= operation.shift(assignment,shift_order,shift_seg,operation.find_loading_port(shift_order,J_t_load))
+        tmp_penalty = evaluate(tmp_assignment)
+        total_count += 1
+        if  tmp_penalty <= penalty:
+            print("改善 "+str(tmp_penalty))
+            penalty= tmp_penalty
+            assignment = copy.deepcopy(tmp_assignment)
+            
+            # 探索リストを最初からやり直し
+            shift_count = 0 
+            random.shuffle(shift_neighbor_list)
+        else:
+            shift_count += 1
+    
+
+    print(assignment)
+    print(total_count)
 
 
 if __name__ == "__main__":
