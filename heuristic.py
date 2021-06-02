@@ -41,7 +41,7 @@ def main():
     # 船体情報の読み込み2
     Ml_Load, Ml_Back, Ml_Afr, Stress, GANG2, GANG3\
         = read_other.Read_other(MainLampFile, BackMainLampFile, AfrMainLampFile, StressFile, Gang2File, Gang3File, Hold_encode)
-    
+
     J_t_load = []  # J_t_load:港tで積む注文の集合
     J_t_keep = []  # J_t_keep:港tを通過する注文の集合
     J_t_dis = []  # J_t_dis:港tで降ろす注文の集合
@@ -190,27 +190,24 @@ def main():
     shift_neighbor_list = operation.create_shift_neighbor(ORDER_COUNT,SEGMENT_COUNT)
     shift_count = 0
     
-    total_count = 0
+
     while(shift_count < len(shift_neighbor_list)):
         shift_order = shift_neighbor_list[shift_count][0]
         shift_seg = shift_neighbor_list[shift_count][1]
         tmp_assignment= operation.shift(assignment,shift_order,shift_seg,operation.find_loading_port(shift_order,J_t_load))
         tmp_penalty = evaluate(tmp_assignment)
-        total_count += 1
         if  tmp_penalty <= penalty:
             print("改善 "+str(tmp_penalty))
             penalty= tmp_penalty
             assignment = copy.deepcopy(tmp_assignment)
-            
             # 探索リストを最初からやり直し
             shift_count = 0 
             random.shuffle(shift_neighbor_list)
         else:
             shift_count += 1
-    
+
 
     print(assignment)
-    print(total_count)
 
 
 if __name__ == "__main__":
