@@ -91,6 +91,7 @@ def main():
         
     def assign_to_hold(assignment_list):
         hold_assignment = []
+        unloaded_orders = []
         # tmp = 0
         for segment_num in range(SEGMENT_COUNT):
             segment = segments[segment_num]
@@ -135,6 +136,12 @@ def main():
                 hold_assignment.append(assignment_in_hold)
             # tmp += sum(assignment_unit)
             
+            # 積み残しを出力する
+            for index in range(len(assignment_unit)):
+                if assignment_unit[index] > 0:
+                    unloaded_orders.append([assignment[index],assignment_unit[index]])
+        
+            
         """
         返り値は，2次元の配列
         hold_assignment[i]で，ホールドiに割り当てられる注文の情報の配列を取得できる
@@ -142,8 +149,15 @@ def main():
         配列の0番目が，注文の番号 
         配列の1番目が，割り当てる台数
         """
-        return hold_assignment
-
+        return hold_assignment,unloaded_orders
+    
+    def evaluate(assignment_hold,unloaded_orders):
+        total_unloaded_unit = 0
+        for order in unloaded_orders:
+            total_unloaded_unit += order[1]
+        return total_unloaded_unit
+        
+    """
     def evaluate(assignment_list):
         # print("evaluate")
         total_unassigned_space = 0
@@ -181,6 +195,7 @@ def main():
             total_unassigned_space += sum(assignment_total_space)
             # print("--------")
         return total_unassigned_space
+    """
 
     random.seed(1)
 
@@ -239,13 +254,9 @@ def main():
             assignment[j%SEGMENT_COUNT][i].append(randomed_J[j])
     
     #初期解を，ホールドに割当
-    assign_to_hold(assignment)
-
-    return
-    
+    assignment_hold,unloaded_orders = assign_to_hold(assignment)    
     #初期解のペナルティ
-    penalty = evaluate(assignment)
-    print(penalty)
+    penalty = evaluate(assignment_hold,unloaded_orders)
     
     shift_neighbor_list = operation.create_shift_neighbor(ORDER_COUNT,SEGMENT_COUNT)
     shift_count = 0
@@ -255,7 +266,8 @@ def main():
         shift_order = shift_neighbor_list[shift_count][0]
         shift_seg = shift_neighbor_list[shift_count][1]
         tmp_assignment= operation.shift(assignment,shift_order,shift_seg,operation.find_loading_port(shift_order,J_t_load))
-        tmp_penalty = evaluate(tmp_assignment)
+        assignment_hold,unloaded_orders = assign_to_hold(tmp_assignment)
+        tmp_penalty = evaluate(assignment_hold,unloaded_orders)
         if  tmp_penalty <= penalty:
             print("改善 "+str(tmp_penalty))
             penalty= tmp_penalty
