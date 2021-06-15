@@ -27,7 +27,25 @@ def shift(assignment,order_num,next_segment_num,loading_port):
     return assignment
 
 def swap(assignment,order1_num,order2_num,loading_port):
-    return
+    order1_current_seg_num = -1
+    order2_current_seg_num = -1
+    #どのセグメントに入っているか確認
+    for seg in range(len(assignment)):
+        if order1_current_seg_num != -1 and order2_current_seg_num != -1:
+            break
+        if order1_num in assignment[seg][loading_port]:
+            order1_current_seg_num = seg
+            order1_idx = assignment[seg][loading_port].index(order1_num)
+        if order2_num in assignment[seg][loading_port]:
+            order2_current_seg_num = seg
+            order2_idx = assignment[seg][loading_port].index(order2_num)
+    if order1_current_seg_num == order2_current_seg_num:
+        return assignment
+    
+    # swap
+    assignment[order1_current_seg_num][loading_port][order1_idx] = order2_num
+    assignment[order2_current_seg_num][loading_port][order2_idx] = order1_num
+    return assignment
 
 def create_shift_neighbor(order_count,segment_count):
     lis = []
