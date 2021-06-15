@@ -26,6 +26,9 @@ def shift(assignment,order_num,next_segment_num,loading_port):
     assignment[next_segment_num][loading_port].insert(random_order,order_num)
     return assignment
 
+def swap(assignment,order1_num,order2_num,loading_port):
+    return
+
 def create_shift_neighbor(order_count,segment_count):
     lis = []
     for order in range(order_count):
@@ -33,4 +36,16 @@ def create_shift_neighbor(order_count,segment_count):
             lis.append([order,segment])
             
     random.shuffle(lis)
+    return lis
+
+def create_swap_neighbor(J_t_load):
+    lis = []
+    for orders in J_t_load:
+        if orders != []:
+            order_count = len(orders)
+            print(order_count)
+            for order1 in orders:
+                for order2 in orders:
+                    if order1 != order2:
+                        lis.append([order1,order2])
     return lis
