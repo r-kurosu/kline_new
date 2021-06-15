@@ -66,4 +66,5 @@ def create_swap_neighbor(J_t_load):
                 for order2 in orders:
                     if order1 != order2:
                         lis.append([order1,order2])
+    random.shuffle(lis)
     return lis
