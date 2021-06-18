@@ -91,8 +91,10 @@ def main():
         
     def assign_to_hold(assignment_list):
         hold_assignment = []
+        for i in range(HOLD_COUNT):
+            hold_assignment.append(0)
         unloaded_orders = []
-        # tmp = 0
+        tmp = 0
         for segment_num in range(SEGMENT_COUNT):
             segment = segments[segment_num]
             assignment = assignment_list[segment_num]
@@ -109,7 +111,7 @@ def main():
                 assignment_RT.append(A[order])
                 assignment_unit.append(int(U[order]))
                 assignment_total_space.append(A[order]*int(U[order]))
-            
+            # tmp += sum(assignment_unit)
             assignment_size = len(assignment)
             assignment_cnt = 0
             for hold in segment:
@@ -124,7 +126,6 @@ def main():
                     assignment_unit[assignment_cnt] = 0
                     assignment_cnt += 1
                     
-
                 # まるごとは注文を詰め込めなくても，一部なら可能なら一部を詰め込む
                 if assignment_cnt < assignment_size:
                     possible_unit_cnt = int(space_left // assignment_RT[assignment_cnt])
@@ -133,15 +134,15 @@ def main():
                     assignment_unit[assignment_cnt] -= possible_unit_cnt
                     # tmp += possible_unit_cnt
                 
-                hold_assignment.append(assignment_in_hold)
+                hold_assignment[hold] = assignment_in_hold
             # tmp += sum(assignment_unit)
+            # print("-----")
             
             # 積み残しを出力する
             for index in range(len(assignment_unit)):
                 if assignment_unit[index] > 0:
                     unloaded_orders.append([assignment[index],assignment_unit[index]])
-        
-            
+
         """
         返り値は，2次元の配列
         hold_assignment[i]で，ホールドiに割り当てられる注文の情報の配列を取得できる
@@ -149,13 +150,23 @@ def main():
         配列の0番目が，注文の番号 
         配列の1番目が，割り当てる台数
         """
+        # print(tmp)
         return hold_assignment,unloaded_orders
     
     def evaluate(assignment_hold,unloaded_orders):
+        total_left_RT = 0
+        for hold_num in range(HOLD_COUNT):
+            assignment = assignment_hold[hold_num]
+            left_RT = B[hold_num]
+            for order in assignment:
+                left_RT -= A[order[0]]*order[1]
+            total_left_RT += left_RT
+        
         total_unloaded_unit = 0
         for order in unloaded_orders:
             total_unloaded_unit += order[1]
-        return total_unloaded_unit
+        # print(total_unloaded_unit)
+        return total_left_RT
         
     """
     def evaluate(assignment_list):
@@ -256,6 +267,9 @@ def main():
     #初期解を，ホールドに割当
     assignment_hold,unloaded_orders = assign_to_hold(assignment)    
     #初期解のペナルティ
+    for item in assignment_hold:
+        print(item)
+    
     penalty = evaluate(assignment_hold,unloaded_orders)
     
     shift_neighbor_list = operation.create_shift_neighbor(ORDER_COUNT,SEGMENT_COUNT)
@@ -285,7 +299,7 @@ def main():
                 
         total_improve = 0
 
-        while(swap_count < len(shift_neighbor_list)):
+        while(swap_count < len(swap_neighbor_list)):
             swap_order1 = swap_neighbor_list[swap_count][0]
             swap_order2 = swap_neighbor_list[swap_count][1]
             tmp_assignment = operation.swap(assignment,swap_order1,swap_order2,operation.find_loading_port(swap_order1,J_t_load))
@@ -303,9 +317,7 @@ def main():
                 swap_count += 1
 
 
-    print(assignment)
-    
-
-
+    for assign in assign_to_hold(assignment)[0]:
+        print(assign)
 if __name__ == "__main__":
     main()
