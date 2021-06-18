@@ -151,9 +151,9 @@ def main():
         配列の1番目が，割り当てる台数
         """
         # print(tmp)
-        return hold_assignment
+        return hold_assignment,unloaded_orders
     
-    def evaluate(assignment_hold):
+    def evaluate(assignment_hold,unloaded_orders):
         total_left_RT = 0
         for hold_num in range(HOLD_COUNT):
             assignment = assignment_hold[hold_num]
@@ -161,7 +161,10 @@ def main():
             for order in assignment:
                 left_RT -= A[order[0]]*order[1]
             total_left_RT += left_RT
-        return total_left_RT
+        unloaded_units = 0
+        for order in unloaded_orders:
+            unloaded_units += order[1]
+        return total_left_RT+unloaded_units
         
     """
     def evaluate(assignment_list):
@@ -258,14 +261,13 @@ def main():
         randomed_J = random.sample(J_t_load[i], len(J_t_load[i]))
         for j in range(len(randomed_J)):
             assignment[j%SEGMENT_COUNT][i].append(randomed_J[j])
-    
+    # for item in assignment:
+    #     print(item)
     #初期解を，ホールドに割当
-    assignment_hold = assign_to_hold(assignment)    
-    #初期解のペナルティ
-    for item in assignment_hold:
-        print(item)
-    
-    penalty = evaluate(assignment_hold)
+    assignment_hold,unloaded_orders = assign_to_hold(assignment)
+
+    #初期解のペナルティ    
+    penalty = evaluate(assignment_hold,unloaded_orders)
     
     shift_neighbor_list = operation.create_shift_neighbor(ORDER_COUNT,SEGMENT_COUNT)
     shift_count = 0
@@ -273,16 +275,38 @@ def main():
     swap_neighbor_list = operation.create_swap_neighbor(J_t_load)
     swap_count = 0
     total_improve = 1
-    
     while total_improve != 0:
-
+        
+        #無理やり全部を詰め込むようにした
+        while(len(unloaded_orders)>0):
+            shift_order = unloaded_orders[random.randint(0,len(unloaded_orders)-1)][0]
+            shift_seg = random.randint(0,SEGMENT_COUNT-1)
+            copied_assignment = copy.deepcopy(assignment)
+            tmp_assignment= operation.shift(copied_assignment,shift_order,shift_seg,operation.find_loading_port(shift_order,J_t_load))
+            assignment_hold,unloaded_orders = assign_to_hold(tmp_assignment)
+            tmp_penalty = evaluate(assignment_hold,unloaded_orders)
+            if  tmp_penalty < penalty:
+                # print("改善 "+str(tmp_penalty))
+                penalty= tmp_penalty
+                assignment = copy.deepcopy(tmp_assignment)
+                # 探索リストを最初からやり直し
+                shift_count = 0 
+                random.shuffle(shift_neighbor_list)
+                print(unloaded_orders)
+        print("超えた！！！！")
+        assignment_hold,unloaded_orders = assign_to_hold(assignment)
+        penalty = evaluate(assignment_hold,unloaded_orders)
+        print(penalty)
+        #ここまで
+            
         while(shift_count < len(shift_neighbor_list)):
             shift_order = shift_neighbor_list[shift_count][0]
             shift_seg = shift_neighbor_list[shift_count][1]
-            tmp_assignment= operation.shift(assignment,shift_order,shift_seg,operation.find_loading_port(shift_order,J_t_load))
-            assignment_hold = assign_to_hold(tmp_assignment)
-            tmp_penalty = evaluate(assignment_hold)
-            if  tmp_penalty <= penalty:
+            copied_assignment = copy.deepcopy(assignment)
+            tmp_assignment= operation.shift(copied_assignment,shift_order,shift_seg,operation.find_loading_port(shift_order,J_t_load))
+            assignment_hold,unloaded_orders = assign_to_hold(tmp_assignment)
+            tmp_penalty = evaluate(assignment_hold,unloaded_orders)
+            if  tmp_penalty < penalty:
                 print("改善 "+str(tmp_penalty))
                 penalty= tmp_penalty
                 assignment = copy.deepcopy(tmp_assignment)
@@ -297,10 +321,11 @@ def main():
         while(swap_count < len(swap_neighbor_list)):
             swap_order1 = swap_neighbor_list[swap_count][0]
             swap_order2 = swap_neighbor_list[swap_count][1]
-            tmp_assignment = operation.swap(assignment,swap_order1,swap_order2,operation.find_loading_port(swap_order1,J_t_load))
-            assignment_hold = assign_to_hold(tmp_assignment)
-            tmp_penalty = evaluate(assignment_hold)
-            if  tmp_penalty <= penalty:
+            copied_assignment = copy.deepcopy(assignment)
+            tmp_assignment = operation.swap(copied_assignment,swap_order1,swap_order2,operation.find_loading_port(swap_order1,J_t_load))
+            assignment_hold,unloaded_orders = assign_to_hold(tmp_assignment)
+            tmp_penalty = evaluate(assignment_hold,unloaded_orders)
+            if  tmp_penalty < penalty:
                 print("改善 "+str(tmp_penalty))
                 penalty= tmp_penalty
                 assignment = copy.deepcopy(tmp_assignment)
@@ -311,8 +336,12 @@ def main():
             else:
                 swap_count += 1
 
-
-    for assign in assign_to_hold(assignment)[0]:
-        print(assign)
+    assignment_hold,unloaded_orders = assign_to_hold(assignment)
+    penalty = evaluate(assignment_hold,unloaded_orders)
+    print(penalty)
+    # for assign in assign_to_hold(assignment)[1]:
+    #     print(assign)
+        
+        
 if __name__ == "__main__":
     main()
