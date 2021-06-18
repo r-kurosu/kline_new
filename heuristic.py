@@ -151,9 +151,9 @@ def main():
         配列の1番目が，割り当てる台数
         """
         # print(tmp)
-        return hold_assignment,unloaded_orders
+        return hold_assignment
     
-    def evaluate(assignment_hold,unloaded_orders):
+    def evaluate(assignment_hold):
         total_left_RT = 0
         for hold_num in range(HOLD_COUNT):
             assignment = assignment_hold[hold_num]
@@ -161,11 +161,6 @@ def main():
             for order in assignment:
                 left_RT -= A[order[0]]*order[1]
             total_left_RT += left_RT
-        
-        total_unloaded_unit = 0
-        for order in unloaded_orders:
-            total_unloaded_unit += order[1]
-        # print(total_unloaded_unit)
         return total_left_RT
         
     """
@@ -265,12 +260,12 @@ def main():
             assignment[j%SEGMENT_COUNT][i].append(randomed_J[j])
     
     #初期解を，ホールドに割当
-    assignment_hold,unloaded_orders = assign_to_hold(assignment)    
+    assignment_hold = assign_to_hold(assignment)    
     #初期解のペナルティ
     for item in assignment_hold:
         print(item)
     
-    penalty = evaluate(assignment_hold,unloaded_orders)
+    penalty = evaluate(assignment_hold)
     
     shift_neighbor_list = operation.create_shift_neighbor(ORDER_COUNT,SEGMENT_COUNT)
     shift_count = 0
@@ -285,8 +280,8 @@ def main():
             shift_order = shift_neighbor_list[shift_count][0]
             shift_seg = shift_neighbor_list[shift_count][1]
             tmp_assignment= operation.shift(assignment,shift_order,shift_seg,operation.find_loading_port(shift_order,J_t_load))
-            assignment_hold,unloaded_orders = assign_to_hold(tmp_assignment)
-            tmp_penalty = evaluate(assignment_hold,unloaded_orders)
+            assignment_hold = assign_to_hold(tmp_assignment)
+            tmp_penalty = evaluate(assignment_hold)
             if  tmp_penalty <= penalty:
                 print("改善 "+str(tmp_penalty))
                 penalty= tmp_penalty
@@ -303,8 +298,8 @@ def main():
             swap_order1 = swap_neighbor_list[swap_count][0]
             swap_order2 = swap_neighbor_list[swap_count][1]
             tmp_assignment = operation.swap(assignment,swap_order1,swap_order2,operation.find_loading_port(swap_order1,J_t_load))
-            assignment_hold,unloaded_orders = assign_to_hold(tmp_assignment)
-            tmp_penalty = evaluate(assignment_hold,unloaded_orders)
+            assignment_hold = assign_to_hold(tmp_assignment)
+            tmp_penalty = evaluate(assignment_hold)
             if  tmp_penalty <= penalty:
                 print("改善 "+str(tmp_penalty))
                 penalty= tmp_penalty
