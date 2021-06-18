@@ -48,7 +48,7 @@ def Read_booking(FileName):
     SMALL_UNIT = 20
     for j in range(len(Booking_df)):
         unit = Booking_df.iloc[j, Booking_df.columns.get_loc('Units')]
-        if 200 < unit:
+        if 80 < unit:
             divied_u_num = int(unit // SMALL_UNIT)
             if (unit % SMALL_UNIT) != 0:
                 divied_u_num += 1
