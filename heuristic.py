@@ -278,25 +278,25 @@ def main():
     while total_improve != 0:
         
         #無理やり全部を詰め込むようにした
-        while(len(unloaded_orders)>0):
-            shift_order = unloaded_orders[random.randint(0,len(unloaded_orders)-1)][0]
-            shift_seg = random.randint(0,SEGMENT_COUNT-1)
-            copied_assignment = copy.deepcopy(assignment)
-            tmp_assignment= operation.shift(copied_assignment,shift_order,shift_seg,operation.find_loading_port(shift_order,J_t_load))
-            assignment_hold,unloaded_orders = assign_to_hold(tmp_assignment)
-            tmp_penalty = evaluate(assignment_hold,unloaded_orders)
-            if  tmp_penalty < penalty:
-                # print("改善 "+str(tmp_penalty))
-                penalty= tmp_penalty
-                assignment = copy.deepcopy(tmp_assignment)
-                # 探索リストを最初からやり直し
-                shift_count = 0 
-                random.shuffle(shift_neighbor_list)
-                print(unloaded_orders)
-        print("超えた！！！！")
-        assignment_hold,unloaded_orders = assign_to_hold(assignment)
-        penalty = evaluate(assignment_hold,unloaded_orders)
-        print(penalty)
+        # while(len(unloaded_orders)>0):
+        #     shift_order = unloaded_orders[random.randint(0,len(unloaded_orders)-1)][0]
+        #     shift_seg = random.randint(0,SEGMENT_COUNT-1)
+        #     copied_assignment = copy.deepcopy(assignment)
+        #     tmp_assignment= operation.shift(copied_assignment,shift_order,shift_seg,operation.find_loading_port(shift_order,J_t_load))
+        #     assignment_hold,unloaded_orders = assign_to_hold(tmp_assignment)
+        #     tmp_penalty = evaluate(assignment_hold,unloaded_orders)
+        #     if  tmp_penalty < penalty:
+        #         # print("改善 "+str(tmp_penalty))
+        #         penalty= tmp_penalty
+        #         assignment = copy.deepcopy(tmp_assignment)
+        #         # 探索リストを最初からやり直し
+        #         shift_count = 0 
+        #         random.shuffle(shift_neighbor_list)
+        #         print(unloaded_orders)
+        # print("超えた！！！！")
+        # assignment_hold,unloaded_orders = assign_to_hold(assignment)
+        # penalty = evaluate(assignment_hold,unloaded_orders)
+        # print(penalty)
         #ここまで
             
         while(shift_count < len(shift_neighbor_list)):

@@ -23,8 +23,8 @@ def shift(assignment,order_num,next_segment_num,loading_port):
     assignment[current_segment_num][loading_port].remove(order_num)
     #新しく挿入
     random_order = random.randint(0,len(assignment[next_segment_num][loading_port]))
-    # assignment[next_segment_num][loading_port].insert(random_order,order_num)
-    assignment[next_segment_num][loading_port].append(order_num)
+    assignment[next_segment_num][loading_port].insert(random_order,order_num)
+    # assignment[next_segment_num][loading_port].append(order_num)
     return assignment
 
 def swap(assignment,order1_num,order2_num,loading_port):
