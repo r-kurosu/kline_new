@@ -1,43 +1,37 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=latex 2019.11.6)  6 MAY 2021 16:08
+This is e-upTeX, Version 3.14159265-p3.8.2-u1.25-190131-2.6 (utf8.uptex) (TeX Live 2019) (preloaded format=uplatex 2019.11.6)  26 JUN 2021 16:57
 entering extended mode
  restricted \write18 enabled.
+ file:line:error style messages enabled.
  %&-line parsing enabled.
 **takeda.tex
 (./takeda.tex
-LaTeX2e <2019-10-01> patch level 1
+pLaTeX2e <2019-10-01u02>+1 (based on LaTeX2e <2019-10-01> patch level 1)
 (/usr/local/texlive/2019/texmf-dist/tex/platex/jsclasses/jsarticle.cls
+Document Class: jsarticle 2019/07/25 jsclasses (okumura, texjporg)
 
-! LaTeX Error: This file needs format `pLaTeX2e'
-               but this is `LaTeX2e'.
+/usr/local/texlive/2019/texmf-dist/tex/platex/jsclasses/jsarticle.cls:236: Class jsarticle Error: You are running upLaTeX.
+(jsarticle)              Please use pLaTeX instead, or add 'uplatex' to
+(jsarticle)              the class option list.
 
-See the LaTeX manual or LaTeX Companion for explanation.
+See the jsarticle class documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.26 \NeedsTeXFormat{pLaTeX2e}
-                              
-? 
-! Emergency stop.
- ...                                              
-                                                  
-l.26 \NeedsTeXFormat{pLaTeX2e}
-                              
-The current input file will not be processed further,
-because it was written for some other flavor of TeX.
-You're in trouble here.  Try typing  <return>  to proceed.
+l.236       {\@ehc}
+                   
+Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
- 
-Here is how much of TeX's memory you used:
- 15 strings out of 492168
- 574 string characters out of 6125415
- 59650 words of memory out of 5000000
- 4472 multiletter control sequences out of 15000+600000
- 3640 words of font info for 14 fonts, out of 8000000 for 9000
- 1141 hyphenation exceptions out of 8191
- 14i,0n,9p,72b,14s stack positions out of 5000i,500n,10000p,200000b,80000s
-No pages of output.
-ld'
+\jsc@mpt=\dimen118
+\jsc@mmm=\dimen119
+\jsc@smallskipamount=\skip41
+LaTeX Info: Redefining \rmfamily on input line 466.
+LaTeX Info: Redefining \sffamily on input line 469.
+LaTeX Info: Redefining \ttfamily on input line 472.
+LaTeX Info: Redefining \textmc on input line 476.
+LaTeX Info: Redefining \textgt on input line 478.
+\symmincho=\mathgroup4
+LaTeX Font Info:    Overwriting symbol font `mincho' in version `bold'
 (Font)                  JY2/mc/m/n --> JY2/gt/m/n on input line 540.
 LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
 (Font)              scaled to size 9.24683pt on input line 731.
@@ -476,29 +470,37 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 ]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [6] [7]
+ [6]
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `tbp') on input line 751.
+ [7]
+File: segment.png Graphic file (type bmp)
+<segment.png>
 
-
-Overfull \hbox (243.01073pt too wide) in paragraph at lines 754--764
-[][][][] 
- []
-
-
-Underfull \hbox (badness 5077) in paragraph at lines 775--776
+Underfull \hbox (badness 5077) in paragraph at lines 767--768
 []\JY2/mc/m/n/10 「 商船三井 プレスリリ ース \OT1/txr/m/n/10 2019 \JY2/mc/m/n/10 年 」
  []
 
-[8] (./takeda.aux) ) 
+[8]
+
+LaTeX Warning: No positions in optional float specifier.
+               Default added (so using `tbp') on input line 775.
+
+
+Overfull \hbox (243.01073pt too wide) in paragraph at lines 778--788
+[][][][] 
+ []
+
+[9
+
+] (./takeda.aux) ) 
 Here is how much of TeX's memory you used:
- 3073 strings out of 492752
- 36122 string characters out of 6140168
+ 3081 strings out of 492752
+ 36234 string characters out of 6140168
  124904 words of memory out of 5000000
- 7492 multiletter control sequences out of 15000+600000
+ 7496 multiletter control sequences out of 15000+600000
  24512 words of font info for 93 fonts, out of 8000000 for 9000
  934 hyphenation exceptions out of 8191
  30i,20n,25p,1401b,380s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on takeda.dvi (8 pages, 55348 bytes).
+Output written on takeda.dvi (9 pages, 56796 bytes).

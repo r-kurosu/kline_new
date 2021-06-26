@@ -60,7 +60,7 @@
 
 \vspace{2mm}
  {\Large 竹田 陽} \\
- 2021年5月7日
+ 2021年7月9日
 \vspace{1mm}
 
 \end{center}
@@ -68,7 +68,7 @@
  {\bf Abstract.}
  Our research considers the situation in which cars are transported to several ports of various countries by a carrier ship for cars. Two stages of work called stowage planning and simulation planning are performed before loading a collection of cars onto a PCC (pure car carrier, PCC). The stowage planning stage considers assigning cars to one of the areas called holds, a few of which compose each level of the ship. The simulation planning stage places the cars assigned to each area in the stowage planning one by one considering the orientation of cars.
  In our research, as the first step of fully automating the stowage planning and simulation planning, the goal is to output stowage plans efficiently with a computer using mathematical optimization technology.
-We compared the computation time of the proposed model with and without the height constraint and investigated the size of instances that we can solve in a limited time.
+ We confirmed that we can get a good solution for small bookings. We also propose heuristic model to solve large bookings.
 \end{quote}
 \vspace{6mm}
 ]
@@ -700,53 +700,77 @@ $b_{i}$ &
 
 
 \section{計算実験}
-\subsection{高さ制約を考慮した場合の計算実験}
 鵜川らによる研究の数理モデルでは自動車の注文数や積み地や揚げ地の数の増加とともに制約や組合せが急速に増加してしまい，指定された時間内では十分に計算が進まない可能性が指摘されている.\cite{ukawa}
-本研究では，まず船内のホールドの高さ制約を加えたモデルと加えていないモデルで計算実験を行い，比較を行う．
+
+\subsection{解くことのできる問題例の規模}
+注文数や港の数を変更した問題例をいくつか準備し，どの程度の規模の問題例ならばある程度の時間内で解けるのか調査を行った．
 実験に用いるプログラムは Pythonを用いて実装し, 計算機はPowerEdge T320 (CPU: Intel(R) Xeon(R) CPU E5-1410 v2 (2.80 GHz, 10 M cache), RAM: 96 GB) を使用した. また，整数計画ソルバーとしてGurobi Optimizer (ver 9.0.0) を使用した.
 
-実験では総積載量 7500 RT の 12 階構造の船を対象とした.  また, 実験に用いた注文データは積み地が 2, 揚げ地が 3 の注文数が109の注文データである. 高さ制約に関しては，3種類の高さ(低，中，高)をそれぞれの注文に付与した．この注文データに対する整数計画ソルバーの計算結果を表\ref{withoutHeight} と表\ref{Height}に示す. 表には, 暫定値が更新された時刻と, その時の暫定値および下界値を示す.
+表\ref{24hours}に実行可能解が初めて出力された計算時間と，計算を回して1時間後と24時間後の解の精度を示した．
 
-\begin{table}[htbp]
+結果より，注文数が250程度，港の数が3,4より少なければ，24時間以内にある程度の解を出力することが確認できた.
+一方で，注文数が350の問題例に関しては，24時間後でも解の探索があまり進まなかった．
+
+実際にはこれ以上の注文数を持つ問題例が多く存在しており，提案したモデルではより大規模な問題例を解くことは難しいと考えられる．
+
+\section{ヒューリスティックモデル}
+より大規模な問題例を現実的な時間で解くために，ヒューリスティックを用いた数理モデルを提案する.
+
+\subsection{ホールドの統合}
+本研究では，ホールドの数が43の運搬船を考えている．
+実オペレーションでは，それぞれのホールドを個別で考えるのではなく，複数のホールドをある程度まとめて考えて作業を行っている．
+そのため，各階においてスロープのついているホールドを境目として，2つのホールドのまとまりとして考える．
+
+複数のホールドを1つのまとまりとして考えると，43のホールドを，17のまとまりに統合することができる．このまとまりをセグメントと呼び，具体的な統合については
+図\ref{fig1}に示す．
+
+\begin{figure}[htbp]
  \centering
- \tabcolsep = 15pt
- \renewcommand{\arraystretch}{0.8}
- \caption{高さ制約なし}
- \label{withoutHeight}
- \begin{tabular}{rrr} \hline
-  計算時間 (秒) & 暫定値 & 下界値 \\ \hline
-  537 &    1035446 & -4461.98 \\
-  933 &    -4285 & -4461.98 \\
-  2510 &    -4301 & -4461.98 \\
-  2973 & -4301 & -4461.98 \\ \hline
- \end{tabular}
-\end{table}
+ \includegraphics[width=0.9\linewidth]{segment.png}
+ \caption{統合後のホールドを色付けしたもの}
+ \label{fig1}
+\end{figure}
+
+\subsection{解の表現方法}
+鵜川らによる研究の数理モデル\cite{ukawa}では，ホールドに注文を何台割り当てる，という連続的な解の表現方法を用いていた．
+ヒューリスティックモデルでは，このような連続的な解表現方法を用いず，注文のセグメントへの割当のみを最適化し，詳細な車両の積載は決め打ちのルールを基に行っていく．
+積載のルールは，ホールドの積載可能量,許容充填率などを満たすように設計を行っていく．
+
+\section{局所探索法}
+局所探索法とは, ある解に少しの変更を加え得た近傍解が元の解よりも良い解である場合に, 変更後の解に移動するという操作を良い解が見つからなくなるまで繰り返す方法である.
+変形を加える操作を近傍操作と呼び, 近傍内に改善解を持たない解を局所最適解と呼ぶ.
+
+\subsection{初期解の生成}
+各セグメントに対して，すべての注文をランダムに割り当てたものを用いる．
+
+\subsection{近傍操作}
+近傍操作には挿入近傍操作と交換近傍操作を用いる.
+
+挿入近傍操作は，セグメントに割り当てられている注文の1つを，ランダムに異なるセグメントに挿入する操作である．
+交換近傍操作は，異なるセグメントに割り当てられている注文を2つランダムに選び，それらを入れ替える操作である．
+
+
+\subsection{評価関数}
+評価関数では，数理モデル\cite{ukawa}の目的関数を用いる．
+また，貨物の重量バランスに関する制約などに違反している場合には，制約違反度合いをペナルティ関数として表し, 目的関数に加えて探索を行う．
+ペナルティ係数の更新方法などは，今後検討していく．
+
+\section{まとめと今後の研究計画}
+鵜川らによる研究の数理モデル\cite{ukawa}では，問題例のサイズが大きくなると，更に計算時間がかかることを確認した．
+また，大規模な問題例も解くことを可能にするために，ヒューリスティックを用いた新たなモデルを提案した．
+
+目的関数や制約の考慮の実装を進めていくとともに，今後，提案したアルゴリズムを用いた計算実験を行いたい.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% References
+\begin{thebibliography}{2}
+  \bibitem{mitsui}
+  「商船三井 プレスリリース2019年」https://www.mol.co.jp/pr/2019/19072.html
+  \bibitem{stowage}
+  「日本橋海運 貿易関連用語集」http://nihonbashi-shipping.co.jp/lexicon/50\_su/
+\bibitem{ukawa} 鵜川知哉, 自動車運搬船における貨物積載プランニングの席割問題に対する数理モデリング, 修士論文，名古屋大学情報学研究科, 2020
+\end{thebibliography}
 
 \newpage
-
-\begin{table}[htbp]
- \centering
- \tabcolsep = 15pt
- \renewcommand{\arraystretch}{0.8}
- \caption{高さ制約あり}
- \label{Height}
- \begin{tabular}{rrr} \hline
-  計算時間 (秒) & 暫定値 & 下界値 \\ \hline
-  3100 &    385282 & -4461.98 \\
-  3128 &    -4152 & -4461.98 \\
-  8433 &    -4173 & -4461.98 \\
-  10484 & -4347 & -4461.98 \\ \hline
- \end{tabular}
-\end{table}
-
-高さ制約を考慮した場合では，考慮していないモデルと比較して実行可能解が出るまでに6倍ほどの計算時間がかかることが確認できた．また，高さ制約がない場合の解と同等の解を探索するのに，3.5倍ほどの計算時間がかかったことも確認できた．
-
-
-\subsection{現実的な計算時間で解ける問題例の規模}
-今までの計算実験では，問題例を1つだけ用いてモデルの構築を行っていた．しかし，モデルの傾向を見るためには多くのデータを用いて実験を行うべきである．注文数や港の数を変更した問題例をいくつか準備し，どの程度の規模の問題例ならばある程度の時間内で解けるのか調査を行った．表\ref{24hours}に実行可能解が初めて出力された計算時間と，計算を回して1時間後と24時間後の解の精度を示した．
-
-結果より，注文数が250程度，港の数が3,4より少なければ，24時間以内にある程度の解を出力することが確認できた．
-
 
 \begin{table}[]
   \caption{複数の規模の問題例に対する計算結果}
@@ -762,21 +786,6 @@ $b_{i}$ &
   350   & 2       & 3       & 2249                                                  & -2738.00                                                               & -4461.98                                                                 & -2883.58                                                                & -4461.98                                                                  \\ \hline
   \end{tabular}
   \end{table}
-
-
-\section{まとめと今後の研究計画}
-高さ制約の考慮による計算時間の比較を行い，およそ高さ制約をモデルに追加することで，3.5倍程度の時間がかかることを確認した．問題例のサイズが大きくなると，更に計算時間がかかることが考えられる．この問題を解決するために，席割問題に対するヒューリスティック解法を新たに作成することでこの問題を解決できると考えている．
-
-また，ヒューリスティックを作成する前段階として，席割の良し悪しを定量的に判断出来るようにする必要がある．ある程度の時間で解ける問題例の規模を確認することができたため，その規模のいくつかの問題例に対して解を出力し，その解をもとにヒアリングを行い，席割の精度の良さを明確にするための指標作成を行う予定である．
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% References
-\begin{thebibliography}{2}
-  \bibitem{mitsui}
-  「商船三井 プレスリリース2019年」https://www.mol.co.jp/pr/2019/19072.html
-  \bibitem{stowage}
-  「日本橋海運 貿易関連用語集」http://nihonbashi-shipping.co.jp/lexicon/50\_su/
-\bibitem{ukawa} 鵜川知哉, 自動車運搬船における貨物積載プランニングの席割問題に対する数理モデリング, 修士論文，名古屋大学情報学研究科, 2020
-\end{thebibliography}
 \end{document}
 
 % LocalWords:  ij Imahori Yagiura Ibaraki th Metaheuristics McGeoch Aarts lrr

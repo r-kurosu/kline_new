@@ -141,4 +141,6 @@ INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/txfonts/txexa.tfm
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/txfonts/txexa.tfm
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/uptex-fonts/jis/upjisr-v.tfm
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/uptex-fonts/jis/upjisr-v.tfm
+INPUT segment.png
+INPUT extractbb -B cropbox -O segment.png
 INPUT takeda.aux
