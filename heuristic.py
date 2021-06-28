@@ -1,5 +1,6 @@
 import warnings
 import numpy as np
+from numpy.core.numeric import load
 import pandas as pd
 import gurobipy as gp
 import category_encoders as ce
@@ -24,6 +25,7 @@ def main():
     MainLampFile = "data/mainlamp.csv"
     BackMainLampFile = "data/back_mainlamp.csv"
     AfrMainLampFile = "data/afr_mainlamp.csv"
+    AfrFile = "data/accepted_filling_rate.csv"
     StressFile = "data/stress_mainlamp.csv"
     Gang2File = "data/gangnum_2.csv"
     Gang3File = "data/gangnum_3.csv"
@@ -37,11 +39,9 @@ def main():
     # 船体情報の読み込み1
     I, B, I_pair, I_next, I_same, I_lamp, I_deck, RT_benefit, delta_s, min_s, max_s, delta_h, max_h, Hold_encode, Hold\
         = read_hold.Read_hold(HoldFile)
-
-    # 船体情報の読み込み2
-    Ml_Load, Ml_Back, Ml_Afr, Stress, GANG2, GANG3\
-        = read_other.Read_other(MainLampFile, BackMainLampFile, AfrMainLampFile, StressFile, Gang2File, Gang3File, Hold_encode)
-
+        
+    filling_rate = read_hold.Read_other(AfrFile)
+    
     J_t_load = []  # J_t_load:港tで積む注文の集合
     J_t_keep = []  # J_t_keep:港tを通過する注文の集合
     J_t_dis = []  # J_t_dis:港tで降ろす注文の集合
@@ -92,56 +92,78 @@ def main():
     def assign_to_hold(assignment_list):
         hold_assignment = []
         for i in range(HOLD_COUNT):
-            hold_assignment.append(0)
+            hold_assignment.append([])
         unloaded_orders = []
-        tmp = 0
+
         for segment_num in range(SEGMENT_COUNT):
             segment = segments[segment_num]
             assignment = assignment_list[segment_num]
             
-            # 積み港ごとに分かれているものを1次元化
-            assignment = list(itertools.chain.from_iterable(assignment))
-            
             assignment_RT = []
             assignment_unit = []
             assignment_total_space = []
-            #assignment_total_space: そのセグメントに割当てられた注文の，台数×サイズ
             
-            for order in assignment:
-                assignment_RT.append(A[order])
-                assignment_unit.append(int(U[order]))
-                assignment_total_space.append(A[order]*int(U[order]))
-            # tmp += sum(assignment_unit)
-            assignment_size = len(assignment)
-            assignment_cnt = 0
+            for loading_port_num in range(len(assignment)):
+                tmp_assignment_RT = []
+                tmp_assignment_unit = []
+                tmp_assignment_total_space = []
+                for order in assignment[loading_port_num]:
+                    tmp_assignment_RT.append(A[order])
+                    tmp_assignment_unit.append(int(U[order]))
+                    tmp_assignment_total_space.append(A[order]*int(U[order]))
+                assignment_RT.append(tmp_assignment_RT)
+                assignment_unit.append(tmp_assignment_unit)
+                assignment_total_space.append(tmp_assignment_total_space)
+            
+            left_spaces = {}
             for hold in segment:
-                space_left = B[hold]
-                assignment_in_hold = []
-                # 全部詰め切るか，そのホールドに注文をまるごと詰め込めなくなったらwhileを抜ける
-                while (assignment_cnt<assignment_size and assignment_total_space[assignment_cnt] < space_left):
-                    space_left -= assignment_total_space[assignment_cnt]
-                    assignment_in_hold.append([assignment[assignment_cnt],assignment_unit[assignment_cnt]])
-                    # tmp += assignment_unit[assignment_cnt]
-                    assignment_total_space[assignment_cnt] = 0
-                    assignment_unit[assignment_cnt] = 0
-                    assignment_cnt += 1
-                    
-                # まるごとは注文を詰め込めなくても，一部なら可能なら一部を詰め込む
-                if assignment_cnt < assignment_size:
-                    possible_unit_cnt = int(space_left // assignment_RT[assignment_cnt])
-                    assignment_in_hold.append([assignment[assignment_cnt],possible_unit_cnt])
-                    assignment_total_space[assignment_cnt] -= assignment_RT[assignment_cnt] * possible_unit_cnt
-                    assignment_unit[assignment_cnt] -= possible_unit_cnt
-                    # tmp += possible_unit_cnt
-                
-                hold_assignment[hold] = assignment_in_hold
-            # tmp += sum(assignment_unit)
-            # print("-----")
+                left_spaces[hold] = B[hold]
             
-            # 積み残しを出力する
-            for index in range(len(assignment_unit)):
-                if assignment_unit[index] > 0:
-                    unloaded_orders.append([assignment[index],assignment_unit[index]])
+            
+            for loading_port_num in range(len(assignment)):
+                orders = assignment[loading_port_num]
+                order_cnt = 0 #どの注文まで積んだか
+                orders_size = len(orders) #注文の個数
+                if loading_port_num == len(assignment)-1: #最後に積む港
+                    for hold in segment:
+                        # 全部詰め切るか，そのホールドに注文をまるごと詰め込めなくなったらwhileを抜ける
+                        while (order_cnt < orders_size and assignment_total_space[loading_port_num][order_cnt]<left_spaces[hold]):
+                            left_spaces[hold] -= assignment_total_space[loading_port_num][order_cnt]
+                            hold_assignment[hold].append([assignment[loading_port_num][order_cnt],assignment_unit[loading_port_num][order_cnt]])
+                            assignment_total_space[loading_port_num][order_cnt] = 0
+                            assignment_unit[loading_port_num][order_cnt] = 0
+                            order_cnt += 1
+                        # まるごとは注文を詰め込めなくても，一部なら可能なら一部を詰め込む
+                        if order_cnt < orders_size:
+                            possible_unit_cnt = int(left_spaces[hold] // assignment_RT[loading_port_num][order_cnt])
+                            if (possible_unit_cnt>0):
+                                hold_assignment[hold].append([assignment[loading_port_num][order_cnt],possible_unit_cnt])
+                                assignment_total_space[loading_port_num][order_cnt] -= assignment_RT[loading_port_num][order_cnt] * possible_unit_cnt
+                                assignment_unit[loading_port_num][order_cnt] -= possible_unit_cnt
+                    
+                else: #最後に積む港ではない場合
+                    for hold in segment:
+                        ALLOWANCE_SPACE = B[hold] *  (1-filling_rate[hold])
+                        # 全部詰め切るか，そのホールドに注文をまるごと詰め込めなくなったらwhileを抜ける
+                        while (order_cnt < orders_size and assignment_total_space[loading_port_num][order_cnt]<(left_spaces[hold])-ALLOWANCE_SPACE):
+                            left_spaces[hold] -= assignment_total_space[loading_port_num][order_cnt]
+                            hold_assignment[hold].append([assignment[loading_port_num][order_cnt],assignment_unit[loading_port_num][order_cnt]])
+                            assignment_total_space[loading_port_num][order_cnt] = 0
+                            assignment_unit[loading_port_num][order_cnt] = 0
+                            order_cnt += 1
+                        
+                        # まるごとは注文を詰め込めなくても，一部なら可能なら一部を詰め込む
+                        if order_cnt < orders_size:
+                            possible_unit_cnt = int((left_spaces[hold]-ALLOWANCE_SPACE) // assignment_RT[loading_port_num][order_cnt])
+                            if (possible_unit_cnt>0):
+                                hold_assignment[hold].append([assignment[loading_port_num][order_cnt],possible_unit_cnt])
+                                assignment_total_space[loading_port_num][order_cnt] -= assignment_RT[loading_port_num][order_cnt] * possible_unit_cnt
+                                assignment_unit[loading_port_num][order_cnt] -= possible_unit_cnt
+                
+                for index in range(len(assignment_unit[loading_port_num])): 
+                    if assignment_unit[loading_port_num][index]>0:
+                        unloaded_orders.append([orders[index],assignment_unit[loading_port_num][index]])
+
 
         """
         返り値は，2次元の配列
@@ -150,7 +172,7 @@ def main():
         配列の0番目が，注文の番号 
         配列の1番目が，割り当てる台数
         """
-        # print(tmp)
+
         return hold_assignment,unloaded_orders
     
     def evaluate(assignment_hold,unloaded_orders):
@@ -268,7 +290,6 @@ def main():
 
     #初期解のペナルティ    
     penalty = evaluate(assignment_hold,unloaded_orders)
-    
     shift_neighbor_list = operation.create_shift_neighbor(ORDER_COUNT,SEGMENT_COUNT)
     shift_count = 0
     
