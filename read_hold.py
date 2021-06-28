@@ -66,3 +66,9 @@ def Read_hold(FileName):
         I_deck.append(append_list)
 
     return I, B, I_pair, I_next, I_same, I_lamp, I_deck, RT_benefit, delta_s, min_s, max_s, delta_h, max_h, Hold_encode, Hold_df
+
+
+def Read_other(filling_rate_file):
+    df = pd.read_csv(filling_rate_file)
+    filling_rate = list(df.iloc[:, 1])
+    return filling_rate
