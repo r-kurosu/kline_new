@@ -14,6 +14,7 @@ import sys
 args = sys.argv
 import itertools
 import copy
+import datetime
 
 warnings.filterwarnings("ignore")
 
@@ -269,6 +270,8 @@ def main():
     assignment[i][j][k]で，j個目の港でk個目に積み込む注文を見れる
     '''
     
+    dt1 = datetime.datetime.now()
+    
     # 解の初期化
     assignment = []
     # とりあえず空で初期化
@@ -314,7 +317,7 @@ def main():
                 shift_count += 1
                 
         total_improve = 0
-
+        """
         while(swap_count < len(swap_neighbor_list)):
             swap_order1 = swap_neighbor_list[swap_count][0]
             swap_order2 = swap_neighbor_list[swap_count][1]
@@ -332,10 +335,14 @@ def main():
                 total_improve += 1
             else:
                 swap_count += 1
-
+        """
     assignment_hold,unloaded_orders,balance_penalty = assign_to_hold(assignment)
     penalty = evaluate(assignment_hold,unloaded_orders,balance_penalty)
     print(penalty)
+    
+    dt2 = datetime.datetime.now()
+    print("計算時間: "+str((dt2-dt1).total_seconds())+"秒")
+    
     
     result = [["Hold_ID","Order_ID","Load_Units"]]
     for index in range(len(assignment_hold)):
