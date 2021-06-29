@@ -93,6 +93,15 @@ def main():
             hold_assignment.append([])
         unloaded_orders = []
 
+        half_way_assignments = [] #1港目を積み終えたときのバランスを計算するための配列
+        for loading_port_num in range(len(L)-1):     
+            tmp = {}
+            for hold_num in range(HOLD_COUNT):
+                tmp[hold_num] = []
+            half_way_assignments.append(tmp)
+        
+        balance_penalty = 0
+
         for segment_num in range(SEGMENT_COUNT):
             segment = segments[segment_num]
             assignment = assignment_list[segment_num]
@@ -146,6 +155,7 @@ def main():
                         while (order_cnt < orders_size and assignment_total_space[loading_port_num][order_cnt]<(left_spaces[hold])-ALLOWANCE_SPACE):
                             left_spaces[hold] -= assignment_total_space[loading_port_num][order_cnt]
                             hold_assignment[hold].append([assignment[loading_port_num][order_cnt],assignment_unit[loading_port_num][order_cnt]])
+                            half_way_assignments[loading_port_num][hold].append([assignment[loading_port_num][order_cnt],assignment_unit[loading_port_num][order_cnt]])
                             assignment_total_space[loading_port_num][order_cnt] = 0
                             assignment_unit[loading_port_num][order_cnt] = 0
                             order_cnt += 1
@@ -155,13 +165,38 @@ def main():
                             possible_unit_cnt = int((left_spaces[hold]-ALLOWANCE_SPACE) // assignment_RT[loading_port_num][order_cnt])
                             if (possible_unit_cnt>0):
                                 hold_assignment[hold].append([assignment[loading_port_num][order_cnt],possible_unit_cnt])
+                                half_way_assignments[loading_port_num][hold].append([assignment[loading_port_num][order_cnt],possible_unit_cnt])
                                 assignment_total_space[loading_port_num][order_cnt] -= assignment_RT[loading_port_num][order_cnt] * possible_unit_cnt
                                 assignment_unit[loading_port_num][order_cnt] -= possible_unit_cnt
-                
+ 
                 for index in range(len(assignment_unit[loading_port_num])): 
                     if assignment_unit[loading_port_num][index]>0:
                         unloaded_orders.append([orders[index],assignment_unit[loading_port_num][index]])
 
+
+        # バランス制約を計算
+        # 最後に積む港以外
+        for loading_port_num in range(len(L)-1):     
+            half_way_assignment = half_way_assignments[loading_port_num]
+            for hold_num,orders in half_way_assignment.items():
+                if len(orders)>0:
+                    for order in orders:
+                        #横方向
+                        balance_penalty += max(0,(delta_h[hold_num] * G[order[0]] * order[1]) - max_h)
+                        #縦方向
+                        balance_penalty += max(0,(delta_s[hold_num] * G[order[0]] * order[1]) - max_s)
+                        balance_penalty += max(0,min_s-(delta_s[hold_num] * G[order[0]] * order[1]))
+                
+        # 最後に積む港
+        for hold_num in range(len(hold_assignment)):
+            tmp_assignment = hold_assignment[hold_num]
+            if len(tmp_assignment)>0:
+                for order in tmp_assignment:
+                    #横方向
+                    balance_penalty += max(0,(delta_h[hold_num] * G[order[0]] * order[1]) - max_h)
+                    #縦方向
+                    balance_penalty += max(0,(delta_s[hold_num] * G[order[0]] * order[1]) - max_s)
+                    balance_penalty += max(0,min_s-(delta_s[hold_num] * G[order[0]] * order[1]))        
 
         """
         返り値は，2次元の配列
@@ -171,9 +206,10 @@ def main():
         配列の1番目が，割り当てる台数
         """
 
-        return hold_assignment,unloaded_orders
+        return hold_assignment,unloaded_orders,balance_penalty
     
-    def evaluate(assignment_hold,unloaded_orders):
+    def evaluate(assignment_hold,unloaded_orders,balance_penalty):
+        # 全注文内の自動車の台数を全て割り当てる
         total_left_RT = 0
         for hold_num in range(HOLD_COUNT):
             assignment = assignment_hold[hold_num]
@@ -184,7 +220,12 @@ def main():
         unloaded_units = 0
         for order in unloaded_orders:
             unloaded_units += order[1]
-        return total_left_RT+unloaded_units
+        # ここまで
+        
+        
+        return total_left_RT+unloaded_units+balance_penalty
+    
+    
     
 
     random.seed(1)
@@ -244,10 +285,9 @@ def main():
             assignment[j%SEGMENT_COUNT][i].append(randomed_J[j])
 
     #初期解を，ホールドに割当
-    assignment_hold,unloaded_orders = assign_to_hold(assignment)
-
+    assignment_hold,unloaded_orders,balance_penalty = assign_to_hold(assignment)
     #初期解のペナルティ    
-    penalty = evaluate(assignment_hold,unloaded_orders)
+    penalty = evaluate(assignment_hold,unloaded_orders,balance_penalty)
     shift_neighbor_list = operation.create_shift_neighbor(ORDER_COUNT,SEGMENT_COUNT)
     shift_count = 0
     
@@ -261,8 +301,8 @@ def main():
             shift_seg = shift_neighbor_list[shift_count][1]
             copied_assignment = copy.deepcopy(assignment)
             tmp_assignment= operation.shift(copied_assignment,shift_order,shift_seg,operation.find_loading_port(shift_order,J_t_load))
-            assignment_hold,unloaded_orders = assign_to_hold(tmp_assignment)
-            tmp_penalty = evaluate(assignment_hold,unloaded_orders)
+            assignment_hold,unloaded_orders,balance_penalty = assign_to_hold(tmp_assignment)
+            tmp_penalty = evaluate(assignment_hold,unloaded_orders,balance_penalty)
             if  tmp_penalty < penalty:
                 print("改善 "+str(tmp_penalty))
                 penalty= tmp_penalty
@@ -280,8 +320,8 @@ def main():
             swap_order2 = swap_neighbor_list[swap_count][1]
             copied_assignment = copy.deepcopy(assignment)
             tmp_assignment = operation.swap(copied_assignment,swap_order1,swap_order2,operation.find_loading_port(swap_order1,J_t_load))
-            assignment_hold,unloaded_orders = assign_to_hold(tmp_assignment)
-            tmp_penalty = evaluate(assignment_hold,unloaded_orders)
+            assignment_hold,unloaded_orders,balance_penalty = assign_to_hold(tmp_assignment)
+            tmp_penalty = evaluate(assignment_hold,unloaded_orders,balance_penalty)
             if  tmp_penalty < penalty:
                 print("改善 "+str(tmp_penalty))
                 penalty= tmp_penalty
@@ -293,8 +333,8 @@ def main():
             else:
                 swap_count += 1
 
-    assignment_hold,unloaded_orders = assign_to_hold(assignment)
-    penalty = evaluate(assignment_hold,unloaded_orders)
+    assignment_hold,unloaded_orders,balance_penalty = assign_to_hold(assignment)
+    penalty = evaluate(assignment_hold,unloaded_orders,balance_penalty)
     print(penalty)
     
     result = [["Hold_ID","Order_ID","Load_Units"]]
