@@ -223,8 +223,17 @@ def main():
             unloaded_units += order[1]
         # ここまで
         
-        
-        return total_left_RT+unloaded_units+balance_penalty
+        objective1 = 0
+        # 目的関数1 ひとつのホールドで，異なる降ろし地の注文を少なくする
+        for each_assignment in assignment_hold:
+            different_destination_area_orders = []
+            for order in each_assignment:
+                different_destination_area_orders.append(Booking.at[order[0],"DPORT"])
+            unique_destination_ports = set(different_destination_area_orders)
+            if (len(unique_destination_ports)>1):
+                objective1 += len(unique_destination_ports)-1
+        # ここまで
+        return total_left_RT+unloaded_units+balance_penalty+objective1
     
     
     
@@ -349,7 +358,7 @@ def main():
         assignment_dict = {}
         each_assignment = assignment_hold[index]
         for item in each_assignment:
-            original_order_num = int(Booking[Booking["Index"]==item[0]]["Order_num"])
+            original_order_num = int(Booking.at[item[0],"Order_num"])
             if original_order_num in assignment_dict:
                 assignment_dict[original_order_num] += item[1]
             else:
