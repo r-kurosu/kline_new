@@ -296,7 +296,22 @@ def main():
     assignment_hold,unloaded_orders = assign_to_hold(assignment)
     penalty = evaluate(assignment_hold,unloaded_orders)
     print(penalty)
-        
+    
+    result = [["Hold_ID","Order_ID","Load_Units"]]
+    for index in range(len(assignment_hold)):
+        assignment_dict = {}
+        each_assignment = assignment_hold[index]
+        for item in each_assignment:
+            original_order_num = int(Booking[Booking["Index"]==item[0]]["Order_num"])
+            if original_order_num in assignment_dict:
+                assignment_dict[original_order_num] += item[1]
+            else:
+                assignment_dict[original_order_num] = item[1]
+        hold_id = int(Hold_encode[Hold_encode["Index"]==index]["Hold"])
+        for order_id, load_unit in assignment_dict.items():
+            result.append([hold_id,order_id,load_unit])
+    out_df = pd.DataFrame(result)
+    out_df.to_csv("out/test.csv",index=False,header=False)            
         
 if __name__ == "__main__":
     main()
