@@ -93,5 +93,7 @@ def Read_booking(FileName):
             J_medium.append(j)
         if 200 < U[j]:
             J_large.append(j)
+            
+    Booking = Booking.reset_index()
 
     return T, L, D, J, U, A, G, J_small, J_medium, J_large, Port, Check_port, Booking, divide_dic
