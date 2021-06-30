@@ -177,16 +177,29 @@ def main():
 
         # バランス制約を計算
         # 最後に積む港以外
+        balance1 = 0
+        balance2 = 0
+        balance3 = 0
         for loading_port_num in range(len(L)-1):     
             half_way_assignment = half_way_assignments[loading_port_num]
             for hold_num,orders in half_way_assignment.items():
                 if len(orders)>0:
                     for order in orders:
                         #横方向
-                        balance_penalty += max(0,(delta_h[hold_num] * G[order[0]] * order[1]) - max_h)
+                        balance1 +=delta_h[hold_num] * G[order[0]] * order[1]
+                        # balance_penalty += max(0,(delta_h[hold_num] * G[order[0]] * order[1]) - max_h)
                         #縦方向
-                        balance_penalty += max(0,(delta_s[hold_num] * G[order[0]] * order[1]) - max_s)
-                        balance_penalty += max(0,min_s-(delta_s[hold_num] * G[order[0]] * order[1]))
+                        balance2 += delta_s[hold_num] * G[order[0]] * order[1]
+                        # balance_penalty += max(0,(delta_s[hold_num] * G[order[0]] * order[1]) - max_s)
+                        balance3 += delta_s[hold_num] * G[order[0]] * order[1]
+                        # balance_penalty += max(0,min_s-(delta_s[hold_num] * G[order[0]] * order[1]))
+        balance_penalty += max(0,balance1-max_h)
+        balance_penalty += max(0,balance2-max_s)
+        balance_penalty += max(0,min_s-balance3)
+        
+        balance1 = 0
+        balance2 = 0
+        balance3 = 0
                 
         # 最後に積む港
         for hold_num in range(len(hold_assignment)):
@@ -194,11 +207,16 @@ def main():
             if len(tmp_assignment)>0:
                 for order in tmp_assignment:
                     #横方向
-                    balance_penalty += max(0,(delta_h[hold_num] * G[order[0]] * order[1]) - max_h)
+                    balance1 +=delta_h[hold_num] * G[order[0]] * order[1]
+                    # balance_penalty += max(0,(delta_h[hold_num] * G[order[0]] * order[1]) - max_h)
                     #縦方向
-                    balance_penalty += max(0,(delta_s[hold_num] * G[order[0]] * order[1]) - max_s)
-                    balance_penalty += max(0,min_s-(delta_s[hold_num] * G[order[0]] * order[1]))        
-
+                    balance2 += delta_s[hold_num] * G[order[0]] * order[1]
+                    # balance_penalty += max(0,(delta_s[hold_num] * G[order[0]] * order[1]) - max_s)
+                    balance3 += delta_s[hold_num] * G[order[0]] * order[1]
+                    # balance_penalty += max(0,min_s-(delta_s[hold_num] * G[order[0]] * order[1]))        
+        balance_penalty += max(0,balance1-max_h)
+        balance_penalty += max(0,balance2-max_s)
+        balance_penalty += max(0,min_s-balance3)
         """
         返り値は，2次元の配列
         hold_assignment[i]で，ホールドiに割り当てられる注文の情報の配列を取得できる
@@ -326,7 +344,7 @@ def main():
                 shift_count += 1
                 
         total_improve = 0
-        """
+        
         while(swap_count < len(swap_neighbor_list)):
             swap_order1 = swap_neighbor_list[swap_count][0]
             swap_order2 = swap_neighbor_list[swap_count][1]
@@ -344,7 +362,7 @@ def main():
                 total_improve += 1
             else:
                 swap_count += 1
-        """
+        
     assignment_hold,unloaded_orders,balance_penalty = assign_to_hold(assignment)
     penalty = evaluate(assignment_hold,unloaded_orders,balance_penalty)
     print(penalty)
