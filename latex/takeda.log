@@ -1,4 +1,4 @@
-This is e-upTeX, Version 3.14159265-p3.8.2-u1.25-190131-2.6 (utf8.uptex) (TeX Live 2019) (preloaded format=uplatex 2019.11.6)  26 JUN 2021 16:57
+This is e-upTeX, Version 3.14159265-p3.8.2-u1.25-190131-2.6 (utf8.uptex) (TeX Live 2019) (preloaded format=uplatex 2019.11.6)  1 JUL 2021 12:22
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -477,30 +477,39 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 File: segment.png Graphic file (type bmp)
 <segment.png>
 
-Underfull \hbox (badness 5077) in paragraph at lines 767--768
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [8]
+Underfull \hbox (badness 5077) in paragraph at lines 777--778
 []\JY2/mc/m/n/10 「 商船三井 プレスリリ ース \OT1/txr/m/n/10 2019 \JY2/mc/m/n/10 年 」
  []
 
-[8]
 
 LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `tbp') on input line 775.
+               Default added (so using `tbp') on input line 784.
 
 
-Overfull \hbox (243.01073pt too wide) in paragraph at lines 778--788
+Overfull \hbox (252.25755pt too wide) in paragraph at lines 787--797
 [][][][] 
  []
 
-[9
 
-] (./takeda.aux) ) 
+LaTeX Warning: No positions in optional float specifier.
+               Default added (so using `tbp') on input line 800.
+
+
+Overfull \hbox (26.56143pt too wide) in paragraph at lines 803--813
+[][][][] 
+ []
+
+[9] (./takeda.aux) ) 
 Here is how much of TeX's memory you used:
- 3081 strings out of 492752
- 36234 string characters out of 6140168
+ 3082 strings out of 492752
+ 36245 string characters out of 6140168
  124904 words of memory out of 5000000
- 7496 multiletter control sequences out of 15000+600000
+ 7497 multiletter control sequences out of 15000+600000
  24512 words of font info for 93 fonts, out of 8000000 for 9000
  934 hyphenation exceptions out of 8191
  30i,20n,25p,1401b,380s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on takeda.dvi (9 pages, 56796 bytes).
+Output written on takeda.dvi (9 pages, 60336 bytes).

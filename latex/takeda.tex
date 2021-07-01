@@ -749,17 +749,27 @@ $b_{i}$ &
 挿入近傍操作は，セグメントに割り当てられている注文の1つを，ランダムに異なるセグメントに挿入する操作である．
 交換近傍操作は，異なるセグメントに割り当てられている注文を2つランダムに選び，それらを入れ替える操作である．
 
+本研究では，はじめに挿入近傍操作を改善がなくなるまで繰り返し，その後交換近傍操作を改善がなくなるまで行う．
+挿入近傍操作で1回でも改善があった場合は，再び挿入近傍操作からやり直す．
 
 \subsection{評価関数}
 評価関数では，数理モデル\cite{ukawa}の目的関数を用いる．
 また，貨物の重量バランスに関する制約などに違反している場合には，制約違反度合いをペナルティ関数として表し, 目的関数に加えて探索を行う．
 ペナルティ係数の更新方法などは，今後検討していく．
 
+\section{ヒューリスティックモデルの計算時間}
+制約と目的関数の一部を実装したプログラムを用いて，計算実験を行った．
+元のモデルでは，計算時間に制限を設けて探索を行ったため，最適解を出力した時間で比較をすることができない．そのため，今回はヒューリスティックモデルで局所探索が終了し最適解を出力した時間と，元のモデルで実行可能解が初めて出力された時間の比較を行う．結果を表\ref{heuristic}に示す．
+
+結果より，ヒューリスティックモデルによって計算時間が大幅に改善されていることが確認できた．すべての制約と目的関数を実装し終えていないため正確な比較はできないが，計算時間の短縮に効果があることが予想される．
+
+また，解の精度に関しても比較をすることができないが，今後解の精度を測る指標を作成することで，比較を行っていきたい．
+
 \section{まとめと今後の研究計画}
 鵜川らによる研究の数理モデル\cite{ukawa}では，問題例のサイズが大きくなると，更に計算時間がかかることを確認した．
-また，大規模な問題例も解くことを可能にするために，ヒューリスティックを用いた新たなモデルを提案した．
+また，大規模な問題例も解くことを可能にするために，ヒューリスティックを用いた新たなモデルを提案した．すべての制約と目的関数を実装し終えていないが，計算実験から計算時間の短縮にある程度効果があることが確認できた．
 
-目的関数や制約の考慮の実装を進めていくとともに，今後，提案したアルゴリズムを用いた計算実験を行いたい.
+今後，目的関数や制約の実装を進めていくとともに，大域的最適解を出力するようなアルゴリズムの提案も行っていきたい．
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% References
 \begin{thebibliography}{2}
@@ -770,14 +780,13 @@ $b_{i}$ &
 \bibitem{ukawa} 鵜川知哉, 自動車運搬船における貨物積載プランニングの席割問題に対する数理モデリング, 修士論文，名古屋大学情報学研究科, 2020
 \end{thebibliography}
 
-\newpage
 
 \begin{table}[]
   \caption{複数の規模の問題例に対する計算結果}
   \label{24hours}
   \begin{tabular}{|c|c|c|r|r|r|r|r|}
   \hline
-  \multicolumn{3}{|c|}{問題例} & \begin{tabular}[c]{@{}c@{}}実行可能解が\\ 出た時間\end{tabular} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}１時間後の\\ 解\end{tabular}} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}1時間後の\\ 下界値\end{tabular}} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}24時間後の\\ 解\end{tabular}} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}24時間後の\\ 下界値\end{tabular}} \\ \hline
+  \multicolumn{3}{|c|}{問題例} & \begin{tabular}[c]{@{}c@{}}実行可能解が\\ 出力された時間\end{tabular} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}１時間後の\\ 解\end{tabular}} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}1時間後の\\ 下界値\end{tabular}} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}24時間後の\\ 解\end{tabular}} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}24時間後の\\ 下界値\end{tabular}} \\ \hline
   注文数   & 積み地の数   & 揚げ地の数   &                                                       & \multicolumn{1}{l|}{}                                                  & \multicolumn{1}{l|}{}                                                    & \multicolumn{1}{l|}{}                                                   & \multicolumn{1}{l|}{}                                                     \\ \hline
   109   & 2       & 3       & 537                                                   & -4301.36                                                               & -4461.98                                                                 & -4388.44                                                                & -4461.98                                                                  \\ \hline
   109   & 2       & 5       & 1674                                                  & -3522.82                                                               & -4461.98                                                                 & -4264.69                                                                & -4461.98                                                                  \\ \hline
@@ -785,7 +794,23 @@ $b_{i}$ &
   250   & 2       & 3       & 2381                                                  & -3155.02                                                               & -4461.98                                                                 & -4083.18                                                                & -4461.98                                                                  \\ \hline
   350   & 2       & 3       & 2249                                                  & -2738.00                                                               & -4461.98                                                                 & -2883.58                                                                & -4461.98                                                                  \\ \hline
   \end{tabular}
-  \end{table}
+\end{table}
+
+
+\begin{table}[]
+  \caption{複数の規模の問題例に対する計算結果}
+  \label{heuristic}
+\begin{tabular}{|c|c|c|r|r|}
+\hline
+\multicolumn{3}{|c|}{問題例}                                                                                 & \multicolumn{1}{c|}{計算時間} & \multicolumn{1}{l|}{\begin{tabular}[c]{@{}l@{}}元のモデルで\\ 実行可能解が\\ 出力された時間\end{tabular}} \\ \hline
+注文数 & \begin{tabular}[c]{@{}c@{}}積み地\\ の数\end{tabular} & \begin{tabular}[c]{@{}c@{}}揚げ地\\ の数\end{tabular} & \multicolumn{1}{c|}{}     & \multicolumn{1}{l|}{}                                                                  \\ \hline
+109 & 2                                                & 3                                                & 243                       & 537                                                                                    \\ \hline
+109 & 2                                                & 5                                                & 318                       & 1674                                                                                   \\ \hline
+109 & 4                                                & 3                                                & 229                       & 344                                                                                    \\ \hline
+250 & 2                                                & 3                                                & 177                       & 2381                                                                                   \\ \hline
+350 & 2                                                & 3                                                & 1852                      & 2249                                                                                   \\ \hline
+\end{tabular}
+\end{table}
 \end{document}
 
 % LocalWords:  ij Imahori Yagiura Ibaraki th Metaheuristics McGeoch Aarts lrr
