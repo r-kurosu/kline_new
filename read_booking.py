@@ -45,10 +45,10 @@ def Read_booking(FileName):
     divided_j = []
     divide_dic = []
     divide_df = Booking_df.iloc[0, :]
-    SMALL_UNIT = 20
+    SMALL_UNIT = 50
     for j in range(len(Booking_df)):
         unit = Booking_df.iloc[j, Booking_df.columns.get_loc('Units')]
-        if 80 < unit:
+        if 100 < unit:
             divied_u_num = int(unit // SMALL_UNIT)
             if (unit % SMALL_UNIT) != 0:
                 divied_u_num += 1
