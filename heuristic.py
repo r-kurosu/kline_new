@@ -1,6 +1,5 @@
 import warnings
 import numpy as np
-from numpy.core.numeric import load
 import pandas as pd
 import gurobipy as gp
 import category_encoders as ce
@@ -330,16 +329,19 @@ def main():
             shift_order = shift_neighbor_list[shift_count][0]
             shift_seg = shift_neighbor_list[shift_count][1]
             copied_assignment = copy.deepcopy(assignment)
-            tmp_assignment= operation.shift(copied_assignment,shift_order,shift_seg,operation.find_loading_port(shift_order,J_t_load))
-            assignment_hold,unloaded_orders,balance_penalty = assign_to_hold(tmp_assignment)
-            tmp_penalty = evaluate(assignment_hold,unloaded_orders,balance_penalty)
-            if  tmp_penalty < penalty:
-                print("改善 "+str(tmp_penalty))
-                penalty= tmp_penalty
-                assignment = copy.deepcopy(tmp_assignment)
-                # 探索リストを最初からやり直し
-                shift_count = 0 
-                random.shuffle(shift_neighbor_list)
+            tmp_assignment,is_changed= operation.shift(copied_assignment,shift_order,shift_seg,operation.find_loading_port(shift_order,J_t_load))
+            if is_changed:
+                assignment_hold,unloaded_orders,balance_penalty = assign_to_hold(tmp_assignment)
+                tmp_penalty = evaluate(assignment_hold,unloaded_orders,balance_penalty)
+                if  tmp_penalty < penalty:
+                    print("改善 "+str(tmp_penalty))
+                    penalty= tmp_penalty
+                    assignment = copy.deepcopy(tmp_assignment)
+                    # 探索リストを最初からやり直し
+                    shift_count = 0 
+                    random.shuffle(shift_neighbor_list)
+                else:
+                    shift_count += 1
             else:
                 shift_count += 1
                 
@@ -349,17 +351,20 @@ def main():
             swap_order1 = swap_neighbor_list[swap_count][0]
             swap_order2 = swap_neighbor_list[swap_count][1]
             copied_assignment = copy.deepcopy(assignment)
-            tmp_assignment = operation.swap(copied_assignment,swap_order1,swap_order2,operation.find_loading_port(swap_order1,J_t_load))
-            assignment_hold,unloaded_orders,balance_penalty = assign_to_hold(tmp_assignment)
-            tmp_penalty = evaluate(assignment_hold,unloaded_orders,balance_penalty)
-            if  tmp_penalty < penalty:
-                print("改善 "+str(tmp_penalty))
-                penalty= tmp_penalty
-                assignment = copy.deepcopy(tmp_assignment)
-                # 探索リストを最初からやり直し
-                swap_count = 0 
-                random.shuffle(swap_neighbor_list)
-                total_improve += 1
+            tmp_assignment,is_changed = operation.swap(copied_assignment,swap_order1,swap_order2,operation.find_loading_port(swap_order1,J_t_load))
+            if is_changed:
+                assignment_hold,unloaded_orders,balance_penalty = assign_to_hold(tmp_assignment)
+                tmp_penalty = evaluate(assignment_hold,unloaded_orders,balance_penalty)
+                if  tmp_penalty < penalty:
+                    print("改善 "+str(tmp_penalty))
+                    penalty= tmp_penalty
+                    assignment = copy.deepcopy(tmp_assignment)
+                    # 探索リストを最初からやり直し
+                    swap_count = 0 
+                    random.shuffle(swap_neighbor_list)
+                    total_improve += 1
+                else:
+                    swap_count += 1
             else:
                 swap_count += 1
         

@@ -17,7 +17,7 @@ def shift(assignment,order_num,next_segment_num,loading_port):
     
     #挿入先が変わらないならreturn
     if current_segment_num == next_segment_num:
-        return assignment
+        return assignment,False
     
     # いまの割当から削除
     assignment[current_segment_num][loading_port].remove(order_num)
@@ -25,7 +25,7 @@ def shift(assignment,order_num,next_segment_num,loading_port):
     random_order = random.randint(0,len(assignment[next_segment_num][loading_port]))
     assignment[next_segment_num][loading_port].insert(random_order,order_num)
     # assignment[next_segment_num][loading_port].append(order_num)
-    return assignment
+    return assignment,True
 
 def swap(assignment,order1_num,order2_num,loading_port):
     order1_current_seg_num = -1
@@ -41,12 +41,12 @@ def swap(assignment,order1_num,order2_num,loading_port):
             order2_current_seg_num = seg
             order2_idx = assignment[seg][loading_port].index(order2_num)
     if order1_current_seg_num == order2_current_seg_num:
-        return assignment
+        return assignment,False
     
     # swap
     assignment[order1_current_seg_num][loading_port][order1_idx] = order2_num
     assignment[order2_current_seg_num][loading_port][order2_idx] = order1_num
-    return assignment
+    return assignment,True
 
 def create_shift_neighbor(order_count,segment_count):
     lis = []
