@@ -240,6 +240,42 @@ def main():
             unloaded_units += order[1]
         # ここまで
         
+        constraint1 = 0 #移動経路制約
+        
+        # 経路確保とバランス制約の計算に使う配列を作成
+        for hold_num in range(len(assignment_hold)):         
+            assignment_in_hold = assignment_hold[hold_num]
+            destination_assignments = [[] for i in range(len(D))]
+            for assign in assignment_in_hold:
+                destination_port = int(Booking.at[assign[0],"DPORT"])
+                if (destination_port-len(L)!=0):
+                    for i in range(1,destination_port-len(L)+1):
+                        destination_assignments[i].append(assign)  
+                                   
+            #降ろし地での経路確保  
+            hold_space = B[hold_num]
+            for i in range(1,len(destination_assignments)):
+                total_loaded_space = 0
+                for assign in destination_assignments[i]:
+                    total_loaded_space += A[assign[0]]*assign[1]
+                if total_loaded_space > hold_space*filling_rate[hold_num]:
+                    constraint1 += (total_loaded_space-(hold_space*filling_rate[hold_num]))
+            #ここまで
+            
+            #降ろし地でのバランス制約
+            for i in range(1,len(destination_assignments)):
+                balance1 = 0
+                balance2 = 0
+                balance3 = 0
+                for assign in destination_assignments[i]:
+                    balance1 += delta_h[hold_num] * G[assign[0]] * assign[1]
+                    balance2 += delta_s[hold_num] * G[assign[0]] * assign[1]
+                    balance3 += delta_s[hold_num] * G[assign[0]] * assign[1]
+                balance_penalty += max(0,balance1-max_h)
+                balance_penalty += max(0,balance2-max_s)
+                balance_penalty += max(0,min_s-balance3)
+            #ここまで
+        
         objective1 = 0
         # 目的関数1 ひとつのホールドで，異なる降ろし地の注文を少なくする
         for each_assignment in assignment_hold:
@@ -250,7 +286,7 @@ def main():
             if (len(unique_destination_ports)>1):
                 objective1 += len(unique_destination_ports)-1
         # ここまで
-        return total_left_RT+unloaded_units+balance_penalty+objective1
+        return total_left_RT+unloaded_units+balance_penalty+constraint1+objective1
     
     
     
