@@ -178,7 +178,6 @@ def main():
         # 最後に積む港以外
         balance1 = 0
         balance2 = 0
-        balance3 = 0
         for loading_port_num in range(len(L)-1):     
             half_way_assignment = half_way_assignments[loading_port_num]
             for hold_num,orders in half_way_assignment.items():
@@ -190,15 +189,13 @@ def main():
                         #縦方向
                         balance2 += delta_s[hold_num] * G[order[0]] * order[1]
                         # balance_penalty += max(0,(delta_s[hold_num] * G[order[0]] * order[1]) - max_s)
-                        balance3 += delta_s[hold_num] * G[order[0]] * order[1]
                         # balance_penalty += max(0,min_s-(delta_s[hold_num] * G[order[0]] * order[1]))
-        balance_penalty += max(0,balance1-max_h)
-        balance_penalty += max(0,balance2-max_s)
-        balance_penalty += max(0,min_s-balance3)
+            balance_penalty += max(0,balance1-max_h)
+            balance_penalty += max(0,balance2-max_s)
+            balance_penalty += max(0,min_s-balance2)
         
         balance1 = 0
         balance2 = 0
-        balance3 = 0
                 
         # 最後に積む港
         for hold_num in range(len(hold_assignment)):
@@ -211,11 +208,10 @@ def main():
                     #縦方向
                     balance2 += delta_s[hold_num] * G[order[0]] * order[1]
                     # balance_penalty += max(0,(delta_s[hold_num] * G[order[0]] * order[1]) - max_s)
-                    balance3 += delta_s[hold_num] * G[order[0]] * order[1]
                     # balance_penalty += max(0,min_s-(delta_s[hold_num] * G[order[0]] * order[1]))        
         balance_penalty += max(0,balance1-max_h)
         balance_penalty += max(0,balance2-max_s)
-        balance_penalty += max(0,min_s-balance3)
+        balance_penalty += max(0,min_s-balance2)
         """
         返り値は，2次元の配列
         hold_assignment[i]で，ホールドiに割り当てられる注文の情報の配列を取得できる
@@ -241,6 +237,9 @@ def main():
         # ここまで
         
         constraint1 = 0 #移動経路制約
+        # 縦横方向のバランス制約
+        balance_constraint1 = [0 for i in range(len(D))]
+        balance_constraint2 = [0 for i in range(len(D))]
         
         # 経路確保とバランス制約の計算に使う配列を作成
         for hold_num in range(len(assignment_hold)):         
@@ -263,18 +262,19 @@ def main():
             #ここまで
             
             #降ろし地でのバランス制約
-            for i in range(1,len(destination_assignments)):
-                balance1 = 0
-                balance2 = 0
-                balance3 = 0
-                for assign in destination_assignments[i]:
-                    balance1 += delta_h[hold_num] * G[assign[0]] * assign[1]
-                    balance2 += delta_s[hold_num] * G[assign[0]] * assign[1]
-                    balance3 += delta_s[hold_num] * G[assign[0]] * assign[1]
-                balance_penalty += max(0,balance1-max_h)
-                balance_penalty += max(0,balance2-max_s)
-                balance_penalty += max(0,min_s-balance3)
+            for destination_load_num in range(1,len(destination_assignments)):
+                for assign in destination_assignments[destination_load_num]:
+                    balance_constraint1[destination_load_num] += delta_h[hold_num] * G[assign[0]] * assign[1]
+                    balance_constraint2[destination_load_num] += delta_s[hold_num] * G[assign[0]] * assign[1]
             #ここまで
+            
+        #全ての降ろし地での全てのバランス制約を計算したので，制約違反していたらペナルティ 
+        for destination_load_num in range(1,len(destination_assignments)):          
+            balance_penalty += max(0,balance_constraint1[destination_load_num]-max_h)
+            balance_penalty += max(0,balance_constraint2[destination_load_num]-max_s)
+            balance_penalty += max(0,min_s-balance_constraint2[destination_load_num])
+        #ここまで
+        
         
         objective1 = 0
         # 目的関数1 ひとつのホールドで，異なる降ろし地の注文を少なくする
