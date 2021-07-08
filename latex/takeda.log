@@ -1,4 +1,4 @@
-This is e-upTeX, Version 3.14159265-p3.8.2-u1.25-190131-2.6 (utf8.uptex) (TeX Live 2019) (preloaded format=uplatex 2019.11.6)  6 JUL 2021 14:32
+This is e-upTeX, Version 3.14159265-p3.8.2-u1.25-190131-2.6 (utf8.uptex) (TeX Live 2019) (preloaded format=uplatex 2019.11.6)  8 JUL 2021 17:12
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -501,7 +501,7 @@ LaTeX Warning: No positions in optional float specifier.
                Default added (so using `tbp') on input line 802.
 
 
-Overfull \hbox (26.56143pt too wide) in paragraph at lines 805--815
+Overfull \hbox (26.56143pt too wide) in paragraph at lines 805--816
 [][][][] 
  []
 
@@ -515,4 +515,4 @@ Here is how much of TeX's memory you used:
  934 hyphenation exceptions out of 8191
  30i,20n,25p,1401b,380s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on takeda.dvi (9 pages, 60764 bytes).
+Output written on takeda.dvi (9 pages, 60920 bytes).
