@@ -14,7 +14,8 @@ import read_other
 warnings.filterwarnings("ignore")
 
 BookingFile = "book/exp_height.csv"
-AssignmentsFile = "result/exp_height_assignment.xlsx"
+# AssignmentsFile = "/Users/takedakiyoshi/lab/kline/KLINE/4月のミーティング向けの資料/exp_assignment.xlsx"
+AssignmentsFile = 'result/exp_height_assignment.xlsx'
 HoldFile = "data/hold.csv"
 MainLampFile = "data/mainlamp.csv"
 BackMainLampFile = "data/back_mainlamp.csv"
@@ -58,35 +59,32 @@ penal2_load = 1
 penal2_dis = 10
 
 
-# 目的関数5のペナルティ
-penal5_k = 1000
-
 order_num = len(set(df["Order_ID"]))
 
 V_ij = []
 for i in I:
     tmp = []
-    for j in J:
+    for j in range(order_num):
         tmp.append(0)
     V_ij.append(tmp)
-# print(len(V_ij))
 
 OBJ = 0
 
 for index, row in df.iterrows():
     # print(row)
     hold_idx = Hold_encode[Hold_encode["Hold"]==row["Hold_ID"]]["Index"].iloc[-1]
-    
-    # print(Booking[Booking["Order_num"] == int(row["Order_ID"])]["Index"].iloc[-1])
     order_idx = int(row["Order_ID"]-1)
-    V_ij[hold_idx][order_idx] = row["Units"]
+    V_ij[hold_idx][order_idx] = row["Load_Units"]   
 
-for i in range(len(V_ij)):
-    print(V_ij[i])
+
+
+# for i  in range(len(V_ij)):
+#     print(V_ij[i])
 
 # 目的関数1
 # Z_it1t2:ホールドiにおいてt2を通過する注文があるとき異なる乗せ港t1の数分のペナルティ
 OBJ1 = 0
+
 for hold_idx in range(len(V_ij)):
     orders = V_ij[hold_idx]
     dport = []
@@ -133,7 +131,7 @@ for p in I_pair:
 print(OBJ2)
 
 OBJ += w2 * OBJ2
-
+total_orders = []
 # 目的関数3
 OBJ3 = 0
 check_port = L[:-1] + D[:-1]
@@ -148,19 +146,19 @@ for hold_idx in range(len(V_ij)):
         for i in range(len(orders)):
             tmp.append(0)
         order_array.append(tmp)
+        #0で初期化
+        
     for i in range(len(orders)):
         if orders[i]>0:
             lport = df[df["Order_ID"]==i+1]["LPORT"].iloc[-1]
-            for j in range(lport,L[-1]+1):
+            for j in range(int(lport),int(L[-1])+1):
                 order_array[j][i] = orders[i]
-    
-    for i in range(len(orders)):
-        if orders[i]>0:
+ 
             dport = df[df["Order_ID"]==i+1]["DPORT"].iloc[-1]
-            for j in range(D[0],dport):
+            for j in range(int(D[0]),int(dport)):
                 order_array[j][i] = orders[i]
             
-            
+    total_orders.append(order_array)
     for port in check_port:
         total_RT = 0
         order = order_array[port]
@@ -176,4 +174,42 @@ print(OBJ3)
 OBJ += w3 * OBJ3
 
 
+#目的関数4 デッドスペース
+OBJ4 = 0
+penal4_k = 1000
+check_port_dead_space = L[:-1]
 
+deeper_holds = {}
+for index,row in Ml_Back.iterrows():
+    first_hold= int(row["Hold0"])
+    tmp = []
+    tmp_idx = 1
+    deeper = []
+    while tmp_idx <= 42 and str(row["Hold"+str(tmp_idx)])!='nan':
+        deeper.append(int(row["Hold"+str(tmp_idx)]))
+        tmp_idx += 1
+    deeper_holds[first_hold] = deeper
+accepted_filling_rate = pd.read_csv('data/accepted_filling_rate.csv') 
+
+for port in check_port_dead_space:
+    total_RT = []
+    for hold_idx in range(len(V_ij)):
+        loaded_rt = 0
+        for i in range(len(total_orders[hold_idx][port])):
+            load_unit = total_orders[hold_idx][port][i]
+            if load_unit > 0: 
+                single_rt = df[df["Order_ID"]==i+1]["RT"].iloc[-1]
+                loaded_rt += single_rt*load_unit
+        total_RT.append(loaded_rt)
+
+
+    for hold_with_lamp in I_lamp:
+        #許容充填率を超えているか確認
+        if total_RT[hold_with_lamp] > B[hold_with_lamp]*accepted_filling_rate.at[hold_with_lamp,"Stress"]:
+            deeper = deeper_holds[hold_with_lamp]
+            for hold in deeper:
+                if B[hold]-  total_RT[hold] >= 1:
+                    OBJ4 += 1
+print(OBJ4)
+
+OBJ += w4 *penal4_k* OBJ4
