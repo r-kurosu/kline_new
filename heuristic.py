@@ -40,6 +40,24 @@ def main():
         
     filling_rate = read_hold.Read_other(AfrFile)
     
+    # ハイパーパラメータ設定
+    # 各目的関数の重み
+    w1 = 1
+    w2 = 1
+    w3 = 1
+    w4 = 1
+    w5 = 1
+
+    # 目的関数1のペナルティ
+    penal1_z = 10
+
+    # 目的関数2のペナルティ
+    penal2_load = 1
+    penal2_dis = 10
+    
+    # 目的関数5のペナルティ
+    penal5_k = 1000
+    
     J_t_load = []  # J_t_load:港tで積む注文の集合
     J_t_keep = []  # J_t_keep:港tを通過する注文の集合
     J_t_dis = []  # J_t_dis:港tで降ろす注文の集合
@@ -284,10 +302,41 @@ def main():
                 different_destination_area_orders.append(Booking.at[order[0],"DPORT"])
             unique_destination_ports = set(different_destination_area_orders)
             if (len(unique_destination_ports)>1):
-                objective1 += len(unique_destination_ports)-1
+                objective1 += penal1_z * len(unique_destination_ports)-1
         # ここまで
-        return total_left_RT+unloaded_units+balance_penalty+constraint1+objective1
-    
+        
+        
+        objective2 = 0
+        # 目的関数2 注文の積み降ろし地を揃える
+        for p in I_pair:
+            hold1 = p[0]
+            hold2 = p[1]
+            orders1 = assignment_hold[hold1]
+            orders2 = assignment_hold[hold2]
+            lport1 = []
+            lport2 = []
+            dport1 = []
+            dport2 = []
+            for order in orders1:
+                dport1.append(Booking.at[order[0],"DPORT"])
+                lport1.append(Booking.at[order[0],"LPORT"])
+            for order in orders2:
+                dport2.append(Booking.at[order[0],"DPORT"])
+                lport2.append(Booking.at[order[0],"LPORT"])
+            dport1 = set(dport1)
+            dport2 = set(dport2)
+            dport = set()
+            if len(dport.union(dport1,dport2)) > 1:
+                objective2 += penal2_dis * len(dport.union(dport1,dport2))-1
+            lport1 = set(lport1)
+            lport2 = set(lport2)
+            lport = set()
+            if len(lport.union(lport1,lport2)) > 1:
+                objective2 += penal2_load * len(lport.union(lport1,lport2))-1
+        #ここまで
+        
+        return total_left_RT+unloaded_units+balance_penalty+constraint1+objective1+objective2
+
     
     
 
