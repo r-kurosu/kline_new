@@ -27,6 +27,8 @@ def main():
     AfrMainLampFile = "data/afr_mainlamp.csv"
     AfrFile = "data/accepted_filling_rate.csv"
     StressFile = "data/stress_mainlamp.csv"
+    Gang2File = "data/gangnum_2.csv"
+    Gang3File = "data/gangnum_3.csv"
 
     # print("File:" + BookingFile)
     booking_name = BookingFile.split("/")[1].split(".")[0]
@@ -37,8 +39,23 @@ def main():
     # 船体情報の読み込み1
     I, B, I_pair, I_next, I_same, I_lamp, I_deck, RT_benefit, delta_s, min_s, max_s, delta_h, max_h, Hold_encode, Hold\
         = read_hold.Read_hold(HoldFile)
+    
+    # 船体情報の読み込み2
+    Ml_Load, Ml_Back, Ml_Afr, Stress, GANG2, GANG3\
+        = read_other.Read_other(MainLampFile, BackMainLampFile, AfrMainLampFile, StressFile, Gang2File, Gang3File, Hold_encode)
         
     filling_rate = read_hold.Read_other(AfrFile)
+    deeper_holds = {}
+    for index,row in Ml_Back.iterrows():
+        first_hold= int(row["Hold0"])
+        tmp = []
+        tmp_idx = 1
+        deeper = []
+        while tmp_idx <= 42 and str(row["Hold"+str(tmp_idx)])!='nan':
+            deeper.append(int(row["Hold"+str(tmp_idx)]))
+            tmp_idx += 1
+        deeper_holds[first_hold] = deeper
+    
     
     # ハイパーパラメータ設定
     # 各目的関数の重み
@@ -55,7 +72,7 @@ def main():
     penal2_load = 1
     penal2_dis = 10
     
-    # 目的関数5のペナルティ
+    # デッドスペースのペナルティ
     penal5_k = 1000
     
     J_t_load = []  # J_t_load:港tで積む注文の集合
@@ -162,10 +179,10 @@ def main():
                         if order_cnt < orders_size:
                             possible_unit_cnt = int(left_spaces[hold] // assignment_RT[loading_port_num][order_cnt])
                             if (possible_unit_cnt>0):
+                                left_spaces[hold] -= assignment_RT[loading_port_num][order_cnt] * possible_unit_cnt
                                 hold_assignment[hold].append([assignment[loading_port_num][order_cnt],possible_unit_cnt])
                                 assignment_total_space[loading_port_num][order_cnt] -= assignment_RT[loading_port_num][order_cnt] * possible_unit_cnt
                                 assignment_unit[loading_port_num][order_cnt] -= possible_unit_cnt
-                    
                 else: #最後に積む港ではない場合
                     for hold in segment:
                         ALLOWANCE_SPACE = B[hold] *  (1-filling_rate[hold])
@@ -182,11 +199,11 @@ def main():
                         if order_cnt < orders_size:
                             possible_unit_cnt = int((left_spaces[hold]-ALLOWANCE_SPACE) // assignment_RT[loading_port_num][order_cnt])
                             if (possible_unit_cnt>0):
+                                left_spaces[hold] -= assignment_RT[loading_port_num][order_cnt] * possible_unit_cnt
                                 hold_assignment[hold].append([assignment[loading_port_num][order_cnt],possible_unit_cnt])
                                 half_way_assignments[loading_port_num][hold].append([assignment[loading_port_num][order_cnt],possible_unit_cnt])
                                 assignment_total_space[loading_port_num][order_cnt] -= assignment_RT[loading_port_num][order_cnt] * possible_unit_cnt
                                 assignment_unit[loading_port_num][order_cnt] -= possible_unit_cnt
- 
                 for index in range(len(assignment_unit[loading_port_num])): 
                     if assignment_unit[loading_port_num][index]>0:
                         unloaded_orders.append([orders[index],assignment_unit[loading_port_num][index]])
@@ -335,6 +352,28 @@ def main():
                 objective2 += penal2_load * len(lport.union(lport1,lport2))-1
         #ここまで
         
+        # 目的関数4 デッドスペースを作らない
+        objective4 = 0
+        check_port_dead_space = L[:-1]
+        
+        for port in check_port_dead_space:
+            total_RT = []
+            for hold_idx in range(len(assignment_hold)):
+                loaded_rt = 0
+                for order in assignment_hold[hold_idx]:
+                    single_rt = Booking.at[order[0],"RT"]
+                    loaded_rt += single_rt*order[1]
+                total_RT.append(loaded_rt)
+        
+        print(total_RT)
+
+        exit()    
+
+        
+        
+        
+        
+        
         return total_left_RT+unloaded_units+balance_penalty+constraint1+objective1+objective2
 
     
@@ -404,7 +443,7 @@ def main():
     penalty = evaluate(assignment_hold,unloaded_orders,balance_penalty)
     shift_neighbor_list = operation.create_shift_neighbor(ORDER_COUNT,SEGMENT_COUNT)
     shift_count = 0
-    
+    exit()
     swap_neighbor_list = operation.create_swap_neighbor(J_t_load)
     swap_count = 0
     total_improve = 1
