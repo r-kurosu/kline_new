@@ -127,13 +127,16 @@ def main():
         for i in range(HOLD_COUNT):
             hold_assignment.append([])
         unloaded_orders = []
-
+        half_way_loaded_rt = [] #最終港以外で，積みを終えたときのRTの配列
         half_way_assignments = [] #1港目を積み終えたときのバランスを計算するための配列
         for loading_port_num in range(len(L)-1):     
             tmp = {}
+            tmp2 = []
             for hold_num in range(HOLD_COUNT):
                 tmp[hold_num] = []
+                tmp2.append(0)
             half_way_assignments.append(tmp)
+            half_way_loaded_rt.append(tmp2)
         
         balance_penalty = 0
 
@@ -204,6 +207,7 @@ def main():
                                 half_way_assignments[loading_port_num][hold].append([assignment[loading_port_num][order_cnt],possible_unit_cnt])
                                 assignment_total_space[loading_port_num][order_cnt] -= assignment_RT[loading_port_num][order_cnt] * possible_unit_cnt
                                 assignment_unit[loading_port_num][order_cnt] -= possible_unit_cnt
+                        half_way_loaded_rt[loading_port_num][hold] = B[hold] - left_spaces[hold]
                 for index in range(len(assignment_unit[loading_port_num])): 
                     if assignment_unit[loading_port_num][index]>0:
                         unloaded_orders.append([orders[index],assignment_unit[loading_port_num][index]])
@@ -255,9 +259,9 @@ def main():
         配列の1番目が，割り当てる台数
         """
 
-        return hold_assignment,unloaded_orders,balance_penalty
+        return hold_assignment,unloaded_orders,balance_penalty,half_way_loaded_rt
     
-    def evaluate(assignment_hold,unloaded_orders,balance_penalty):
+    def evaluate(assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt):
         # 全注文内の自動車の台数を全て割り当てる
         total_left_RT = 0
         for hold_num in range(HOLD_COUNT):
@@ -355,26 +359,16 @@ def main():
         # 目的関数4 デッドスペースを作らない
         objective4 = 0
         check_port_dead_space = L[:-1]
-        
         for port in check_port_dead_space:
-            total_RT = []
-            for hold_idx in range(len(assignment_hold)):
-                loaded_rt = 0
-                for order in assignment_hold[hold_idx]:
-                    single_rt = Booking.at[order[0],"RT"]
-                    loaded_rt += single_rt*order[1]
-                total_RT.append(loaded_rt)
+            total_RT = half_way_loaded_rt[port]
+            for hold_with_lamp in I_lamp:
+                if total_RT[hold_with_lamp] > B[hold_with_lamp]*filling_rate[hold_with_lamp]:
+                    for hold in deeper:
+                        if B[hold]-  total_RT[hold] >= 1:
+                            objective4 += penal5_k
+        # ここまで
         
-        print(total_RT)
-
-        exit()    
-
-        
-        
-        
-        
-        
-        return total_left_RT+unloaded_units+balance_penalty+constraint1+objective1+objective2
+        return total_left_RT+unloaded_units+balance_penalty+constraint1+objective1+objective2+objective4
 
     
     
@@ -438,12 +432,11 @@ def main():
             assignment[j%SEGMENT_COUNT][i].append(randomed_J[j])
 
     #初期解を，ホールドに割当
-    assignment_hold,unloaded_orders,balance_penalty = assign_to_hold(assignment)
+    assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt = assign_to_hold(assignment)
     #初期解のペナルティ    
-    penalty = evaluate(assignment_hold,unloaded_orders,balance_penalty)
+    penalty = evaluate(assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt)
     shift_neighbor_list = operation.create_shift_neighbor(ORDER_COUNT,SEGMENT_COUNT)
     shift_count = 0
-    exit()
     swap_neighbor_list = operation.create_swap_neighbor(J_t_load)
     swap_count = 0
     total_improve = 1
@@ -455,8 +448,8 @@ def main():
             copied_assignment = copy.deepcopy(assignment)
             tmp_assignment,is_changed= operation.shift(copied_assignment,shift_order,shift_seg,operation.find_loading_port(shift_order,J_t_load))
             if is_changed:
-                assignment_hold,unloaded_orders,balance_penalty = assign_to_hold(tmp_assignment)
-                tmp_penalty = evaluate(assignment_hold,unloaded_orders,balance_penalty)
+                assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt = assign_to_hold(tmp_assignment)
+                tmp_penalty = evaluate(assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt)
                 if  tmp_penalty < penalty:
                     print("改善 "+str(tmp_penalty))
                     penalty= tmp_penalty
@@ -477,8 +470,8 @@ def main():
             copied_assignment = copy.deepcopy(assignment)
             tmp_assignment,is_changed = operation.swap(copied_assignment,swap_order1,swap_order2,operation.find_loading_port(swap_order1,J_t_load))
             if is_changed:
-                assignment_hold,unloaded_orders,balance_penalty = assign_to_hold(tmp_assignment)
-                tmp_penalty = evaluate(assignment_hold,unloaded_orders,balance_penalty)
+                assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt = assign_to_hold(tmp_assignment)
+                tmp_penalty = evaluate(assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt)
                 if  tmp_penalty < penalty:
                     print("改善 "+str(tmp_penalty))
                     penalty= tmp_penalty
@@ -492,8 +485,8 @@ def main():
             else:
                 swap_count += 1
         
-    assignment_hold,unloaded_orders,balance_penalty = assign_to_hold(assignment)
-    penalty = evaluate(assignment_hold,unloaded_orders,balance_penalty)
+    assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt = assign_to_hold(assignment)
+    penalty = evaluate(assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt)
     print(penalty)
     
     dt2 = datetime.datetime.now()
