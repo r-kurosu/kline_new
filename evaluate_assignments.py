@@ -139,7 +139,6 @@ check_port = L[:-1] + D[:-1]
 for hold_idx in range(len(V_ij)):
     orders = V_ij[hold_idx]
     accpeted_rate = Stress[hold_idx]
-    # print(accpeted_rate)
     order_array = []
     for loading_num in range(len(T)):    
         tmp = []
@@ -157,7 +156,7 @@ for hold_idx in range(len(V_ij)):
             dport = df[df["Order_ID"]==i+1]["DPORT"].iloc[-1]
             for j in range(int(D[0]),int(dport)):
                 order_array[j][i] = orders[i]
-            
+
     total_orders.append(order_array)
     for port in check_port:
         total_RT = 0
@@ -168,7 +167,7 @@ for hold_idx in range(len(V_ij)):
                 total_RT += order[i]*single_rt
         if total_RT > B[hold_idx]*accpeted_rate:
             OBJ3 += total_RT - (B[hold_idx]*accpeted_rate)
-        
+
 print(OBJ3)
 
 OBJ += w3 * OBJ3
@@ -213,3 +212,24 @@ for port in check_port_dead_space:
 print(OBJ4)
 
 OBJ += w4 *penal4_k* OBJ4
+
+
+# 目的関数5 残容量を入り口に寄せる
+OBJ5 = 0
+n_it = []
+for hold_idx  in range(len(V_ij)):
+    loaded_rt = 0
+    for i in range(len(V_ij[hold_idx])):
+        load_unit = V_ij[hold_idx][i]
+        if load_unit > 0: 
+            single_rt = df[df["Order_ID"]==i+1]["RT"].iloc[-1]
+            loaded_rt += single_rt*load_unit
+    n_it.append(B[hold_idx]-loaded_rt)
+for i in range(len(n_it)):
+    OBJ5 += n_it[i] * RT_benefit[i]
+
+print(OBJ5)
+
+OBJ -= w5 * OBJ5
+
+print(OBJ)
