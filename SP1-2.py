@@ -216,8 +216,8 @@ def main():
     # ==============================================================================================
 
     # ファイルロード
-    # BookingFile = "book/exp.csv"
-    BookingFile = args[1]
+    BookingFile = "book/exp_height.csv"
+    # BookingFile = args[1]
     HoldFile = "data/hold.csv"
     MainLampFile = "data/mainlamp.csv"
     BackMainLampFile = "data/back_mainlamp.csv"
