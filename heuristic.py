@@ -263,12 +263,14 @@ def main():
     
     def evaluate(assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt):
         # 全注文内の自動車の台数を全て割り当てる
+        n_it = []
         total_left_RT = 0
         for hold_num in range(HOLD_COUNT):
             assignment = assignment_hold[hold_num]
             left_RT = B[hold_num]
             for order in assignment:
                 left_RT -= A[order[0]]*order[1]
+            n_it.append(left_RT)  
             total_left_RT += left_RT
         unloaded_units = 0
         for order in unloaded_orders:
@@ -368,7 +370,12 @@ def main():
                             objective4 += penal5_k
         # ここまで
         
-        return total_left_RT+unloaded_units+balance_penalty+constraint1+objective1+objective2+objective4
+        # 目的関数5 残容量を入り口に寄せる
+        objective5 = 0
+        for i in range(len(n_it)):
+            objective5 += n_it[i] * RT_benefit[i]
+            
+        return total_left_RT+unloaded_units+balance_penalty+constraint1+objective1+objective2+objective4-objective5
 
     
     
@@ -488,6 +495,7 @@ def main():
     assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt = assign_to_hold(assignment)
     penalty = evaluate(assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt)
     print(penalty)
+    
     
     dt2 = datetime.datetime.now()
     print("計算時間: "+str((dt2-dt1).total_seconds())+"秒")
