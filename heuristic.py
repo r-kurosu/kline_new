@@ -298,6 +298,8 @@ def main():
         # ここまで
         
         constraint1 = 0 #移動経路制約
+        
+        objective3 = 0 #作業効率充填率
         # 縦横方向のバランス制約
         balance_constraint1 = [0 for i in range(len(D))]
         balance_constraint2 = [0 for i in range(len(D))]
@@ -312,7 +314,7 @@ def main():
                     for i in range(1,destination_port-len(L)+1):
                         destination_assignments[i].append(assign)  
                                    
-            #降ろし地での経路確保  
+            #降ろし地での経路確保  降ろし地での作業効率充填率
             hold_space = B[hold_num]
             for i in range(1,len(destination_assignments)):
                 total_loaded_space = 0
@@ -320,6 +322,9 @@ def main():
                     total_loaded_space += A[assign[0]]*assign[1]
                 if total_loaded_space > hold_space*filling_rate[hold_num]:
                     constraint1 += (total_loaded_space-(hold_space*filling_rate[hold_num]))
+                if total_loaded_space > hold_space*Stress[hold_num]:
+                    objective3 += (total_loaded_space-(hold_space*Stress[hold_num]))
+            
             #ここまで
             
             #降ろし地でのバランス制約
@@ -394,8 +399,8 @@ def main():
         objective5 = 0
         for i in range(len(n_it)):
             objective5 += n_it[i] * RT_benefit[i]
-            
-        return 100*unloaded_units+balance_penalty+constraint1+objective1+objective2+objective4-objective5
+        # ここまで    
+        return 100*unloaded_units+100*balance_penalty+100*constraint1+objective1+objective2+objective3+objective4-objective5
 
     
     
