@@ -473,7 +473,7 @@ def main():
     swap_count = 0
     total_improve = 1
     while total_improve != 0:
-            
+
         while(shift_count < len(shift_neighbor_list)):
             shift_order = shift_neighbor_list[shift_count][0]
             shift_seg = shift_neighbor_list[shift_count][1]
@@ -495,6 +495,18 @@ def main():
                 shift_count += 1
                 
         total_improve = 0
+        #割当の順番を最適化
+        # for segment_num in range(SEGMENT_COUNT):
+        #     for loading_port_num in range(len(L)):
+        #         for k in range(len(assignment[segment_num][loading_port_num])**2):
+        #             copied_assignment = copy.deepcopy(assignment)
+        #             tmp_assignment= operation.intra(copied_assignment,segment_num,loading_port_num)
+        #             assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt = assign_to_hold(tmp_assignment)
+        #             tmp_penalty = evaluate(assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt)
+        #             if  tmp_penalty < penalty:
+        #                 print("改善 "+str(tmp_penalty))
+        #                 penalty= tmp_penalty
+        #                 assignment = copy.deepcopy(tmp_assignment)    
         
         while(swap_count < len(swap_neighbor_list)):
             swap_order1 = swap_neighbor_list[swap_count][0]

@@ -48,6 +48,15 @@ def swap(assignment,order1_num,order2_num,loading_port):
     assignment[order2_current_seg_num][loading_port][order2_idx] = order1_num
     return assignment,True
 
+def intra(assignment,segment_num,loading_port_num):
+    first_idx = random.randint(0,len(assignment[segment_num][loading_port_num])-1)
+    next_idx = random.randint(0,len(assignment[segment_num][loading_port_num])-1)
+    while first_idx == next_idx:
+        next_idx = random.randint(0,len(assignment[segment_num][loading_port_num])-1)
+    assignment[segment_num][loading_port_num][first_idx],assignment[segment_num][loading_port_num][next_idx] = assignment[segment_num][loading_port_num][next_idx],assignment[segment_num][loading_port_num][first_idx]
+    
+    return assignment
+
 def create_shift_neighbor(order_count,segment_count):
     lis = []
     for order in range(order_count):
