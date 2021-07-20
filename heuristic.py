@@ -375,7 +375,7 @@ def main():
         for i in range(len(n_it)):
             objective5 += n_it[i] * RT_benefit[i]
             
-        return total_left_RT+unloaded_units+balance_penalty+constraint1+objective1+objective2+objective4-objective5
+        return 100*unloaded_units+balance_penalty+constraint1+objective1+objective2+objective4-objective5
 
     
     
