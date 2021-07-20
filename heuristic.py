@@ -189,6 +189,26 @@ def main():
                 else: #最後に積む港ではない場合
                     for hold in segment:
                         ALLOWANCE_SPACE = B[hold] *  (1-filling_rate[hold])
+                        ALLOWANCE_STRESS_SPACE = B[hold] * (1-Stress[hold])
+                        # 全部詰め切るか，そのホールドに作業効率充填率を満たしつつ注文をまるごと詰め込めなくなったらwhileを抜ける
+                        while (order_cnt < orders_size and assignment_total_space[loading_port_num][order_cnt]<(left_spaces[hold])-ALLOWANCE_STRESS_SPACE):
+                            left_spaces[hold] -= assignment_total_space[loading_port_num][order_cnt]
+                            hold_assignment[hold].append([assignment[loading_port_num][order_cnt],assignment_unit[loading_port_num][order_cnt]])
+                            half_way_assignments[loading_port_num][hold].append([assignment[loading_port_num][order_cnt],assignment_unit[loading_port_num][order_cnt]])
+                            assignment_total_space[loading_port_num][order_cnt] = 0
+                            assignment_unit[loading_port_num][order_cnt] = 0
+                            order_cnt += 1
+                            
+                        # まるごとは注文を詰め込めなくても，作業効率充填率を満たしつつ一部なら可能なら一部を詰め込む
+                        if order_cnt < orders_size:
+                            possible_unit_cnt = int((left_spaces[hold]-ALLOWANCE_STRESS_SPACE) // assignment_RT[loading_port_num][order_cnt])
+                            if (possible_unit_cnt>0):
+                                left_spaces[hold] -= assignment_RT[loading_port_num][order_cnt] * possible_unit_cnt
+                                hold_assignment[hold].append([assignment[loading_port_num][order_cnt],possible_unit_cnt])
+                                half_way_assignments[loading_port_num][hold].append([assignment[loading_port_num][order_cnt],possible_unit_cnt])
+                                assignment_total_space[loading_port_num][order_cnt] -= assignment_RT[loading_port_num][order_cnt] * possible_unit_cnt
+                                assignment_unit[loading_port_num][order_cnt] -= possible_unit_cnt
+                        
                         # 全部詰め切るか，そのホールドに注文をまるごと詰め込めなくなったらwhileを抜ける
                         while (order_cnt < orders_size and assignment_total_space[loading_port_num][order_cnt]<(left_spaces[hold])-ALLOWANCE_SPACE):
                             left_spaces[hold] -= assignment_total_space[loading_port_num][order_cnt]
