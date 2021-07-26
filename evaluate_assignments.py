@@ -13,9 +13,9 @@ import read_other
 
 warnings.filterwarnings("ignore")
 
-BookingFile = "book/exp_height.csv"
-# AssignmentsFile = "/Users/takedakiyoshi/lab/kline/KLINE/4月のミーティング向けの資料/exp_assignment.xlsx"
-AssignmentsFile = 'result/exp_height_assignment.xlsx'
+BookingFile = "book/exp.csv"
+AssignmentsFile = "/Users/takedakiyoshi/lab/kline/KLINE/out/exp_assignment.xlsx"
+# AssignmentsFile = '/Users/takedakiyoshi/lab/kline/KLINE/ヒューリスティック/exp_2_5_assignment_86400.xlsx'
 HoldFile = "data/hold.csv"
 MainLampFile = "data/mainlamp.csv"
 BackMainLampFile = "data/back_mainlamp.csv"
@@ -77,7 +77,6 @@ for index, row in df.iterrows():
     V_ij[hold_idx][order_idx] = row["Load_Units"]   
 
 
-
 # for i  in range(len(V_ij)):
 #     print(V_ij[i])
 
@@ -92,7 +91,7 @@ for hold_idx in range(len(V_ij)):
         if orders[i]>0:
             dport.append(df[df["Order_ID"]==i+1]["DPORT"].iloc[-1])
     dport = set(dport)
-    if len(dport)>2:
+    if len(dport)>1:
         OBJ1 += w1 * penal1_z* (len(dport)-1)
 print(OBJ1)
 
@@ -140,7 +139,7 @@ for hold_idx in range(len(V_ij)):
     orders = V_ij[hold_idx]
     accpeted_rate = Stress[hold_idx]
     order_array = []
-    for loading_num in range(len(T)):    
+    for port_num in range(len(T)):    
         tmp = []
         for i in range(len(orders)):
             tmp.append(0)
