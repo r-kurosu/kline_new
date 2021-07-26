@@ -8,3 +8,5 @@ mip1.log
 *.pyc
 
 server_test.py
+
+out/*
