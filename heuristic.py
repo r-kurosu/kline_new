@@ -401,137 +401,171 @@ def main():
             objective5 += n_it[i] * RT_benefit[i]
         # ここまで    
         return 10000*unloaded_units+10000*balance_penalty+10000*constraint1+objective1+objective2+objective3+objective4-objective5
-    """
-    def is_feasible(assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt):
-        # 全注文内の自動車の台数を全て割り当てる
-        n_it = []
-        total_left_RT = 0
-        for hold_num in range(HOLD_COUNT):
-            assignment = assignment_hold[hold_num]
-            left_RT = B[hold_num]
-            for order in assignment:
-                left_RT -= A[order[0]]*order[1]
-            n_it.append(left_RT)  
-            total_left_RT += left_RT
-        unloaded_units = 0
-        for order in unloaded_orders:
-            unloaded_units += order[1]
-        # ここまで
+    
+    # def is_feasible(assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt):
+    #     # 全注文内の自動車の台数を全て割り当てる
+    #     n_it = []
+    #     total_left_RT = 0
+    #     for hold_num in range(HOLD_COUNT):
+    #         assignment = assignment_hold[hold_num]
+    #         left_RT = B[hold_num]
+    #         for order in assignment:
+    #             left_RT -= A[order[0]]*order[1]
+    #         n_it.append(left_RT)  
+    #         total_left_RT += left_RT
+    #     unloaded_units = 0
+    #     for order in unloaded_orders:
+    #         unloaded_units += order[1]
+    #     # ここまで
         
-        constraint1 = 0 #移動経路制約
+    #     constraint1 = 0 #移動経路制約
         
-        objective3 = 0 #作業効率充填率
-        # 縦横方向のバランス制約
-        balance_constraint1 = [0 for i in range(len(D))]
-        balance_constraint2 = [0 for i in range(len(D))]
+    #     objective3 = 0 #作業効率充填率
+    #     # 縦横方向のバランス制約
+    #     balance_constraint1 = [0 for i in range(len(D))]
+    #     balance_constraint2 = [0 for i in range(len(D))]
         
-        # 経路確保とバランス制約の計算に使う配列を作成
-        for hold_num in range(len(assignment_hold)):         
-            assignment_in_hold = assignment_hold[hold_num]
-            destination_assignments = [[] for i in range(len(D))]
-            for assign in assignment_in_hold:
-                destination_port = int(Booking.at[assign[0],"DPORT"])
-                if (destination_port-len(L)!=0):
-                    for i in range(1,destination_port-len(L)+1):
-                        destination_assignments[i].append(assign)  
+    #     # 経路確保とバランス制約の計算に使う配列を作成
+    #     for hold_num in range(len(assignment_hold)):         
+    #         assignment_in_hold = assignment_hold[hold_num]
+    #         destination_assignments = [[] for i in range(len(D))]
+    #         for assign in assignment_in_hold:
+    #             destination_port = int(Booking.at[assign[0],"DPORT"])
+    #             if (destination_port-len(L)!=0):
+    #                 for i in range(1,destination_port-len(L)+1):
+    #                     destination_assignments[i].append(assign)  
                                    
-            #降ろし地での経路確保  降ろし地での作業効率充填率
-            hold_space = B[hold_num]
-            for i in range(1,len(destination_assignments)):
-                total_loaded_space = 0
-                for assign in destination_assignments[i]:
-                    total_loaded_space += A[assign[0]]*assign[1]
-                if total_loaded_space > hold_space*filling_rate[hold_num]:
-                    constraint1 += (total_loaded_space-(hold_space*filling_rate[hold_num]))
-                if total_loaded_space > hold_space*Stress[hold_num]:
-                    objective3 += (total_loaded_space-(hold_space*Stress[hold_num]))
+    #         #降ろし地での経路確保  降ろし地での作業効率充填率
+    #         hold_space = B[hold_num]
+    #         for i in range(1,len(destination_assignments)):
+    #             total_loaded_space = 0
+    #             for assign in destination_assignments[i]:
+    #                 total_loaded_space += A[assign[0]]*assign[1]
+    #             if total_loaded_space > hold_space*filling_rate[hold_num]:
+    #                 constraint1 += (total_loaded_space-(hold_space*filling_rate[hold_num]))
+    #             if total_loaded_space > hold_space*Stress[hold_num]:
+    #                 objective3 += (total_loaded_space-(hold_space*Stress[hold_num]))
             
-            #ここまで
+    #         #ここまで
             
-            #降ろし地でのバランス制約
-            for destination_load_num in range(1,len(destination_assignments)):
-                for assign in destination_assignments[destination_load_num]:
-                    balance_constraint1[destination_load_num] += delta_h[hold_num] * G[assign[0]] * assign[1]
-                    balance_constraint2[destination_load_num] += delta_s[hold_num] * G[assign[0]] * assign[1]
-            #ここまで
+    #         #降ろし地でのバランス制約
+    #         for destination_load_num in range(1,len(destination_assignments)):
+    #             for assign in destination_assignments[destination_load_num]:
+    #                 balance_constraint1[destination_load_num] += delta_h[hold_num] * G[assign[0]] * assign[1]
+    #                 balance_constraint2[destination_load_num] += delta_s[hold_num] * G[assign[0]] * assign[1]
+    #         #ここまで
+                
+    #         # 降ろし地での作業効率充填率
+    #         order_array = []
+    #         accpeted_rate = Stress[hold_num]
+    #         for port_num in range(len(T)):    
+    #             order_array.append([])
 
-        #全ての降ろし地での全てのバランス制約を計算したので，制約違反していたらペナルティ 
-        for destination_load_num in range(1,len(destination_assignments)):          
-            balance_penalty += max(0,balance_constraint1[destination_load_num]-max_h)
-            balance_penalty += max(0,balance_constraint2[destination_load_num]-max_s)
-            balance_penalty += max(0,min_s-balance_constraint2[destination_load_num])
-        #ここまで
+             
+    #         for item in assignment_in_hold:
+    #             pass
+    #             lport = Booking.at[item[0],"LPORT"]
+    #             for i in range(int(lport),int(L[-1])+1):
+    #                 order_array[i].append(item)
+    #             dport = Booking.at[item[0],"DPORT"]
+    #             for i in range(int(D[0]),int(dport)):
+    #                 order_array[i].append(item)
+            
+    #         for port in check_port:
+    #             order = order_array[port]
+    #             total_RT = 0
+    #             for item in order:
+    #                 single_rt = Booking.at[item[0],"RT"]
+    #                 # print(item[0])
+    #                 # print(Booking.at[item[0]-1,"RT"])
+                    
+    #                 total_RT += item[1]*single_rt
+    #                 # print(single_rt,item[1])
+    #             if total_RT > B[hold_num]*accpeted_rate:
+    #                 objective3 += total_RT - (B[hold_num]*accpeted_rate)
+    #         #     print("port "+str(port))   
+    #         # print("------------")
+                
+    #     #全ての降ろし地での全てのバランス制約を計算したので，制約違反していたらペナルティ 
+    #     for destination_load_num in range(1,len(destination_assignments)):          
+    #         balance_penalty += max(0,balance_constraint1[destination_load_num]-max_h)
+    #         balance_penalty += max(0,balance_constraint2[destination_load_num]-max_s)
+    #         balance_penalty += max(0,min_s-balance_constraint2[destination_load_num])
+    #     #ここまで
         
-        objective1 = 0
-        # 目的関数1 ひとつのホールドで，異なる降ろし地の注文を少なくする
-        for each_assignment in assignment_hold:
-            different_destination_area_orders = []
-            for order in each_assignment:
-                different_destination_area_orders.append(Booking.at[order[0],"DPORT"])
-            unique_destination_ports = set(different_destination_area_orders)
-            # print(unique_destination_ports)
-            if (len(unique_destination_ports)>1):
-                objective1 += penal1_z * (len(unique_destination_ports)-1)
-                print(objective1)
-        # ここまで
+    #     objective1 = 0
+    #     # 目的関数1 ひとつのホールドで，異なる降ろし地の注文を少なくする
+    #     for each_assignment in assignment_hold:
+    #         different_destination_area_orders = []
+    #         for order in each_assignment:
+    #             different_destination_area_orders.append(Booking.at[order[0],"DPORT"])
+    #         unique_destination_ports = set(different_destination_area_orders)
+    #         # print(unique_destination_ports)
+    #         if (len(unique_destination_ports)>1):
+    #             objective1 += penal1_z * (len(unique_destination_ports)-1)
+    #     # ここまで
         
         
-        objective2 = 0
-        # 目的関数2 注文の積み降ろし地を揃える
-        for p in I_pair:
-            hold1 = p[0]
-            hold2 = p[1]
-            orders1 = assignment_hold[hold1]
-            orders2 = assignment_hold[hold2]
-            lport1 = []
-            lport2 = []
-            dport1 = []
-            dport2 = []
-            for order in orders1:
-                dport1.append(Booking.at[order[0],"DPORT"])
-                lport1.append(Booking.at[order[0],"LPORT"])
-            for order in orders2:
-                dport2.append(Booking.at[order[0],"DPORT"])
-                lport2.append(Booking.at[order[0],"LPORT"])
-            dport1 = set(dport1)
-            dport2 = set(dport2)
-            dport = set()
-            if len(dport.union(dport1,dport2)) > 1:
-                objective2 += penal2_dis * len(dport.union(dport1,dport2))-1
-            lport1 = set(lport1)
-            lport2 = set(lport2)
-            lport = set()
-            if len(lport.union(lport1,lport2)) > 1:
-                objective2 += penal2_load * len(lport.union(lport1,lport2))-1
-        #ここまで
+    #     objective2 = 0
+    #     # 目的関数2 注文の積み降ろし地を揃える
+    #     for p in I_pair:
+    #         hold1 = p[0]
+    #         hold2 = p[1]
+    #         orders1 = assignment_hold[hold1]
+    #         orders2 = assignment_hold[hold2]
+    #         lport1 = []
+    #         lport2 = []
+    #         dport1 = []
+    #         dport2 = []
+    #         for order in orders1:
+    #             dport1.append(Booking.at[order[0],"DPORT"])
+    #             lport1.append(Booking.at[order[0],"LPORT"])
+    #         for order in orders2:
+    #             dport2.append(Booking.at[order[0],"DPORT"])
+    #             lport2.append(Booking.at[order[0],"LPORT"])
+    #         dport1 = set(dport1)
+    #         dport2 = set(dport2)
+    #         dport = set()
+    #         if len(dport.union(dport1,dport2)) > 1:
+    #             objective2 += penal2_dis * len(dport.union(dport1,dport2))-1
+    #         lport1 = set(lport1)
+    #         lport2 = set(lport2)
+    #         lport = set()
+    #         if len(lport.union(lport1,lport2)) > 1:
+    #             objective2 += penal2_load * len(lport.union(lport1,lport2))-1
+    #     #ここまで
         
-        # 目的関数4 デッドスペースを作らない
-        objective4 = 0
-        check_port_dead_space = L[:-1]
-        for port in check_port_dead_space:
-            total_RT = half_way_loaded_rt[port]
-            for hold_with_lamp in I_lamp:
-                if total_RT[hold_with_lamp] > B[hold_with_lamp]*filling_rate[hold_with_lamp]:
-                    for hold in deeper:
-                        if B[hold]-  total_RT[hold] >= 1:
-                            objective4 += penal5_k
-        # ここまで
+    #     # 目的関数3 作業効率充填率
         
-        # 目的関数5 残容量を入り口に寄せる
-        objective5 = 0
-        for i in range(len(n_it)):
-            objective5 += n_it[i] * RT_benefit[i]
-        # ここまで    
-        print(unloaded_units,balance_penalty,constraint1)
-        print(objective1,objective2,objective3,objective4,objective5)
-    """
+    #     # ここまで
+        
+    #     # 目的関数4 デッドスペースを作らない
+    #     objective4 = 0
+    #     check_port_dead_space = L[:-1]
+    #     for port in check_port_dead_space:
+    #         total_RT = half_way_loaded_rt[port]
+    #         for hold_with_lamp in I_lamp:
+    #             if total_RT[hold_with_lamp] > B[hold_with_lamp]*filling_rate[hold_with_lamp]:
+    #                 for hold in deeper:
+    #                     if B[hold]-  total_RT[hold] >= 1:
+    #                         objective4 += penal5_k
+    #     # ここまで
+        
+    #     # 目的関数5 残容量を入り口に寄せる
+    #     objective5 = 0
+    #     for i in range(len(n_it)):
+    #         objective5 += n_it[i] * RT_benefit[i]
+    #     # ここまで    
+    #     print(unloaded_units,balance_penalty,constraint1)
+    #     print(objective1,objective2,objective3,objective4,objective5)
+    
     random.seed(1)
 
     SEGMENT_COUNT = 18
     HOLD_COUNT = 43
     ORDER_COUNT = len(J)
-    
-    
+    UNIQUE_ORDER_COUNT = len(set(Booking["Order_num"]))
+    check_port = L[:-1] + D[:-1]
     # 分割したホールドで，奥から詰める順番で配列を作成
     segments = np.array([[1, 0],
                          [2, 3],
@@ -592,6 +626,7 @@ def main():
     swap_neighbor_list = operation.create_swap_neighbor(J_t_load)
     swap_count = 0
     total_improve = 1
+    
     while total_improve != 0:
 
         while(shift_count < len(shift_neighbor_list)):
@@ -653,10 +688,9 @@ def main():
     penalty = evaluate(assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt)
     print(penalty)
     print("----------")
-    output = is_feasible(assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt)
-    print(output)
-    
-    
+    # output = is_feasible(assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt)
+    # print(output)
+
     dt2 = datetime.datetime.now()
     print("計算時間: "+str((dt2-dt1).total_seconds())+"秒")
     
@@ -669,14 +703,13 @@ def main():
             original_order_num = int(Booking.at[item[0],"Order_num"])
             other_info_dict[original_order_num] = []
             original_units = int(Booking.at[item[0],"Units"])
-            original_RT = int(Booking.at[item[0],"RT"])
+            original_RT = Booking.at[item[0],"RT"]
             lport = int(Booking.at[item[0],"LPORT"])
             dport = int(Booking.at[item[0],"DPORT"])
             other_info_dict[original_order_num].append(original_units)
             other_info_dict[original_order_num].append(original_RT)
             other_info_dict[original_order_num].append(lport)
             other_info_dict[original_order_num].append(dport)
-            
             if original_order_num in assignment_dict:
                 assignment_dict[original_order_num] += item[1]
             else:
@@ -687,7 +720,6 @@ def main():
             info.extend(other_info_dict[order_id])
             result.append(info)
     out_df = pd.DataFrame(result)
-    print(out_df)
     booking_name = BookingFile.split("/")[1].split(".")[0]
     assignment_file_name = "out/"+booking_name+"_assignment.xlsx"
     out_df.to_excel(assignment_file_name,index=False,header=False)            
