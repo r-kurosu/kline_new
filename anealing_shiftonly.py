@@ -685,17 +685,18 @@ def main():
 
 
     
+    r_freeze = 0
+    anealing_neighborhood_size = len(shift_neighbor_list)/2
     
-    
-    while AnealingTemperature>1.0:
+    while r_freeze<3 and AnealingTemperature > 0.1:
         consecutive_count = 0
         shift_count = 0
-        while(shift_count < len(shift_neighbor_list)/2):
+        accepted_count = 0
+        while(shift_count < anealing_neighborhood_size):
             random.shuffle(shift_neighbor_list)
-            if consecutive_count >=int(len(shift_neighbor_list)/400):
-                print('温度低下')
+            if consecutive_count >=int(anealing_neighborhood_size/200):
+                accepted_count += 10000
                 break
-            # print(consecutive_count)
             shift_order = shift_neighbor_list[shift_count][0]
             shift_seg = shift_neighbor_list[shift_count][1]
             copied_assignment = copy.deepcopy(assignment)
@@ -706,11 +707,10 @@ def main():
                 delta =  tmp_penalty - penalty
                 if  accept_prob(delta,AnealingTemperature):
                     consecutive_count += 1;
+                    accepted_count += 1
                     print("改善 "+str(tmp_penalty))
                     penalty= tmp_penalty
                     assignment = copy.deepcopy(tmp_assignment)
-                    # 探索リストを最初からやり直し
-                    # shift_count = 0 
                     shift_count += 1
                     random.shuffle(shift_neighbor_list)
                 else:
@@ -722,6 +722,14 @@ def main():
                 
         AnealingTemperature= AnealingTemperature*0.9
         print(AnealingTemperature)
+        print(accepted_count)
+        print(anealing_neighborhood_size)
+        print("受理確率:" +str(accepted_count/anealing_neighborhood_size))
+        # 受理確率が15%以下が2回続いたら、終わり
+        if (accepted_count/anealing_neighborhood_size < 0.05):
+            r_freeze += 1
+        else:
+            r_freeze = 0
         """
         while(swap_count < len(swap_neighbor_list)):
             swap_order1 = swap_neighbor_list[swap_count][0]
