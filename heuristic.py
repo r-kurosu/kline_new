@@ -19,8 +19,8 @@ warnings.filterwarnings("ignore")
 
 
 def main():
-    BookingFile = "book/exp_4_3.csv"
-    # BookingFile = args[1]
+    # BookingFile = "book/exp.csv"
+    BookingFile = args[1]
     HoldFile = "data/hold.csv"
     MainLampFile = "data/mainlamp.csv"
     BackMainLampFile = "data/back_mainlamp.csv"
@@ -573,7 +573,7 @@ def main():
         print(unloaded_units,balance_penalty,constraint1)
         print(objective1,objective2,objective3,objective2,objective5)    
         # ここまで    
-        return 10000*unloaded_units+10000*balance_penalty+10000*constraint1+objective1+objective2+objective3+objective4-objective5
+        return 100*unloaded_units+100*balance_penalty+100*constraint1+objective1+objective2+objective3+objective4-objective5
     
     random.seed(1)
 
@@ -666,18 +666,6 @@ def main():
                 shift_count += 1
                 
         total_improve = 0
-        #割当の順番を最適化
-        # for segment_num in range(SEGMENT_COUNT):
-        #     for loading_port_num in range(len(L)):
-        #         for k in range(len(assignment[segment_num][loading_port_num])**2):
-        #             copied_assignment = copy.deepcopy(assignment)
-        #             tmp_assignment= operation.intra(copied_assignment,segment_num,loading_port_num)
-        #             assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt = assign_to_hold(tmp_assignment)
-        #             tmp_penalty = evaluate(assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt)
-        #             if  tmp_penalty < penalty:
-        #                 print("改善 "+str(tmp_penalty))
-        #                 penalty= tmp_penalty
-        #                 assignment = copy.deepcopy(tmp_assignment)    
         """
         while(swap_count < len(swap_neighbor_list)):
             swap_order1 = swap_neighbor_list[swap_count][0]
