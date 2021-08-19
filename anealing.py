@@ -576,27 +576,27 @@ def main():
         # ここまで    
         return 100*unloaded_units+100*balance_penalty+100*constraint1+objective1+objective2+objective3+objective4-objective5
     
-    def accept_prob(delta,T):
+    def accept_prob(delta,AnealingTemperature):
         if delta<0:
             return True
-        elif math.exp(-delta/T) > random.random():
+        elif math.exp(-delta/AnealingTemperature) > random.random():
             return True
         else:
             return False
             
         
     def set_T(assignment,shift_neighbor_list):
-        t = 5
-        accepted_count = 1
+        t = 10
+        accepted_count = 0
         
         assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt = assign_to_hold(assignment)
         penalty = evaluate(assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt)
         
         
-        while accepted_count <= 80:
+        while accepted_count < 10:
             accepted_count = 0
-            t = t*2
-            for i in range(100):
+            t = 20*1.5
+            for i in range(20):
                 random.shuffle(shift_neighbor_list)
                 shift_order = shift_neighbor_list[i][0]  
                 shift_seg = shift_neighbor_list[i][1]
@@ -605,10 +605,11 @@ def main():
                 if is_changed:
                     assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt = assign_to_hold(tmp_assignment)
                     tmp_penalty = evaluate(assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt)
-                    delta = penalty - tmp_penalty
+                    delta = tmp_penalty - penalty 
                     # print(delta)
                     if accept_prob(delta,t):
                         accepted_count += 1
+        print(t)
         return t
         
     random.seed(1)
@@ -679,14 +680,22 @@ def main():
     swap_count = 0
     
     #アニーリングの初期温度
-    T = set_T(assignment,shift_neighbor_list)
-    print("初期温度: " +str(T))
+    AnealingTemperature = set_T(assignment,shift_neighbor_list)
+    print("初期温度: " +str(AnealingTemperature))
 
-    total_improve = 1
+
     
-    while total_improve != 0:
-
-        while(shift_count < len(shift_neighbor_list)):
+    
+    
+    while AnealingTemperature>1.0:
+        consecutive_count = 0
+        shift_count = 0
+        while(shift_count < len(shift_neighbor_list)/2):
+            random.shuffle(shift_neighbor_list)
+            if consecutive_count >=int(len(shift_neighbor_list)/400):
+                print('温度低下')
+                break
+            # print(consecutive_count)
             shift_order = shift_neighbor_list[shift_count][0]
             shift_seg = shift_neighbor_list[shift_count][1]
             copied_assignment = copy.deepcopy(assignment)
@@ -694,19 +703,25 @@ def main():
             if is_changed:
                 assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt = assign_to_hold(tmp_assignment)
                 tmp_penalty = evaluate(assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt)
-                if  tmp_penalty < penalty:
+                delta =  tmp_penalty - penalty
+                if  accept_prob(delta,AnealingTemperature):
+                    consecutive_count += 1;
                     print("改善 "+str(tmp_penalty))
                     penalty= tmp_penalty
                     assignment = copy.deepcopy(tmp_assignment)
                     # 探索リストを最初からやり直し
-                    shift_count = 0 
+                    # shift_count = 0 
+                    shift_count += 1
                     random.shuffle(shift_neighbor_list)
                 else:
+                    consecutive_count = 0;
                     shift_count += 1
             else:
+                consecutive_count = 0;
                 shift_count += 1
                 
-        total_improve = 0
+        AnealingTemperature= AnealingTemperature*0.9
+        print(AnealingTemperature)
         """
         while(swap_count < len(swap_neighbor_list)):
             swap_order1 = swap_neighbor_list[swap_count][0]
@@ -728,7 +743,8 @@ def main():
                     swap_count += 1
             else:
                 swap_count += 1
-    """
+        """
+    
     assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt = assign_to_hold(assignment)
     penalty = evaluate(assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt)
     print(penalty)
