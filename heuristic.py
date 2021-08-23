@@ -422,7 +422,7 @@ def main():
         for i in range(len(n_it)):
             objective5 += n_it[i] * RT_benefit[i]
         # ここまで    
-        return 10000*unloaded_units+10000*balance_penalty+10000*constraint1+objective1+objective2+objective3+objective4-objective5
+        return unloaded_units+balance_penalty+constraint1,objective1+objective2+objective3+objective4-objective5
     
     
     def is_feasible(assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt):
@@ -636,7 +636,8 @@ def main():
     #初期解を，ホールドに割当
     assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt = assign_to_hold(assignment)
     #初期解のペナルティ    
-    penalty = evaluate(assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt)
+    penalty,objective = evaluate(assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt)
+    evaluated_value = 100*penalty+objective
     shift_neighbor_list = operation.create_shift_neighbor(ORDER_COUNT,SEGMENT_COUNT)
     shift_count = 0
     swap_neighbor_list = operation.create_swap_neighbor(J_t_load)
@@ -652,10 +653,11 @@ def main():
             tmp_assignment,is_changed= operation.shift(copied_assignment,shift_order,shift_seg,operation.find_loading_port(shift_order,J_t_load))
             if is_changed:
                 assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt = assign_to_hold(tmp_assignment)
-                tmp_penalty = evaluate(assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt)
-                if  tmp_penalty < penalty:
-                    print("改善 "+str(tmp_penalty))
-                    penalty= tmp_penalty
+                tmp_penalty,tmp_objective = evaluate(assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt)
+                tmp_evaluated_value = 100*tmp_penalty+tmp_objective
+                if  tmp_evaluated_value < evaluated_value:
+                    print("改善 "+str(tmp_evaluated_value))
+                    evaluated_value= tmp_evaluated_value
                     assignment = copy.deepcopy(tmp_assignment)
                     # 探索リストを最初からやり直し
                     shift_count = 0 
@@ -674,10 +676,11 @@ def main():
             tmp_assignment,is_changed = operation.swap(copied_assignment,swap_order1,swap_order2,operation.find_loading_port(swap_order1,J_t_load))
             if is_changed:
                 assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt = assign_to_hold(tmp_assignment)
-                tmp_penalty = evaluate(assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt)
-                if  tmp_penalty < penalty:
-                    print("改善 "+str(tmp_penalty))
-                    penalty= tmp_penalty
+                tmp_penalty,tmp_objective = evaluate(assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt)
+                tmp_evaluated_value = 100*tmp_penalty+tmp_objective 
+                if  tmp_evaluated_value < evaluated_value:
+                    print("改善 "+str(tmp_evaluated_value))
+                    evaluated_value= tmp_evaluated_value
                     assignment = copy.deepcopy(tmp_assignment)
                     # 探索リストを最初からやり直し
                     swap_count = 0 
@@ -687,10 +690,10 @@ def main():
                     swap_count += 1
             else:
                 swap_count += 1
-    """
+        """
     assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt = assign_to_hold(assignment)
-    penalty = evaluate(assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt)
-    print(penalty)
+    penalty,objective = evaluate(assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt)
+    print(penalty*100+objective)
     print("----")
     output = is_feasible(assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt)
     print(output)
