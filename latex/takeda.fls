@@ -53,6 +53,8 @@ INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/algorithms/algorithmic.sty
 INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/algorithms/algorithmic.sty
 INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/tools/enumerate.sty
 INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/tools/enumerate.sty
+INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/graphics/lscape.sty
+INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/graphics/lscape.sty
 INPUT takeda.aux
 INPUT takeda.aux
 OUTPUT takeda.aux

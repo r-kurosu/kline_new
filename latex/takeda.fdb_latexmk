@@ -1,9 +1,9 @@
 # Fdb version 3
-["dvipdf"] 1625731969 "takeda.dvi" "takeda.pdf" "takeda" 1625731970
-  "takeda.dvi" 1625731969 60920 b559165c0adc1324eae76d40d06b3622 "latex"
+["dvipdf"] 1629880203 "takeda.dvi" "takeda.pdf" "takeda" 1629880204
+  "takeda.dvi" 1629880203 61016 54da931f0dabdc7f3e37889e084e55db "latex"
   (generated)
   "takeda.pdf"
-["latex"] 1625731968 "takeda.tex" "takeda.dvi" "takeda" 1625731970
+["latex"] 1629880203 "takeda.tex" "takeda.dvi" "takeda" 1629880204
   "/usr/local/texlive/2019/texmf-dist/fonts/map/fontname/texfonts.map" 1511824771 3332 103109f5612ad95229751940c61aada0 ""
   "/usr/local/texlive/2019/texmf-dist/fonts/tfm/public/cm/cmr8.tfm" 1136768653 1292 21c1c5bfeaebccffdb478fd231a0997d ""
   "/usr/local/texlive/2019/texmf-dist/fonts/tfm/public/txfonts/txb.tfm" 1136768653 2452 76194099b4f1c022cb59f4564251c4fe ""
@@ -36,6 +36,7 @@
   "/usr/local/texlive/2019/texmf-dist/tex/latex/graphics/graphics.sty" 1571003109 16458 1bb0e1418e20f598314cbad8ab796f2f ""
   "/usr/local/texlive/2019/texmf-dist/tex/latex/graphics/graphicx.sty" 1570222634 9057 e434b0c2dbde71054f2dde205cf3bde4 ""
   "/usr/local/texlive/2019/texmf-dist/tex/latex/graphics/keyval.sty" 1570222634 2590 3aa06f747eb7e19c8d68947f1828fd06 ""
+  "/usr/local/texlive/2019/texmf-dist/tex/latex/graphics/lscape.sty" 1570222634 1753 5c7d7d6327d08bcb5ccea1135381eff4 ""
   "/usr/local/texlive/2019/texmf-dist/tex/latex/graphics/trig.sty" 1570222634 3976 f6c84526d8a14dceb492f9a764e82175 ""
   "/usr/local/texlive/2019/texmf-dist/tex/latex/tools/enumerate.sty" 1570222634 3469 bb111855092044188dbc6ed4683ad0a9 ""
   "/usr/local/texlive/2019/texmf-dist/tex/latex/txfonts/omltxmi.fd" 1137111002 492 e7f8afe4428797548d4301de03a1b15f ""
@@ -61,9 +62,9 @@
   "/usr/local/texlive/2019/texmf-var/web2c/euptex/uplatex.fmt" 1573005491 4553067 6bfd2d44f501852523d42dc3f56fd483 ""
   "/usr/local/texlive/2019/texmf.cnf" 1557341546 577 d150fef99ac436ad1156e86b0892f6ef ""
   "segment.png" 1624691836 126966 1ca7e78e3334ecd124970f46236d5b6a ""
-  "takeda.aux" 1625731969 3269 a777ff16f2b03a8b18c765d3637a621f "latex"
-  "takeda.tex" 1625731968 46354 e7215f5f356e6bea64df8c488a8b5883 ""
+  "takeda.aux" 1629880203 3324 e020e5394b4bf26c01c402c50ef0198c "latex"
+  "takeda.tex" 1629880203 46834 559a4e852468091b919e331a7efcba85 ""
   (generated)
   "takeda.aux"
-  "takeda.dvi"
   "takeda.log"
+  "takeda.dvi"
