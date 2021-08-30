@@ -633,7 +633,7 @@ def main():
         for j in range(len(randomed_J)):
             assignment[j%SEGMENT_COUNT][i].append(randomed_J[j])
 
-    penalty_coefficient = 10000
+    penalty_coefficient = 100
     #初期解を，ホールドに割当
     assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt = assign_to_hold(assignment)
     #初期解のペナルティ    
@@ -645,6 +645,35 @@ def main():
     swap_count = 0
     total_improve = 1
     
+    print(evaluated_value)
+    for item in assignment:
+        print(item)
+    print("-----")
+    shift_order = 80
+    shift_seg = 12
+    inserted_index = 3
+    # 注文29をセグメント1に移動する
+    loading_port = operation.find_loading_port(shift_order,J_t_load)
+    current_segment,current_index = operation.find_current_segment_and_index(assignment,shift_order,loading_port)
+    assignment= operation.shift(assignment,shift_order,current_segment,shift_seg,loading_port,inserted_index)
+
+    assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt = assign_to_hold(assignment)
+    penalty,objective = evaluate(assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt)
+    tmp_evaluated_value = penalty_coefficient*penalty+objective
+    print(tmp_evaluated_value)
+    for item in assignment:
+        print(item)
+    print("----")
+    assignment= operation.shift(assignment,shift_order,shift_seg,current_segment,loading_port,current_index)
+    for item in assignment:
+        print(item)
+    assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt = assign_to_hold(assignment)
+    penalty,objective = evaluate(assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt)
+    evaluated_value = penalty_coefficient*penalty+objective
+    print(evaluated_value)
+    
+    
+    exit()
 
     
     while total_improve != 0:
@@ -653,20 +682,17 @@ def main():
             shift_order = shift_neighbor_list[shift_count][0]
             shift_seg = shift_neighbor_list[shift_count][1]
             copied_assignment = copy.deepcopy(assignment)
-            tmp_assignment,is_changed= operation.shift(copied_assignment,shift_order,shift_seg,operation.find_loading_port(shift_order,J_t_load))
-            if is_changed:
-                assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt = assign_to_hold(tmp_assignment)
-                tmp_penalty,tmp_objective = evaluate(assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt)
-                tmp_evaluated_value = penalty_coefficient*tmp_penalty+tmp_objective
-                if  tmp_evaluated_value < evaluated_value:
-                    print("改善 "+str(tmp_evaluated_value))
-                    evaluated_value= tmp_evaluated_value
-                    assignment = copy.deepcopy(tmp_assignment)
-                    # 探索リストを最初からやり直し
-                    shift_count = 0 
-                    random.shuffle(shift_neighbor_list)
-                else:
-                    shift_count += 1
+            tmp_assignment= operation.shift(copied_assignment,shift_order,shift_seg,operation.find_loading_port(shift_order,J_t_load))
+            assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt = assign_to_hold(tmp_assignment)
+            tmp_penalty,tmp_objective = evaluate(assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt)
+            tmp_evaluated_value = penalty_coefficient*tmp_penalty+tmp_objective
+            if  tmp_evaluated_value < evaluated_value:
+                print("改善 "+str(tmp_evaluated_value))
+                evaluated_value= tmp_evaluated_value
+                assignment = copy.deepcopy(tmp_assignment)
+                # 探索リストを最初からやり直し
+                shift_count = 0 
+                random.shuffle(shift_neighbor_list)
             else:
                 shift_count += 1
                 
@@ -676,21 +702,18 @@ def main():
             swap_order1 = swap_neighbor_list[swap_count][0]
             swap_order2 = swap_neighbor_list[swap_count][1]
             copied_assignment = copy.deepcopy(assignment)
-            tmp_assignment,is_changed = operation.swap(copied_assignment,swap_order1,swap_order2,operation.find_loading_port(swap_order1,J_t_load))
-            if is_changed:
-                assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt = assign_to_hold(tmp_assignment)
-                tmp_penalty,tmp_objective = evaluate(assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt)
-                tmp_evaluated_value = penalty_coefficient*tmp_penalty+tmp_objective 
-                if  tmp_evaluated_value < evaluated_value:
-                    print("改善 "+str(tmp_evaluated_value))
-                    evaluated_value= tmp_evaluated_value
-                    assignment = copy.deepcopy(tmp_assignment)
-                    # 探索リストを最初からやり直し
-                    swap_count = 0 
-                    random.shuffle(swap_neighbor_list)
-                    total_improve += 1
-                else:
-                    swap_count += 1
+            tmp_assignment = operation.swap(copied_assignment,swap_order1,swap_order2,operation.find_loading_port(swap_order1,J_t_load))
+            assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt = assign_to_hold(tmp_assignment)
+            tmp_penalty,tmp_objective = evaluate(assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt)
+            tmp_evaluated_value = penalty_coefficient*tmp_penalty+tmp_objective 
+            if  tmp_evaluated_value < evaluated_value:
+                print("改善 "+str(tmp_evaluated_value))
+                evaluated_value= tmp_evaluated_value
+                assignment = copy.deepcopy(tmp_assignment)
+                # 探索リストを最初からやり直し
+                swap_count = 0 
+                random.shuffle(swap_neighbor_list)
+                total_improve += 1
             else:
                 swap_count += 1
         
@@ -734,6 +757,6 @@ def main():
     booking_name = BookingFile.split("/")[1].split(".")[0]
     # assignment_file_name = "out/"+booking_name+"_assignment.xlsx"
     # out_df.to_excel(assignment_file_name,index=False,header=False)            
-        
+     
 if __name__ == "__main__":
     main()
