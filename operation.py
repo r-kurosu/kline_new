@@ -6,7 +6,7 @@ def find_loading_port(order_num,J_t_load):
         if order_num in J_t_load[port_num]:
             return port_num
         
-def shift(assignment,order_num,next_segment_num,loading_port):
+def shift(assignment,order_num,next_segment_num,loading_port,next_order):
     current_segment_num = -1
     #どのセグメントに入っているか確認
     for seg in range(len(assignment)):
@@ -18,7 +18,7 @@ def shift(assignment,order_num,next_segment_num,loading_port):
     assignment[current_segment_num][loading_port].remove(order_num)
     #新しく挿入
     random_order = random.randint(0,len(assignment[next_segment_num][loading_port]))
-    assignment[next_segment_num][loading_port].insert(random_order,order_num)
+    assignment[next_segment_num][loading_port].insert(next_order,order_num)
     return assignment,True
 
     #挿入先が変わらないならreturn
