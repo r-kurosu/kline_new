@@ -6,10 +6,12 @@ def find_loading_port(order_num,J_t_load):
         if order_num in J_t_load[port_num]:
             return port_num
         
-def find_current_segment(assignment,order_num,loading_port):
+def find_current_segment_and_index(assignment,order_num,loading_port):
     for seg in range(len(assignment)):
         if order_num in assignment[seg][loading_port]:
-            return seg
+            idx = assignment[seg][loading_port].index(order_num)
+            return seg,idx
+
             
 def shift(assignment,order_num,current_segment_num,next_segment_num,loading_port,next_order):
     # いまの割当から削除
