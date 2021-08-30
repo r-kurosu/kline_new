@@ -676,7 +676,7 @@ def main():
     ここまで
     """
     while total_improve != 0:
-
+        shift_count = 0
         while(shift_count < len(shift_neighbor_list)):
             shift_order = shift_neighbor_list[shift_count][0]
             shift_seg = shift_neighbor_list[shift_count][1]
@@ -688,7 +688,7 @@ def main():
             tmp_penalty,tmp_objective = evaluate(assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt)
             tmp_evaluated_value = penalty_coefficient*tmp_penalty+tmp_objective
             if  tmp_evaluated_value < evaluated_value:
-                print("改善 "+str(tmp_evaluated_value))
+                print("改善 shift "+str(tmp_evaluated_value))
                 evaluated_value= tmp_evaluated_value
                 # 探索リストを最初からやり直し
                 shift_count = 0 
@@ -699,28 +699,30 @@ def main():
                 assignment= operation.shift(assignment,shift_order,shift_seg,current_segment,loading_port,current_index)
                 
                 
-                
         total_improve = 0
-        """
+        swap_count = 0
         while(swap_count < len(swap_neighbor_list)):
             swap_order1 = swap_neighbor_list[swap_count][0]
             swap_order2 = swap_neighbor_list[swap_count][1]
-            copied_assignment = copy.deepcopy(assignment)
-            tmp_assignment = operation.swap(copied_assignment,swap_order1,swap_order2,operation.find_loading_port(swap_order1,J_t_load))
-            assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt = assign_to_hold(tmp_assignment)
+            loading_port = operation.find_loading_port(swap_order1,J_t_load)
+            order1_seg,order1_index = operation.find_current_segment_and_index(assignment,swap_order1,loading_port)
+            order2_seg,order2_index = operation.find_current_segment_and_index(assignment,swap_order2,loading_port)
+            assignment = operation.swap(assignment,swap_order1,order1_seg,order1_index,swap_order2,order2_seg,order2_index,loading_port)
+            assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt = assign_to_hold(assignment)
             tmp_penalty,tmp_objective = evaluate(assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt)
             tmp_evaluated_value = penalty_coefficient*tmp_penalty+tmp_objective 
             if  tmp_evaluated_value < evaluated_value:
-                print("改善 "+str(tmp_evaluated_value))
+                print("改善 swap  "+str(tmp_evaluated_value))
                 evaluated_value= tmp_evaluated_value
-                assignment = copy.deepcopy(tmp_assignment)
                 # 探索リストを最初からやり直し
-                swap_count = 0 
                 random.shuffle(swap_neighbor_list)
                 total_improve += 1
+                swap_count = 0
+                break
             else:
+                assignment = operation.swap(assignment,swap_order2,order1_seg,order1_index,swap_order1,order2_seg,order2_index,loading_port)
                 swap_count += 1
-        """
+        
         
     assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt = assign_to_hold(assignment)
     penalty,objective = evaluate(assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt)
