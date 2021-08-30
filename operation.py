@@ -67,7 +67,7 @@ def create_swap_neighbor(J_t_load,Booking):
             order_count = len(orders)
             for i in range(0,order_count-1):
                 for j in range(i+1,order_count):
-                    print(orders[i],orders[j])
-                    lis.append([orders[i],orders[j]])
+                    if Booking.at[orders[i],"index"] != Booking.at[orders[j],"index"]: 
+                        lis.append([orders[i],orders[j]])
     random.shuffle(lis)
     return lis
