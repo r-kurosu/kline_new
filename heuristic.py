@@ -571,7 +571,7 @@ def main():
             objective5 += n_it[i] * RT_benefit[i]
             
         print(unloaded_units,balance_penalty,constraint1)
-        print(objective1,objective2,objective3,objective2,objective5)    
+        print(objective1,objective2,objective3,objective4,objective5)    
         # ここまで    
         return penalty_coefficient*(unloaded_units+balance_penalty+constraint1)+objective1+objective2+objective3+objective4-objective5
     
