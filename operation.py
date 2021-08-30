@@ -19,7 +19,7 @@ def shift(assignment,order_num,next_segment_num,loading_port,next_order):
     #新しく挿入
     random_order = random.randint(0,len(assignment[next_segment_num][loading_port]))
     assignment[next_segment_num][loading_port].insert(next_order,order_num)
-    return assignment,True
+    return assignment
 
     #挿入先が変わらないならreturn
     if current_segment_num == next_segment_num:
@@ -57,7 +57,7 @@ def swap(assignment,order1_num,order2_num,loading_port):
     # swap
     assignment[order1_current_seg_num][loading_port][order1_idx] = order2_num
     assignment[order2_current_seg_num][loading_port][order2_idx] = order1_num
-    return assignment,True
+    return assignment
 
 def intra(assignment,segment_num,loading_port_num):
     first_idx = random.randint(0,len(assignment[segment_num][loading_port_num])-1)
