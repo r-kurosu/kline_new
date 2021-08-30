@@ -649,13 +649,13 @@ def main():
     for item in assignment:
         print(item)
     print("-----")
-    # shift_order = 80
-    # shift_seg = 12
-    # inserted_index = 3
+    shift_order = 17
+    shift_seg = 1
     # # 注文29をセグメント1に移動する
-    # loading_port = operation.find_loading_port(shift_order,J_t_load)
-    # current_segment,current_index = operation.find_current_segment_and_index(assignment,shift_order,loading_port)
-    # assignment= operation.shift(assignment,shift_order,current_segment,shift_seg,loading_port,inserted_index)
+    loading_port = operation.find_loading_port(shift_order,J_t_load)
+    current_segment,current_index = operation.find_current_segment_and_index(assignment,shift_order,loading_port)
+    inserted_index = random.randint(0,len(assignment[shift_seg][loading_port]))
+    assignment= operation.shift(assignment,shift_order,current_segment,shift_seg,loading_port,inserted_index)
 
     # assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt = assign_to_hold(assignment)
     # penalty,objective = evaluate(assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt)
@@ -672,15 +672,14 @@ def main():
     # evaluated_value = penalty_coefficient*penalty+objective
     # print(evaluated_value)
     
-    swap_order1 = 29
-    swap_order2 = 31
-    loading_port = operation.find_loading_port(swap_order1,J_t_load)
-    order1_seg,order1_index = operation.find_current_segment_and_index(assignment,swap_order1,loading_port)
-    order2_seg,order2_index = operation.find_current_segment_and_index(assignment,swap_order2,loading_port)
-    assignment = operation.swap(assignment,swap_order1,order1_seg,order1_index,swap_order2,order2_seg,order2_index,loading_port)
-        
-    assignment = operation.swap(assignment,swap_order2,order1_seg,order1_index,swap_order1,order2_seg,order2_index,loading_port)
-    exit()
+    # swap_order1 = 29
+    # swap_order2 = 31
+    # loading_port = operation.find_loading_port(swap_order1,J_t_load)
+    # order1_seg,order1_index = operation.find_current_segment_and_index(assignment,swap_order1,loading_port)
+    # order2_seg,order2_index = operation.find_current_segment_and_index(assignment,swap_order2,loading_port)
+    # assignment = operation.swap(assignment,swap_order1,order1_seg,order1_index,swap_order2,order2_seg,order2_index,loading_port)
+    # #戻す
+    # assignment = operation.swap(assignment,swap_order2,order1_seg,order1_index,swap_order1,order2_seg,order2_index,loading_port)
     
 
     
@@ -705,7 +704,7 @@ def main():
                 shift_count += 1
                 
         total_improve = 0
-        
+        """
         while(swap_count < len(swap_neighbor_list)):
             swap_order1 = swap_neighbor_list[swap_count][0]
             swap_order2 = swap_neighbor_list[swap_count][1]
@@ -724,6 +723,7 @@ def main():
                 total_improve += 1
             else:
                 swap_count += 1
+        """
         
     assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt = assign_to_hold(assignment)
     penalty,objective = evaluate(assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt)
