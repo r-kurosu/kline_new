@@ -641,7 +641,7 @@ def main():
     evaluated_value = penalty_coefficient*penalty+objective
     shift_neighbor_list = operation.create_shift_neighbor(ORDER_COUNT,SEGMENT_COUNT)
     shift_count = 0
-    swap_neighbor_list = operation.create_swap_neighbor(J_t_load)
+    swap_neighbor_list = operation.create_swap_neighbor(J_t_load,Booking)
     swap_count = 0
     total_improve = 1
     
