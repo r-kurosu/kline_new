@@ -60,7 +60,19 @@ def create_shift_neighbor(order_count,segment_count):
     random.shuffle(lis)
     return lis
 
-def create_swap_neighbor(J_t_load,Booking):
+def create_swap_neighbor(J_t_load):
+    lis = []
+    for orders in J_t_load:
+        if orders != []:
+            order_count = len(orders)
+            for order1 in orders:
+                for order2 in orders:
+                    if order1 != order2:
+                        lis.append([order1,order2])
+    random.shuffle(lis)
+    return lis
+
+def create_optimized_swap_neighbor(J_t_load,Booking):
     lis = []
     for orders in J_t_load:
         if orders != []:
