@@ -641,7 +641,8 @@ def main():
     evaluated_value = penalty_coefficient*penalty+objective
     shift_neighbor_list = operation.create_shift_neighbor(ORDER_COUNT,SEGMENT_COUNT)
     shift_count = 0
-    swap_neighbor_list = operation.create_swap_neighbor(J_t_load,Booking)
+    # swap_neighbor_list = operation.create_swap_neighbor(J_t_load,Booking)
+    swap_neighbor_list = operation.create_optimized_swap_neighbor(J_t_load,Booking)
     swap_count = 0
     total_improve = 1
     
@@ -681,6 +682,8 @@ def main():
             shift_order = shift_neighbor_list[shift_count][0]
             shift_seg = shift_neighbor_list[shift_count][1]
             loading_port = operation.find_loading_port(shift_order,J_t_load)
+            """
+            #ランダムな場所に追加
             current_segment,current_index = operation.find_current_segment_and_index(assignment,shift_order,loading_port)
             inserted_index = random.randint(0,len(assignment[shift_seg][loading_port]))
             assignment= operation.shift(assignment,shift_order,current_segment,shift_seg,loading_port,inserted_index)
@@ -697,10 +700,38 @@ def main():
                 shift_count += 1
                 # 探索の解を戻す
                 assignment= operation.shift(assignment,shift_order,shift_seg,current_segment,loading_port,current_index)
-                
-                
+            """
+            # """
+            #全ての場所に挿入して比較
+            best_index = -1
+            tmp_best_evaluated_value = evaluated_value
+            for idx in range(len(assignment[shift_seg][loading_port])+1):
+                current_segment,current_index = operation.find_current_segment_and_index(assignment,shift_order,loading_port)
+                inserted_index = idx
+                assignment= operation.shift(assignment,shift_order,current_segment,shift_seg,loading_port,inserted_index)
+                assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt = assign_to_hold(assignment)
+                tmp_penalty,tmp_objective = evaluate(assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt)
+                tmp_evaluated_value = penalty_coefficient*tmp_penalty+tmp_objective
+                if  tmp_evaluated_value < tmp_best_evaluated_value:
+                    tmp_best_evaluated_value= tmp_evaluated_value
+                    best_index = idx
+                assignment= operation.shift(assignment,shift_order,shift_seg,current_segment,loading_port,current_index)
+            if best_index!= -1:
+                shift_count = 0 
+                random.shuffle(shift_neighbor_list)
+                assignment= operation.shift(assignment,shift_order,current_segment,shift_seg,loading_port,best_index)
+                assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt = assign_to_hold(assignment)
+                tmp_penalty,tmp_objective = evaluate(assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt)
+                evaluated_value = penalty_coefficient*tmp_penalty+tmp_objective
+                print("改善 shift "+str(evaluated_value))
+            else:
+                shift_count += 1
+            # """
+            
         total_improve = 0
         swap_count = 0
+        
+        """
         while(swap_count < len(swap_neighbor_list)):
             swap_order1 = swap_neighbor_list[swap_count][0]
             swap_order2 = swap_neighbor_list[swap_count][1]
@@ -718,11 +749,11 @@ def main():
                 random.shuffle(swap_neighbor_list)
                 total_improve += 1
                 swap_count = 0
-                break
+                # break
             else:
                 assignment = operation.swap(assignment,swap_order2,order1_seg,order1_index,swap_order1,order2_seg,order2_index,loading_port)
                 swap_count += 1
-        
+        """
         
     assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt = assign_to_hold(assignment)
     penalty,objective = evaluate(assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt)
