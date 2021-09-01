@@ -122,7 +122,7 @@ def main():
         J_ld.append(ld)
 
         
-    def assign_to_hold(assignment_list):
+    def assign_to_hold(assignment_list,find_separation=False,shift_next_segment = -1,order_loading_port= -1):
         hold_assignment = []
         for i in range(HOLD_COUNT):
             hold_assignment.append([])
@@ -139,6 +139,8 @@ def main():
             half_way_loaded_rt.append(tmp2)
         
         balance_penalty = 0
+        
+        separation_orders = []
 
         for segment_num in range(SEGMENT_COUNT):
             segment = segments[segment_num]
@@ -180,6 +182,10 @@ def main():
                             order_cnt += 1
                         # まるごとは注文を詰め込めなくても，一部なら可能なら一部を詰め込む
                         if order_cnt < orders_size:
+                            if find_separation:
+                                if shift_next_segment == segment_num and order_loading_port==loading_port_num:
+                                    print(assignment[loading_port_num][order_cnt])
+                                    separation_orders.append(assignment[loading_port_num][order_cnt])
                             possible_unit_cnt = int(left_spaces[hold] // assignment_RT[loading_port_num][order_cnt])
                             if (possible_unit_cnt>0):
                                 left_spaces[hold] -= assignment_RT[loading_port_num][order_cnt] * possible_unit_cnt
@@ -201,6 +207,10 @@ def main():
                             
                         # まるごとは注文を詰め込めなくても，作業効率充填率を満たしつつ一部なら可能なら一部を詰め込む
                         if order_cnt < orders_size:
+                            if find_separation:
+                                if shift_next_segment == segment_num and order_loading_port==loading_port_num:
+                                    print(assignment[loading_port_num][order_cnt])
+                                    separation_orders.append(assignment[loading_port_num][order_cnt])
                             possible_unit_cnt = int((left_spaces[hold]-ALLOWANCE_STRESS_SPACE) // assignment_RT[loading_port_num][order_cnt])
                             if (possible_unit_cnt>0):
                                 left_spaces[hold] -= assignment_RT[loading_port_num][order_cnt] * possible_unit_cnt
@@ -220,6 +230,10 @@ def main():
                         
                         # まるごとは注文を詰め込めなくても，一部なら可能なら一部を詰め込む
                         if order_cnt < orders_size:
+                            if find_separation:
+                                if shift_next_segment == segment_num and order_loading_port==loading_port_num:
+                                    print(assignment[loading_port_num][order_cnt])
+                                    separation_orders.append(assignment[loading_port_num][order_cnt])
                             possible_unit_cnt = int((left_spaces[hold]-ALLOWANCE_SPACE) // assignment_RT[loading_port_num][order_cnt])
                             if (possible_unit_cnt>0):
                                 left_spaces[hold] -= assignment_RT[loading_port_num][order_cnt] * possible_unit_cnt
@@ -231,8 +245,6 @@ def main():
                 for index in range(len(assignment_unit[loading_port_num])): 
                     if assignment_unit[loading_port_num][index]>0:
                         unloaded_orders.append([orders[index],assignment_unit[loading_port_num][index]])
-
-
         # バランス制約を計算
         # 最後に積む港以外
         balance1 = 0
@@ -278,8 +290,15 @@ def main():
         配列の0番目が，注文の番号 
         配列の1番目が，割り当てる台数
         """
-
-        return hold_assignment,unloaded_orders,balance_penalty,half_way_loaded_rt
+        
+        separation_orders = set(separation_orders)
+        separation_index = []
+        for order in separation_orders:
+            separation_index.append(assignment_list[shift_next_segment][order_loading_port].index(order))
+        if find_separation == False:
+            return hold_assignment,unloaded_orders,balance_penalty,half_way_loaded_rt
+        else:
+            return hold_assignment,unloaded_orders,balance_penalty,half_way_loaded_rt,separation_index
     
     def evaluate(assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt):
         # 全注文内の自動車の台数を全て割り当てる
@@ -646,6 +665,20 @@ def main():
     swap_count = 0
     total_improve = 1
     
+    
+    
+
+    print(assignment[4])
+    print('----')
+    assignment= operation.shift(assignment,170,0,4,1,5)
+    print(assignment[4])
+    print('----')
+    assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt,separation_index = assign_to_hold(assignment,True,4,1)
+    for i in range(8,11):
+        print(assignment_hold[i])
+    print(separation_index)
+    exit()
+    
     """
     ここからテスト
     # shift_order = 17
@@ -749,7 +782,7 @@ def main():
                 random.shuffle(swap_neighbor_list)
                 total_improve += 1
                 swap_count = 0
-                # break
+                break
             else:
                 assignment = operation.swap(assignment,swap_order2,order1_seg,order1_index,swap_order1,order2_seg,order2_index,loading_port)
                 swap_count += 1
