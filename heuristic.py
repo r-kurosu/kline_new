@@ -184,7 +184,6 @@ def main():
                         if order_cnt < orders_size:
                             if find_separation:
                                 if shift_next_segment == segment_num and order_loading_port==loading_port_num:
-                                    print(assignment[loading_port_num][order_cnt])
                                     separation_orders.append(assignment[loading_port_num][order_cnt])
                             possible_unit_cnt = int(left_spaces[hold] // assignment_RT[loading_port_num][order_cnt])
                             if (possible_unit_cnt>0):
@@ -209,7 +208,6 @@ def main():
                         if order_cnt < orders_size:
                             if find_separation:
                                 if shift_next_segment == segment_num and order_loading_port==loading_port_num:
-                                    print(assignment[loading_port_num][order_cnt])
                                     separation_orders.append(assignment[loading_port_num][order_cnt])
                             possible_unit_cnt = int((left_spaces[hold]-ALLOWANCE_STRESS_SPACE) // assignment_RT[loading_port_num][order_cnt])
                             if (possible_unit_cnt>0):
@@ -232,7 +230,6 @@ def main():
                         if order_cnt < orders_size:
                             if find_separation:
                                 if shift_next_segment == segment_num and order_loading_port==loading_port_num:
-                                    print(assignment[loading_port_num][order_cnt])
                                     separation_orders.append(assignment[loading_port_num][order_cnt])
                             possible_unit_cnt = int((left_spaces[hold]-ALLOWANCE_SPACE) // assignment_RT[loading_port_num][order_cnt])
                             if (possible_unit_cnt>0):
@@ -668,16 +665,15 @@ def main():
     
     
 
-    print(assignment[4])
-    print('----')
-    assignment= operation.shift(assignment,170,0,4,1,5)
-    print(assignment[4])
-    print('----')
-    assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt,separation_index = assign_to_hold(assignment,True,4,1)
-    for i in range(8,11):
-        print(assignment_hold[i])
-    print(separation_index)
-    exit()
+    # print(assignment[4])
+    # print('----')
+    # assignment= operation.shift(assignment,170,0,4,1,5)
+    # print(assignment[4])
+    # print('----')
+    # assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt,separation_index = assign_to_hold(assignment,True,4,1)
+    # for i in range(8,11):
+    #     print(assignment_hold[i])
+    # print(separation_index)
     
     """
     ここからテスト
@@ -734,7 +730,7 @@ def main():
                 # 探索の解を戻す
                 assignment= operation.shift(assignment,shift_order,shift_seg,current_segment,loading_port,current_index)
             """
-            # """
+            """
             #全ての場所に挿入して比較
             best_index = -1
             tmp_best_evaluated_value = evaluated_value
@@ -749,6 +745,64 @@ def main():
                     tmp_best_evaluated_value= tmp_evaluated_value
                     best_index = idx
                 assignment= operation.shift(assignment,shift_order,shift_seg,current_segment,loading_port,current_index)
+            if best_index!= -1:
+                shift_count = 0 
+                random.shuffle(shift_neighbor_list)
+                assignment= operation.shift(assignment,shift_order,current_segment,shift_seg,loading_port,best_index)
+                assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt = assign_to_hold(assignment)
+                tmp_penalty,tmp_objective = evaluate(assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt)
+                evaluated_value = penalty_coefficient*tmp_penalty+tmp_objective
+                print("改善 shift "+str(evaluated_value))
+            else:
+                shift_count += 1
+            """
+            # """
+            #効果のありそうなとろこに挿入して比較
+            best_index = -1
+            tmp_best_evaluated_value = evaluated_value
+            
+            #まず一番後ろに挿入
+            current_segment,current_index = operation.find_current_segment_and_index(assignment,shift_order,loading_port)
+            inserted_index = len(assignment[shift_seg][loading_port])
+            assignment= operation.shift(assignment,shift_order,current_segment,shift_seg,loading_port,inserted_index)
+            assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt,separation_index = assign_to_hold(assignment,True,shift_seg,loading_port)
+            tmp_penalty,tmp_objective = evaluate(assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt)
+            tmp_evaluated_value = penalty_coefficient*tmp_penalty+tmp_objective
+            if  tmp_evaluated_value < tmp_best_evaluated_value:
+                tmp_best_evaluated_value= tmp_evaluated_value
+                best_index = inserted_index
+            assignment= operation.shift(assignment,shift_order,shift_seg,current_segment,loading_port,current_index)
+            insert_index_list= []
+            # print(separation_index)
+            if len(separation_index)==0:
+                insert_index_list.append(0)    
+            for item in separation_index:
+                if item==0:
+                    insert_index_list.append(0)
+                elif item != len(assignment[shift_seg][loading_port]):
+                    if item ==len(assignment[shift_seg][loading_port])-1:
+                        insert_index_list.append(item)
+                        insert_index_list.append(item-1)
+                    else:
+                        insert_index_list.append(item)
+                        insert_index_list.append(item+1)
+                        insert_index_list.append(item-1)
+            insert_index_list =  list(set(insert_index_list))
+            # print('change')
+            # print(insert_index_list)
+            # 効果のありそうなところに挿入
+            for idx in insert_index_list:
+                current_segment,current_index = operation.find_current_segment_and_index(assignment,shift_order,loading_port)
+                inserted_index = idx
+                assignment= operation.shift(assignment,shift_order,current_segment,shift_seg,loading_port,inserted_index)
+                assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt = assign_to_hold(assignment)
+                tmp_penalty,tmp_objective = evaluate(assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt)
+                tmp_evaluated_value = penalty_coefficient*tmp_penalty+tmp_objective
+                if  tmp_evaluated_value < tmp_best_evaluated_value:
+                    tmp_best_evaluated_value= tmp_evaluated_value
+                    best_index = idx
+                assignment= operation.shift(assignment,shift_order,shift_seg,current_segment,loading_port,current_index)
+            
             if best_index!= -1:
                 shift_count = 0 
                 random.shuffle(shift_neighbor_list)
