@@ -662,8 +662,9 @@ def main():
                 assign.append([0, 0, V_ij[i, j].X, 0, 0, "L", "D", 0])
         relaxed_all_assignment.append(tmp_assignment) 
     relaxation_t = np.array(relaxed_all_assignment).T  
-    for item in relaxation_t:
-        print(item)     
+    for i in range(len(relaxation_t)):
+        array_sum = sum(relaxation_t[i])
+        relaxation_t[i] = list(map( lambda x:x/array_sum,relaxation_t[i]))
     print(len(relaxation_t))
     print(len(relaxation_t[0]))
     
@@ -1033,6 +1034,9 @@ def main():
                 tmp_assignment.append(0.0)
         mip_all_assignment.append(tmp_assignment)   
     mip_t = np.array(mip_all_assignment).T
+    for i in range(len(mip_t)):
+        array_sum = sum(mip_t[i])
+        mip_t[i] = list(map( lambda x:x/array_sum,mip_t[i]))
     print('--------')
     for item in mip_t:
         print(item)     
