@@ -216,7 +216,7 @@ def main():
     # ==============================================================================================
 
     # ファイルロード
-    BookingFile = "book/exp_height.csv"
+    BookingFile = "book/exp.csv"
     # BookingFile = args[1]
     HoldFile = "data/hold.csv"
     MainLampFile = "data/mainlamp.csv"
@@ -300,7 +300,8 @@ def main():
         if J_N > 1000:
             gang_num[t] = 3
 
-
+    print(len(J)) #注文数
+    print(len(I)) #ホールドの数
     
     # モデリング1(定数・変数の設定)
     # ==============================================================================================
@@ -1044,8 +1045,15 @@ def main():
     print(len(mip_t[0]))
     
     # """
-
     
+    order_abs = 0
+    for order_num in range(len(J)):
+        for hold_num in range(len(I)):
+            order_abs += abs(relaxation_t[order_num][hold_num]-mip_t[order_num][hold_num])
+    print(order_abs)
+    
+    print("解の差")
+    print((order_abs/(2*len(J)))*100)
 
 if __name__ == "__main__":
     main()
