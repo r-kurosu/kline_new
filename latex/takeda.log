@@ -1,4 +1,4 @@
-This is e-upTeX, Version 3.14159265-p3.8.2-u1.25-190131-2.6 (utf8.uptex) (TeX Live 2019) (preloaded format=uplatex 2019.11.6)  25 AUG 2021 17:30
+This is e-upTeX, Version 3.14159265-p3.8.2-u1.25-190131-2.6 (utf8.uptex) (TeX Live 2019) (preloaded format=uplatex 2019.11.6)  23 SEP 2021 15:32
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -479,26 +479,34 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 File: segment.png Graphic file (type bmp)
 <segment.png>
 
-Underfull \vbox (badness 4805) has occurred while \output is active []
-
-
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [8]
-Underfull \hbox (badness 5077) in paragraph at lines 780--781
+
+LaTeX Warning: No positions in optional float specifier.
+               Default added (so using `tbp') on input line 801.
+
+
+Overfull \hbox (8.06775pt too wide) in paragraph at lines 805--813
+ [][][][] 
+ []
+
+
+Underfull \vbox (badness 3849) has occurred while \output is active []
+
+
+Underfull \hbox (badness 5077) in paragraph at lines 834--835
 []\JY2/mc/m/n/10 「 商船三井 プレスリリ ース \OT1/txr/m/n/10 2019 \JY2/mc/m/n/10 年 」
  []
 
-[9
-
-]
+[9]
 
 LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `tbp') on input line 787.
+               Default added (so using `tbp') on input line 841.
 
 
 LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `tbp') on input line 805.
+               Default added (so using `tbp') on input line 859.
 
 
 Overfull \hbox (853.58267pt too wide) has occurred while \output is active
@@ -510,12 +518,12 @@ Overfull \hbox (853.58267pt too wide) has occurred while \output is active
 
 ] (./takeda.aux) ) 
 Here is how much of TeX's memory you used:
- 3099 strings out of 492752
- 36558 string characters out of 6140168
+ 3134 strings out of 492752
+ 36873 string characters out of 6140168
  124904 words of memory out of 5000000
- 7511 multiletter control sequences out of 15000+600000
- 24512 words of font info for 93 fonts, out of 8000000 for 9000
+ 7546 multiletter control sequences out of 15000+600000
+ 25090 words of font info for 94 fonts, out of 8000000 for 9000
  934 hyphenation exceptions out of 8191
- 30i,20n,25p,1401b,380s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 30i,20n,25p,1401b,539s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on takeda.dvi (10 pages, 61016 bytes).
+Output written on takeda.dvi (10 pages, 64968 bytes).
