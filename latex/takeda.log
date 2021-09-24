@@ -1,4 +1,4 @@
-This is e-upTeX, Version 3.14159265-p3.8.2-u1.25-190131-2.6 (utf8.uptex) (TeX Live 2019) (preloaded format=uplatex 2019.11.6)  23 SEP 2021 17:08
+This is e-upTeX, Version 3.14159265-p3.8.2-u1.25-190131-2.6 (utf8.uptex) (TeX Live 2019) (preloaded format=uplatex 2019.11.6)  24 SEP 2021 15:44
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -494,24 +494,27 @@ Overfull \hbox (8.06775pt too wide) in paragraph at lines 806--814
 
 Underfull \vbox (badness 3849) has occurred while \output is active []
 
+ [9]
+
+LaTeX Warning: No positions in optional float specifier.
+               Default added (so using `tbp') on input line 864.
+
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [9]
-Underfull \hbox (badness 5077) in paragraph at lines 852--853
+
+Underfull \hbox (badness 5077) in paragraph at lines 895--896
 []\JY2/mc/m/n/10 「 商船三井 プレスリリ ース \OT1/txr/m/n/10 2019 \JY2/mc/m/n/10 年 」
  []
 
-[10
-
-]
+[10]
 
 LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `tbp') on input line 859.
+               Default added (so using `tbp') on input line 902.
 
 
 LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `tbp') on input line 877.
+               Default added (so using `tbp') on input line 920.
 
 
 Overfull \hbox (853.58267pt too wide) has occurred while \output is active
@@ -523,12 +526,12 @@ Overfull \hbox (853.58267pt too wide) has occurred while \output is active
 
 ] (./takeda.aux) ) 
 Here is how much of TeX's memory you used:
- 3135 strings out of 492752
- 36884 string characters out of 6140168
+ 3136 strings out of 492752
+ 36893 string characters out of 6140168
  124904 words of memory out of 5000000
- 7547 multiletter control sequences out of 15000+600000
+ 7548 multiletter control sequences out of 15000+600000
  25090 words of font info for 94 fonts, out of 8000000 for 9000
  934 hyphenation exceptions out of 8191
  30i,20n,25p,1401b,539s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on takeda.dvi (11 pages, 66416 bytes).
+Output written on takeda.dvi (11 pages, 70464 bytes).
