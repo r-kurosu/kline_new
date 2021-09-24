@@ -60,15 +60,16 @@
 
 \vspace{2mm}
  {\Large 竹田 陽} \\
- 2021年7月9日
+ 2021年10月7日
 \vspace{1mm}
 
 \end{center}
 \begin{quote}
  {\bf Abstract.}
- Our research considers the situation in which cars are transported to several ports of various countries by a carrier ship for cars. Two stages of work called stowage planning and simulation planning are performed before loading a collection of cars onto a PCC (pure car carrier, PCC). The stowage planning stage considers assigning cars to one of the areas called holds, a few of which compose each level of the ship. The simulation planning stage places the cars assigned to each area in the stowage planning one by one considering the orientation of cars.
- In our research, as the first step of fully automating the stowage planning and simulation planning, the goal is to output stowage plans efficiently with a computer using mathematical optimization technology.
- We confirmed that we can get a good solution for small bookings. We also propose heuristic model to solve large bookings.
+ Our research considers the situation in which cars are transported to several ports of various countries by a carrier ship for cars. Two stages of work called stowage planning and simulation planning are performed before loading a collection of cars onto a pure car carrier (PCC). The stowage planning stage considers assigning cars to one of the areas called holds, a few of which compose each level of the ship. The simulation planning stage places the cars assigned to each area in the stowage planning one by one considering the orientation of cars.
+ In our research, as the first step of fully automating the stowage planning and simulation planning, we aim to output stowage plans efficiently.
+ We propose heuristic algorithm to solve large instances.
+ We also propose a method to reduce computation time while keeping the quality of solution.
 \end{quote}
 \vspace{6mm}
 ]
@@ -620,7 +621,7 @@ $b_{i}$ &
 　運搬船で自動車を運ぶ際に船の外側へ自動車を詰め込みすぎると船が航海の途中で割れてしまったり,船の上方へ自動車を詰め込みすぎると船が傾いたときにバランスを崩しそのまま横転してしまうというような問題がある[3].本研究ではこの問題を考慮するため,過去10回分の航海データを解析することによりその航海内での運搬船の重量バランスを数値化した.その結果得られた10回分の航海データの中で最も重量バランスが偏ったときを閾値とし,運搬船の上下方向と前後方向それぞれに対して,各港において運搬船からで降ろす注文を全て降ろしたとき,または港で載せる注文を全て載せたときについて重量バランスが閾値を超えてしまうような荷物の割当を禁止する.
 
 \textgt{(c)注文の分割ルールを守る} \\
-　最初に注文を100台以下の小さい注文と100台以上500台以下の大きい注文と500台以上の巨大な注文に分割する. 小さい注文についてはモデルSP1-1と同じようにギャングの効率を考え分割をしない. 大きい注文に関しては一つのホールドでは全ての自動車が入りきらないことがあるので, 1つのデッキ内に注文に含まれる全ての自動車が収まるようにする. 巨大な注文についてはユニット数が500台以上1000台以下の場合には二等分, 1000台以上1500台以下の場合には三等分し別々の注文としてから大きい注文に加える. また等分した注文は別々のデッキに載せ, 大きい注文と同様に1つのデッキ内に全ての自動車が収まるようにする.
+　最初に注文を100台以下の小さい注文と100台以上500台以下の大きい注文と500台以上の巨大な注文に分割する. 小さい注文についてはモデルSP1-1と同じように作業の効率を考え分割をしない. 大きい注文に関しては一つのホールドでは全ての自動車が入りきらないことがあるので, 1つのデッキ内に注文に含まれる全ての自動車が収まるようにする. 巨大な注文についてはユニット数が500台以上1000台以下の場合には二等分, 1000台以上1500台以下の場合には三等分し別々の注文としてから大きい注文に加える. また等分した注文は別々のデッキに載せ, 大きい注文と同様に1つのデッキ内に全ての自動車が収まるようにする.
 
 \textgt{(d)船内の高さに関する制約} \\
 　それぞれのホールドには高さがあるため，積載する自動車の高さがホールドの高さを超えない必要がある．
@@ -632,10 +633,10 @@ $b_{i}$ &
 　ある港においてホールドから注文を降ろす場合,同じホールド内に降ろし地の異なる注文が複数存在していると注文の降ろし間違いが発生する可能性がある. 本研究では降ろし地において注文を各ホールド内で降ろすときに,その降ろし地を通過する注文があるときにペナルティが発生する.またこのとき更に降ろす注文の中で載せた港が異なる注文が複数含まれていたとする.この場合,席割作業の次にホールド内のどの領域に自動車を一台ずつ詰めていくのかを考える際,手配師は降ろし間違えを防ぐため降ろし地が同じ注文は出来るだけホールド内の一つの領域に行き渡るようにホールド内のスペース配分などを考慮しなければならない.このような手配師の負担を考え,この場合は降ろす注文の中に含まれる相異なる載せ地の分だけ更にペナルティが加算される.
 
 \textgt{(b)船内で注文の積み降ろし地を揃える} \\
-　ギャング達とのヒアリングで,積み間違いや降ろし間違いを防ぐためになるべく積み降ろし地が同じ注文は船内の同じところで固めておきたいという要望があった.本研究ではこの要望に応えるために隣接ホールドペアを用意した.隣接ホールドペアとは,例えば4デッキの3ホールドと4デッキの2ホールドのような隣り合ったホールド同士のペアと, 5デッキの3ホールドと6デッキの1ホールドのようなスロープで繋がったホールド同士のペアのことである.このホールドペアの表を用いて各隣接ホールドペアに対して目的関数(a)と同様に,異なる積み降ろし地の数だけペナルティが加算される.
+　ヒアリングを行ったところ,積み間違いや降ろし間違いを防ぐためになるべく積み降ろし地が同じ注文は船内の同じところで固めておきたいという要望があった.本研究ではこの要望に応えるために隣接ホールドペアを用意した.隣接ホールドペアとは,例えば4デッキの3ホールドと4デッキの2ホールドのような隣り合ったホールド同士のペアと, 5デッキの3ホールドと6デッキの1ホールドのようなスロープで繋がったホールド同士のペアのことである.このホールドペアの表を用いて各隣接ホールドペアに対して目的関数(a)と同様に,異なる積み降ろし地の数だけペナルティが加算される.
 
 \textgt{(c)作業効率充填率を考慮する} \\
-　ある港で注文の積み降ろしのために自動車をホールドから出すときやホールドに自動車を入れるときに,そのホールドと入口の間で通過するホールドの中にはその港を通過する注文が一定数割り当てられている.この注文がある一定量以上の場合,プランナーはそのホールドを自動車が通れるための道を作る必要がありホールド内における自動車のスペース配分を考える必要がある.またギャングは作られた道に自動車を通さなければいけないため,自動車の移動に慎重になり全体の作業効率が落ちる可能性が高い.本研究ではこのように作業効率が落ちないための各ホールド毎の作業効率充填率を設定し,これを上回ったホールドを自動車が通過する場合,通過する自動車の台数毎にペナルティが発生する.
+　ある港で注文の積み降ろしのために自動車をホールドから出すときやホールドに自動車を入れるときに,そのホールドと入口の間で通過するホールドの中にはその港を通過する注文が一定数割り当てられている.この注文がある一定量以上の場合,プランナーはそのホールドを自動車が通れるための道を作る必要がありホールド内における自動車のスペース配分を考える必要がある.また作業中は作られた道に自動車を通さなければいけないため,自動車の移動に慎重になり全体の作業効率が落ちる可能性が高い.本研究ではこのように作業効率が落ちないための各ホールド毎の作業効率充填率を設定し,これを上回ったホールドを自動車が通過する場合,通過する自動車の台数毎にペナルティが発生する.
 
 \textgt{(d)デッドスペースを作らない} \\
 　注文の合計資源要求量が船の合計収容量より十分小さい場合, 特定のホールドに空きスペースが出来る. このスペースが入口付近にあれば追い積みという港での突然の追加注文を積むことに対応出来るが, 空きスペースが出来たホールドに到達するまでに通るホールドが許容充填率を上回っている場合は, このスペースに追い積みをすることは出来ない. このような空きスペースのことをデッドスペースと言う. 目的関数(d)ではランプで繋がった船のホールドが許容充填率を超え特定デッキ間の移動ができない状態になったとき, そのホールドよりも奥にあるホールドの中で, 指定された最大許容デッドスペースよりも大きいデッドスペースがあるホールドが存在するときに大きいペナルティが発生する. \\
@@ -701,7 +702,7 @@ $b_{i}$ &
 
 \section{MIPを用いた計算実験}
 \label {gurobiの計算実験}
-鵜川らによる研究の数理モデルでは自動車の注文数や積み地や揚げ地の数の増加とともに制約や組合せが急速に増加してしまい，指定された時間内では十分に計算が進まない可能性が指摘されている.\cite{ukawa}
+鵜川らによる研究の数理モデルでは自動車の注文数や積み地や揚げ地の数の増加とともに制約や組合せが急速に増加してしまい，指定された時間内では十分に計算が進まない可能性が指摘されている\cite{ukawa}.
 
 \subsection{解くことのできる問題例の規模}
 注文数や港の数を変更した問題例をいくつか準備し，どの程度の規模の問題例ならばある程度の時間内で解けるのか調査を行った．
@@ -907,11 +908,11 @@ $b_{i}$ &
   \hline
   \multicolumn{3}{|c|}{問題例} & \begin{tabular}[c]{@{}c@{}}実行可能解が\\ 出力された時間\end{tabular} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}１時間後の\\ 解\end{tabular}} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}1時間後の\\ 下界値\end{tabular}} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}24時間後の\\ 解\end{tabular}} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}24時間後の\\ 下界値\end{tabular}} \\ \hline
   注文数   & 積み地の数   & 揚げ地の数   &                                                       & \multicolumn{1}{l|}{}                                                  & \multicolumn{1}{l|}{}                                                    & \multicolumn{1}{l|}{}                                                   & \multicolumn{1}{l|}{}                                                     \\ \hline
-  109   & 2       & 3       & 537                                                   & -4301.36                                                               & -4461.98                                                                 & -4388.44                                                                & -4461.98                                                                  \\ \hline
-  109   & 2       & 5       & 1674                                                  & -3522.82                                                               & -4461.98                                                                 & -4264.69                                                                & -4461.98                                                                  \\ \hline
-  109   & 4       & 3       & 344                                                   & -3515.46                                                               & -4461.98                                                                 & -4365.89                                                                & -4461.98                                                                  \\ \hline
-  250   & 2       & 3       & 2381                                                  & -3155.02                                                               & -4461.98                                                                 & -4083.18                                                                & -4461.98                                                                  \\ \hline
-  350   & 2       & 3       & 2249                                                  & -2738.00                                                               & -4461.98                                                                 & -2883.58                                                                & -4461.98                                                                  \\ \hline
+  109   & 2       & 3       & 537                                                   & $-4301.36      $                                                         & $-4461.98    $                                                             & $-4388.44    $                                                            & $-4461.98 $                                                                 \\ \hline
+  109   & 2       & 5       & 1674                                                  & $-3522.82                                          $                     & $-4461.98        $                                                         & $-4264.69   $                                                             & $-4461.98 $                                                                 \\ \hline
+  109   & 4       & 3       & 344                                                   & $-3515.46                                           $                    &$ -4461.98       $                                                          &$ -4365.89  $                                                              & $-4461.98 $                                                                 \\ \hline
+  250   & 2       & 3       & 2381                                                  & $-3155.02                                $                               & $-4461.98        $                                                         & $-4083.18  $                                                              &$ -4461.98   $                                                               \\ \hline
+  350   & 2       & 3       & 2249                                                  & $ -2738.00                   $                                            &$-4461.98             $                                                    & $-2883.58                    $                                            & $-4461.98                   $                                               \\ \hline
   \end{tabular}
 \end{table}
 
@@ -925,11 +926,11 @@ $b_{i}$ &
   \hline
   \multicolumn{3}{|c|}{問題例}                                                                                 & \multicolumn{2}{c|}{モデル1}                                                                                                                            & \multicolumn{2}{c|}{モデル2}                          \\ \hline
   注文数 & \begin{tabular}[c]{@{}c@{}}積み地\\ の数\end{tabular} & \begin{tabular}[c]{@{}c@{}}揚げ地\\ の数\end{tabular} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}3600秒後\\ の解\end{tabular}} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}86400秒後\\ の解\end{tabular}} & \multicolumn{1}{c|}{解} & \multicolumn{1}{c|}{計算時間} \\ \hline
-  109 & 2                                                & 3                                                & -508                                                                     & -3478                                                                     & -2975                  & 873                       \\ \hline
-  109 & 2                                                & 5                                                & -2612                                                                    & -3354                                                                     & -1167                  & 938                       \\ \hline
-  109 & 4                                                & 3                                                & 1240                                                                     & -3455                                                                     & -1378                  & 728                       \\ \hline
-  250 & 2                                                & 3                                                & 実行不可能                                                                    & -2064                                                                     & -2235                  & 3069                      \\ \hline
-  200 & 2                                                & 3                                                & 実行不可能                                                                    & -840                                                                      & 実行不可能                  & 6481                      \\ \hline
+  109 & 2                                                & 3                                                & $-508         $                                                            & $-3478    $                                                                 & $-2975   $               & 873                       \\ \hline
+  109 & 2                                                & 5                                                & $-2612         $                                                           & $-3354  $                                                                   & $-1167   $               & 938                       \\ \hline
+  109 & 4                                                & 3                                                & 1240                                                                     & $-3455    $                                                                 & $-1378  $                & 728                       \\ \hline
+  250 & 2                                                & 3                                                & 実行不可能                                                                    & $-2064        $                                                             & $-2235      $            & 3069                      \\ \hline
+  200 & 2                                                & 3                                                & 実行不可能                                                                    & $-840    $                                                                  & 実行不可能                  & 6481                      \\ \hline
   350 & 2                                                & 3                                                & 実行不可能                                                                    & 3726                                                                      & 実行不可能                  & 19219                     \\ \hline
   \end{tabular}
 \end{table}

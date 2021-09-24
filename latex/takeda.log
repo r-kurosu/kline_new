@@ -1,4 +1,4 @@
-This is e-upTeX, Version 3.14159265-p3.8.2-u1.25-190131-2.6 (utf8.uptex) (TeX Live 2019) (preloaded format=uplatex 2019.11.6)  24 SEP 2021 15:44
+This is e-upTeX, Version 3.14159265-p3.8.2-u1.25-190131-2.6 (utf8.uptex) (TeX Live 2019) (preloaded format=uplatex 2019.11.6)  24 SEP 2021 16:00
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -284,43 +284,43 @@ LaTeX Font Info:    Trying to load font information for OT1+txr on input line 54
 File: ot1txr.fd 2000/12/15 v3.1
 )
 LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
-(Font)              scaled to size 15.9785pt on input line 74.
+(Font)              scaled to size 15.9785pt on input line 75.
 LaTeX Font Info:    Font shape `JY2/mc/m/n' will be
-(Font)              scaled to size 15.9785pt on input line 74.
+(Font)              scaled to size 15.9785pt on input line 75.
 LaTeX Font Info:    Font shape `JT2/mc/bx/n' in size <17.28> not available
-(Font)              Font shape `JT2/gt/m/n' tried instead on input line 74.
+(Font)              Font shape `JT2/gt/m/n' tried instead on input line 75.
 LaTeX Font Info:    Font shape `JT2/gt/m/n' will be
-(Font)              scaled to size 15.9785pt on input line 74.
+(Font)              scaled to size 15.9785pt on input line 75.
 LaTeX Font Info:    Font shape `JY2/mc/bx/n' in size <17.28> not available
-(Font)              Font shape `JY2/gt/m/n' tried instead on input line 74.
+(Font)              Font shape `JY2/gt/m/n' tried instead on input line 75.
 LaTeX Font Info:    Font shape `JY2/gt/m/n' will be
-(Font)              scaled to size 15.9785pt on input line 74.
+(Font)              scaled to size 15.9785pt on input line 75.
 LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
-(Font)              scaled to size 13.31541pt on input line 74.
+(Font)              scaled to size 13.31541pt on input line 75.
 LaTeX Font Info:    Font shape `JY2/mc/m/n' will be
-(Font)              scaled to size 13.31541pt on input line 74.
+(Font)              scaled to size 13.31541pt on input line 75.
 LaTeX Font Info:    Font shape `JT2/mc/bx/n' in size <10> not available
-(Font)              Font shape `JT2/gt/m/n' tried instead on input line 74.
+(Font)              Font shape `JT2/gt/m/n' tried instead on input line 75.
 LaTeX Font Info:    Font shape `JT2/gt/m/n' will be
-(Font)              scaled to size 9.24683pt on input line 74.
+(Font)              scaled to size 9.24683pt on input line 75.
 LaTeX Font Info:    Font shape `JY2/mc/bx/n' in size <10> not available
-(Font)              Font shape `JY2/gt/m/n' tried instead on input line 74.
+(Font)              Font shape `JY2/gt/m/n' tried instead on input line 75.
 LaTeX Font Info:    Font shape `JY2/gt/m/n' will be
-(Font)              scaled to size 9.24683pt on input line 74.
+(Font)              scaled to size 9.24683pt on input line 75.
 LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
-(Font)              scaled to size 11.09619pt on input line 75.
+(Font)              scaled to size 11.09619pt on input line 76.
 LaTeX Font Info:    Font shape `JY2/mc/m/n' will be
-(Font)              scaled to size 11.09619pt on input line 75.
+(Font)              scaled to size 11.09619pt on input line 76.
 LaTeX Font Info:    Font shape `JT2/gt/m/n' will be
-(Font)              scaled to size 11.09619pt on input line 75.
+(Font)              scaled to size 11.09619pt on input line 76.
 LaTeX Font Info:    Font shape `JY2/gt/m/n' will be
-(Font)              scaled to size 11.09619pt on input line 75.
-LaTeX Font Info:    Trying to load font information for OT1+txss on input line 75.
+(Font)              scaled to size 11.09619pt on input line 76.
+LaTeX Font Info:    Trying to load font information for OT1+txss on input line 76.
  (/usr/local/texlive/2019/texmf-dist/tex/latex/txfonts/ot1txss.fd
 File: ot1txss.fd 2000/12/15 v3.1
 )
 LaTeX Font Info:    Font shape `OT1/txss/m/n' will be
-(Font)              scaled to size 11.39996pt on input line 75.
+(Font)              scaled to size 11.39996pt on input line 76.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
@@ -332,129 +332,129 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 ]
 LaTeX Font Info:    Font shape `OT1/txss/m/n' will be
-(Font)              scaled to size 9.49997pt on input line 85.
-LaTeX Font Info:    Trying to load font information for OMS+txr on input line 90.
+(Font)              scaled to size 9.49997pt on input line 86.
+LaTeX Font Info:    Trying to load font information for OMS+txr on input line 91.
  (/usr/local/texlive/2019/texmf-dist/tex/latex/txfonts/omstxr.fd
 File: omstxr.fd 2000/12/15 v3.1
 )
 LaTeX Font Info:    Font shape `OMS/txr/m/n' in size <10> not available
-(Font)              Font shape `OMS/txsy/m/n' tried instead on input line 90.
+(Font)              Font shape `OMS/txsy/m/n' tried instead on input line 91.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [2]
 LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
-(Font)              scaled to size 8.32214pt on input line 154.
+(Font)              scaled to size 8.32214pt on input line 155.
 LaTeX Font Info:    Font shape `JY2/mc/m/n' will be
-(Font)              scaled to size 8.32214pt on input line 154.
+(Font)              scaled to size 8.32214pt on input line 155.
 LaTeX Font Info:    Font shape `JY2/mc/m/n' will be
-(Font)              scaled to size 6.47278pt on input line 156.
+(Font)              scaled to size 6.47278pt on input line 157.
 LaTeX Font Info:    Font shape `JY2/mc/m/n' will be
-(Font)              scaled to size 4.62341pt on input line 156.
-LaTeX Font Info:    Trying to load font information for U+txmia on input line 156.
+(Font)              scaled to size 4.62341pt on input line 157.
+LaTeX Font Info:    Trying to load font information for U+txmia on input line 157.
  (/usr/local/texlive/2019/texmf-dist/tex/latex/txfonts/utxmia.fd
 File: utxmia.fd 2000/12/15 v3.1
 )
-LaTeX Font Info:    Trying to load font information for U+txsya on input line 156.
+LaTeX Font Info:    Trying to load font information for U+txsya on input line 157.
  (/usr/local/texlive/2019/texmf-dist/tex/latex/txfonts/utxsya.fd
 File: utxsya.fd 2000/12/15 v3.1
 )
-LaTeX Font Info:    Trying to load font information for U+txsyb on input line 156.
+LaTeX Font Info:    Trying to load font information for U+txsyb on input line 157.
  (/usr/local/texlive/2019/texmf-dist/tex/latex/txfonts/utxsyb.fd
 File: utxsyb.fd 2000/12/15 v3.1
 )
-LaTeX Font Info:    Trying to load font information for U+txsyc on input line 156.
+LaTeX Font Info:    Trying to load font information for U+txsyc on input line 157.
  (/usr/local/texlive/2019/texmf-dist/tex/latex/txfonts/utxsyc.fd
 File: utxsyc.fd 2000/12/15 v3.1
 )
-Overfull \hbox (3.76826pt too wide) in paragraph at lines 160--163
+Overfull \hbox (3.76826pt too wide) in paragraph at lines 161--164
 [][][][]| 
  []
 
 
-Overfull \hbox (8.51558pt too wide) in paragraph at lines 179--183
+Overfull \hbox (8.51558pt too wide) in paragraph at lines 180--184
 [][][][]| 
  []
 
 LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
-(Font)              scaled to size 6.47278pt on input line 200.
+(Font)              scaled to size 6.47278pt on input line 201.
 LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
-(Font)              scaled to size 4.62341pt on input line 200.
+(Font)              scaled to size 4.62341pt on input line 201.
 
-Overfull \hbox (11.69606pt too wide) in paragraph at lines 219--224
+Overfull \hbox (11.69606pt too wide) in paragraph at lines 220--225
 [][][][]| 
  []
 
 
-LaTeX Warning: Float too large for page by 2.51166pt on input line 227.
+LaTeX Warning: Float too large for page by 2.51166pt on input line 228.
 
 
-Overfull \hbox (5.68922pt too wide) in paragraph at lines 235--239
+Overfull \hbox (5.68922pt too wide) in paragraph at lines 236--240
 [][][][]| 
  []
 
 
-Overfull \hbox (5.09775pt too wide) in paragraph at lines 242--245
+Overfull \hbox (5.09775pt too wide) in paragraph at lines 243--246
 [][][][]| 
  []
 
 
-Overfull \hbox (5.68922pt too wide) in paragraph at lines 248--253
+Overfull \hbox (5.68922pt too wide) in paragraph at lines 249--254
 [][][][]| 
  []
 
 
-Overfull \hbox (5.68922pt too wide) in paragraph at lines 256--259
+Overfull \hbox (5.68922pt too wide) in paragraph at lines 257--260
 [][][][]| 
  []
 
 
-Overfull \hbox (30.53606pt too wide) in paragraph at lines 262--266
+Overfull \hbox (30.53606pt too wide) in paragraph at lines 263--267
 [][][][]| 
  []
 
 
-Overfull \hbox (28.00288pt too wide) in paragraph at lines 269--273
+Overfull \hbox (28.00288pt too wide) in paragraph at lines 270--274
 [][][][]| 
  []
 
 
-Overfull \hbox (18.04903pt too wide) in paragraph at lines 276--280
+Overfull \hbox (18.04903pt too wide) in paragraph at lines 277--281
 [][][][]| 
  []
 
 
-Overfull \hbox (36.54268pt too wide) in paragraph at lines 283--287
+Overfull \hbox (36.54268pt too wide) in paragraph at lines 284--288
 [][][][]| 
  []
 
 
-Overfull \hbox (27.29585pt too wide) in paragraph at lines 290--294
+Overfull \hbox (27.29585pt too wide) in paragraph at lines 291--295
 [][][][]| 
  []
 
 
-Overfull \hbox (36.54268pt too wide) in paragraph at lines 297--301
+Overfull \hbox (36.54268pt too wide) in paragraph at lines 298--302
 [][][][]| 
  []
 
 
-Overfull \hbox (36.54268pt too wide) in paragraph at lines 304--308
+Overfull \hbox (36.54268pt too wide) in paragraph at lines 305--309
 [][][][]| 
  []
 
 [3]
-Overfull \hbox (19.19606pt too wide) in paragraph at lines 352--354
+Overfull \hbox (19.19606pt too wide) in paragraph at lines 353--355
 [][][][]| 
  []
 
 
-Overfull \hbox (19.19606pt too wide) in paragraph at lines 357--359
+Overfull \hbox (19.19606pt too wide) in paragraph at lines 358--360
 [][][][]| 
  []
 
 
-Overfull \hbox (8.44289pt too wide) in paragraph at lines 402--404
+Overfull \hbox (8.44289pt too wide) in paragraph at lines 403--405
 [][][][]| 
  []
 
@@ -484,10 +484,10 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
  [8]
 
 LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `tbp') on input line 802.
+               Default added (so using `tbp') on input line 803.
 
 
-Overfull \hbox (8.06775pt too wide) in paragraph at lines 806--814
+Overfull \hbox (8.06775pt too wide) in paragraph at lines 807--815
  [][][][] 
  []
 
@@ -497,24 +497,24 @@ Underfull \vbox (badness 3849) has occurred while \output is active []
  [9]
 
 LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `tbp') on input line 864.
+               Default added (so using `tbp') on input line 865.
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
-Underfull \hbox (badness 5077) in paragraph at lines 895--896
+Underfull \hbox (badness 5077) in paragraph at lines 896--897
 []\JY2/mc/m/n/10 「 商船三井 プレスリリ ース \OT1/txr/m/n/10 2019 \JY2/mc/m/n/10 年 」
  []
 
 [10]
 
 LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `tbp') on input line 902.
+               Default added (so using `tbp') on input line 903.
 
 
 LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `tbp') on input line 920.
+               Default added (so using `tbp') on input line 921.
 
 
 Overfull \hbox (853.58267pt too wide) has occurred while \output is active
@@ -534,4 +534,4 @@ Here is how much of TeX's memory you used:
  934 hyphenation exceptions out of 8191
  30i,20n,25p,1401b,539s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on takeda.dvi (11 pages, 70464 bytes).
+Output written on takeda.dvi (11 pages, 70504 bytes).
