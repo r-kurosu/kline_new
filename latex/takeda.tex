@@ -66,10 +66,9 @@
 \end{center}
 \begin{quote}
  {\bf Abstract.}
- Our research considers the situation in which cars are transported to several ports of various countries by a carrier ship for cars. Two stages of work called stowage planning and simulation planning are performed before loading a collection of cars onto a pure car carrier (PCC). The stowage planning stage considers assigning cars to one of the areas called holds, a few of which compose each level of the ship. The simulation planning stage places the cars assigned to each area in the stowage planning one by one considering the orientation of cars.
- In our research, as the first step of fully automating the stowage planning and simulation planning, we aim to output stowage plans efficiently.
- We propose heuristic algorithm to solve large instances.
- We also propose a method to reduce computation time while keeping the quality of solution.
+ Our research considers the situation in which cars are transported to several ports of various countries by a carrier ship. Two stages of work called stowage planning and simulation planning are performed before loading a collection of cars onto a pure car carrier (PCC). The stowage planning stage considers assigning cars to one of the areas called holds, a few of which compose each level of the ship. The simulation planning stage places the cars assigned to each area in the stowage planning one by one considering the orientation of cars.
+ In our research, as the first step of fully automating the stowage planning and simulation planning, we aim to output efficient stowage plans.
+ We propose heuristic algorithm to solve large instances, and also propose a method to reduce computation time while keeping the quality of solution.
 \end{quote}
 \vspace{6mm}
 ]
@@ -620,12 +619,6 @@ $b_{i}$ &
 \textgt{(b)貨物の重量バランスに関する制約} \\
 　運搬船で自動車を運ぶ際に船の外側へ自動車を詰め込みすぎると船が航海の途中で割れてしまったり,船の上方へ自動車を詰め込みすぎると船が傾いたときにバランスを崩しそのまま横転してしまうというような問題がある[3].本研究ではこの問題を考慮するため,過去10回分の航海データを解析することによりその航海内での運搬船の重量バランスを数値化した.その結果得られた10回分の航海データの中で最も重量バランスが偏ったときを閾値とし,運搬船の上下方向と前後方向それぞれに対して,各港において運搬船からで降ろす注文を全て降ろしたとき,または港で載せる注文を全て載せたときについて重量バランスが閾値を超えてしまうような荷物の割当を禁止する.
 
-\textgt{(c)注文の分割ルールを守る} \\
-　最初に注文を100台以下の小さい注文と100台以上500台以下の大きい注文と500台以上の巨大な注文に分割する. 小さい注文についてはモデルSP1-1と同じように作業の効率を考え分割をしない. 大きい注文に関しては一つのホールドでは全ての自動車が入りきらないことがあるので, 1つのデッキ内に注文に含まれる全ての自動車が収まるようにする. 巨大な注文についてはユニット数が500台以上1000台以下の場合には二等分, 1000台以上1500台以下の場合には三等分し別々の注文としてから大きい注文に加える. また等分した注文は別々のデッキに載せ, 大きい注文と同様に1つのデッキ内に全ての自動車が収まるようにする.
-
-\textgt{(d)船内の高さに関する制約} \\
-　それぞれのホールドには高さがあるため，積載する自動車の高さがホールドの高さを超えない必要がある．
-
 \subsection{目的関数}
 本研究で扱う目的関数について述べる. 席割に関するプランナーとの意見交換や,実際の席割作業を体験することで,プランナーは席割を考える上で注文の降ろし間違えが起こらないような席割を第一に目指していることが推測された.本研究では,このような席割を実現するために3つの目的関数のパラメータを提案する.
 
@@ -664,13 +657,7 @@ $b_{i}$ &
 &\hspace{1.0em} \sum_{i \in I} x_{ij} = 1, \hspace{8.34em} j \in J^{\rm{small}}. \\
 &\hspace{1.0em} \sum_{i \in I} {\hspace{0.6em}v_{ij}} = u_j, \hspace{8.33em} j \in J. \\
 &\hspace{1.0em} \sum_{j \in J} {\hspace{0.65em}a_{j}}{v_{ij}} \leq {b_{i}}, \hspace{8.7em} i \in I. \\
-&\hspace{0.5em} \sum_{j \in {J_t}^{\rm{keep}}} \frac{a_{j} v_{ij}} {b_{i}} \geq \overline{q}_{i}^{\rm{s}} + {m_{it}}, \hspace{3.76em} i \in I, t \in T.
-\end{align}
-
-
-\newpage
-
-\begin{align}
+&\hspace{0.5em} \sum_{j \in {J_t}^{\rm{keep}}} \frac{a_{j} v_{ij}} {b_{i}} \geq \overline{q}_{i}^{\rm{s}} + {m_{it}}, \hspace{3.76em} i \in I, t \in T. \\
   &\hspace{0.8em} \sum_{i_2 \in {I_{i_1}^*}} {m_{i_2t} v_{i_1j}} \leq {m_{i_1jt}}, \hspace{2.4em} i_1 \in I, j \in J_{t}^{\rm{ld}}, t \in T. \\
   &\hspace{1.0em} \sum_{j \in J_{t}^{\rm{lk}}} \frac{a_{j} v_{ij}} {b_{i}} \leq k^1_{it} + \overline{q}_{i}, \hspace{3.85em} i \in I^{\rm{lamp}}, t \in L. \\
   &\hspace{1.0em} \sum_{j \in J_{t}^{\rm{lk}}} \frac{a_{j} v_{ij} + d^{\rm{s}}} {b_{i}}  \geq 1 - k^2_{it}  \hspace{3.28em} i \in I, t \in L. \\
@@ -682,7 +669,13 @@ $b_{i}$ &
   &\hspace{1.0em} \sum_{i_1 \in I_{k_{1}}^{\rm{deck}}} x_{i_1j} \sum_{i_2 \in I_{k_{2}}^{\rm{deck}}} x_{i_2j} \leq 0, \notag \\
   &\hspace{6.91em} j \in J^{\rm{large}}, k_1, k_2 \in K, k_1 \neq k_2. \\
   &\hspace{1.0em} \frac{v_{ij}} {u_j} \leq x_{ij}, \hspace{6.33em} i \in I, j \in J. \\
-  &\hspace{1.0em} {f^{\rm{h}}_1} \leq {\delta_{i}^{\rm{h}}}{g_{j}} {v_{ij}} \leq f^{\rm{h}}_2, \hspace{1.5em} i \in I, j \in J_{t}^{\rm{keep}} \cup J_{t}^{\rm{lk}}, t \in T. \\
+  &\hspace{1.0em} {f^{\rm{h}}_1} \leq {\delta_{i}^{\rm{h}}}{g_{j}} {v_{ij}} \leq f^{\rm{h}}_2, \hspace{1.5em} i \in I, j \in J_{t}^{\rm{keep}} \cup J_{t}^{\rm{lk}}, t \in T.
+\end{align}
+
+
+\newpage
+
+\begin{align}
   &\hspace{1.0em} {\delta_{i}^{\rm{v}}}{g_{j}} {v_{ij}} \leq f^{\rm{v}}, \hspace{1.5em} i \in I, j \in J_{t}^{\rm{keep}} \cup J_{t}^{\rm{lk}}, t \in T. \\
   &\hspace{1.0em} {x_{ij}} \leq {y_{it}^{\rm{keep}}}, \hspace{4.11em} i \in I, j \in J_{t}^{\rm{keep}}, t \in T. \\
   &\hspace{1.0em} {x_{ij}} \leq {y_{it_1t_2}}, \hspace{1.61em} i \in I, j \in J_{t_1}^{\rm{load}} \cap J_{t_2}^{\rm{dis}}, {t_1},{t_2} \in T. \\
@@ -696,8 +689,6 @@ $b_{i}$ &
 &\hspace{1.0em} {y_{i_1i_2t}^{\rm{dis}}} + y_{i_1i_2t}^{\rm{keep}} - 1 \leq {z_{i_1i_2t}^2}, \hspace{1.58em}  i_1, i_2 \in \overline{I}, t \in D. \\
 &\hspace{1.0em} \sum_{j \in J} \sum_{i \in I} H_j^{\rm{v}} {x_{ij}} \leq H_i^{\rm{h}},  \hspace{3.5em} i \in I, j \in J
 \end{align}
-
-\newpage
 
 
 \section{MIPを用いた計算実験}
@@ -715,7 +706,7 @@ $b_{i}$ &
 
 実際にはこれ以上の注文数を持つ問題例が多く存在しており，提案したモデルではより大規模な問題例を解くことは難しいと考えられる．
 
-\section{ヒューリスティックを使用するモデル}
+\section{ヒューリスティックを用いるモデル}
 より大規模な問題例を現実的な時間で解くために，ヒューリスティックを用いた数理モデルを提案する.
 
 \subsection{ホールドの統合}
@@ -814,7 +805,7 @@ $b_{i}$ &
 \end{tabular}
 \end{table}
 
-挿入近傍操作を一定回数行った際の経産次官の比較結果を表\ref{shift}に示す．
+挿入近傍操作を一定回数行った際の計算時間の比較結果を表\ref{shift}に示す．
 提案手法により，計算時間が短縮できることを確認した．
 
 \subsection{MIPモデルとの比較}
