@@ -795,18 +795,18 @@ $b_{i}$ &
   \centering
   \caption{近傍操作に関する計算時間の比較}
   \label{shift}
-\begin{tabular}{|c|c|c|r|r|}
+\begin{tabular}{cccrr}
 \hline
-注文数 & 積み地 & 揚げ地 & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}全ての位置\\ を探索\end{tabular}} & \multicolumn{1}{l|}{提案手法} \\ \hline
-109 & 2   & 3   & 145                                                                      & 81                        \\ \hline
-109 & 2   & 5   & 192                                                                      & 89                        \\ \hline
-109 & 4   & 3   & 122                                                                      & 99                        \\ \hline
+注文数 & 積み地 & 揚げ地 & \multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}全ての位置\\ を探索\end{tabular}} & 提案手法 \\ \hline
+109 & 2   & 3   & 145                                                                      & 81                        \\
+109 & 2   & 5   & 192                                                                      & 89                        \\
+109 & 4   & 3   & 122                                                                      & 99                        \\
 250 & 2   & 3   & 387                                                                      & 204                       \\ \hline
 \end{tabular}
 \end{table}
 
 挿入近傍操作を一定回数行った際の計算時間の比較結果を表\ref{shift}に示す．
-提案手法により，計算時間が短縮できることを確認した．
+提案手法により、全てのインスタンスにおいて計算時間が短縮できることを確認した．
 
 \subsection{MIPモデルとの比較}
 元のモデルで探索を行って1時間後と24時間後の結果と，新たに提案するモデルの結果の比較を表\ref{heuristic}に示す．
@@ -857,12 +857,12 @@ $b_{i}$ &
   \centering
   \caption{線形緩和問題の解との比較}
   \label{hamming}
-\begin{tabular}{|c|c|c|r|}
+\begin{tabular}{cccr}
 \hline
-注文数 & 積み地 & 揚げ地 & \multicolumn{1}{c|}{解の差異(\%)} \\ \hline
-38 & 2   & 3   & 100.00                        \\ \hline
-38 & 2   & 3   & 95.28                         \\ \hline
-57 & 2   & 5   & 94.23                         \\ \hline
+注文数 & 積み地 & 揚げ地 & \multicolumn{1}{c}{解の差異(\%)} \\ \hline
+38 & 2   & 3   & 100.00                        \\
+38 & 2   & 3   & 95.28                         \\
+57 & 2   & 5   & 94.23                         \\
 66 & 4   & 3   & 96.96                         \\ \hline
 \end{tabular}
 \end{table}
@@ -895,14 +895,14 @@ $b_{i}$ &
   \centering
   \caption{複数の規模の問題例に対する計算結果}
   \label{24hours}
-  \begin{tabular}{|c|c|c|r|r|r|r|r|}
+  \begin{tabular}{cccrrrrr}
   \hline
-  \multicolumn{3}{|c|}{問題例} & \begin{tabular}[c]{@{}c@{}}実行可能解が\\ 出力された時間\end{tabular} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}１時間後の\\ 解\end{tabular}} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}1時間後の\\ 下界値\end{tabular}} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}24時間後の\\ 解\end{tabular}} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}24時間後の\\ 下界値\end{tabular}} \\ \hline
-  注文数   & 積み地の数   & 揚げ地の数   &                                                       & \multicolumn{1}{l|}{}                                                  & \multicolumn{1}{l|}{}                                                    & \multicolumn{1}{l|}{}                                                   & \multicolumn{1}{l|}{}                                                     \\ \hline
-  109   & 2       & 3       & 537                                                   & $-4301.36      $                                                         & $-4461.98    $                                                             & $-4388.44    $                                                            & $-4461.98 $                                                                 \\ \hline
-  109   & 2       & 5       & 1674                                                  & $-3522.82                                          $                     & $-4461.98        $                                                         & $-4264.69   $                                                             & $-4461.98 $                                                                 \\ \hline
-  109   & 4       & 3       & 344                                                   & $-3515.46                                           $                    &$ -4461.98       $                                                          &$ -4365.89  $                                                              & $-4461.98 $                                                                 \\ \hline
-  250   & 2       & 3       & 2381                                                  & $-3155.02                                $                               & $-4461.98        $                                                         & $-4083.18  $                                                              &$ -4461.98   $                                                               \\ \hline
+  \multicolumn{3}{c}{問題例} & \begin{tabular}[c]{@{}c@{}}実行可能解が\\ 出力された時間\end{tabular} & \multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}１時間後の\\ 解\end{tabular}} & \multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}1時間後の\\ 下界値\end{tabular}} & \multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}24時間後の\\ 解\end{tabular}} & \multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}24時間後の\\ 下界値\end{tabular}} \\ \hline
+  注文数   & 積み地の数   & 揚げ地の数   &                                                       & \multicolumn{1}{l}{}                                                  & \multicolumn{1}{l}{}                                                    & \multicolumn{1}{l}{}                                                   & \multicolumn{1}{l}{}                                                     \\ \hline
+  109   & 2       & 3       & 537                                                   & $-4301.36      $                                                         & $-4461.98    $                                                             & $-4388.44    $                                                            & $-4461.98 $                                                                 \\
+  109   & 2       & 5       & 1674                                                  & $-3522.82                                          $                     & $-4461.98        $                                                         & $-4264.69   $                                                             & $-4461.98 $                                                                 \\
+  109   & 4       & 3       & 344                                                   & $-3515.46                                           $                    &$ -4461.98       $                                                          &$ -4365.89  $                                                              & $-4461.98 $                                                                 \\
+  250   & 2       & 3       & 2381                                                  & $-3155.02                                $                               & $-4461.98        $                                                         & $-4083.18  $                                                              &$ -4461.98   $                                                               \\
   350   & 2       & 3       & 2249                                                  & $ -2738.00                   $                                            &$-4461.98             $                                                    & $-2883.58                    $                                            & $-4461.98                   $                                               \\ \hline
   \end{tabular}
 \end{table}
@@ -913,15 +913,15 @@ $b_{i}$ &
   \centering
   \caption{2つのモデルの計算時間と解の比較}
   \label{heuristic}
-  \begin{tabular}{|c|c|c|r|r|r|r|}
+  \begin{tabular}{cccrrrr}
   \hline
-  \multicolumn{3}{|c|}{問題例}                                                                                 & \multicolumn{2}{c|}{モデル1}                                                                                                                            & \multicolumn{2}{c|}{モデル2}                          \\ \hline
-  注文数 & \begin{tabular}[c]{@{}c@{}}積み地\\ の数\end{tabular} & \begin{tabular}[c]{@{}c@{}}揚げ地\\ の数\end{tabular} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}3600秒後\\ の解\end{tabular}} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}86400秒後\\ の解\end{tabular}} & \multicolumn{1}{c|}{解} & \multicolumn{1}{c|}{計算時間} \\ \hline
-  109 & 2                                                & 3                                                & $-508         $                                                            & $-3478    $                                                                 & $-2975   $               & 873                       \\ \hline
-  109 & 2                                                & 5                                                & $-2612         $                                                           & $-3354  $                                                                   & $-1167   $               & 938                       \\ \hline
-  109 & 4                                                & 3                                                & 1240                                                                     & $-3455    $                                                                 & $-1378  $                & 728                       \\ \hline
-  250 & 2                                                & 3                                                & 実行不可能                                                                    & $-2064        $                                                             & $-2235      $            & 3069                      \\ \hline
-  200 & 2                                                & 3                                                & 実行不可能                                                                    & $-840    $                                                                  & 実行不可能                  & 6481                      \\ \hline
+  \multicolumn{3}{c}{問題例}                                                                                 & \multicolumn{2}{c}{モデル1}                                                                                                                            & \multicolumn{2}{c}{モデル2}                          \\ \hline
+  注文数 & \begin{tabular}[c]{@{}c@{}}積み地\\ の数\end{tabular} & \begin{tabular}[c]{@{}c@{}}揚げ地\\ の数\end{tabular} & \multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}3600秒後\\ の解\end{tabular}} & \multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}86400秒後\\ の解\end{tabular}} & \multicolumn{1}{c}{解} & \multicolumn{1}{c}{計算時間} \\ \hline
+  109 & 2                                                & 3                                                & $-508         $                                                            & $-3478    $                                                                 & $-2975   $               & 873                       \\
+  109 & 2                                                & 5                                                & $-2612         $                                                           & $-3354  $                                                                   & $-1167   $               & 938                       \\
+  109 & 4                                                & 3                                                & 1240                                                                     & $-3455    $                                                                 & $-1378  $                & 728                       \\
+  250 & 2                                                & 3                                                & 実行不可能                                                                    & $-2064        $                                                             & $-2235      $            & 3069                      \\
+  200 & 2                                                & 3                                                & 実行不可能                                                                    & $-840    $                                                                  & 実行不可能                  & 6481                      \\
   350 & 2                                                & 3                                                & 実行不可能                                                                    & 3726                                                                      & 実行不可能                  & 19219                     \\ \hline
   \end{tabular}
 \end{table}
