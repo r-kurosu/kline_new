@@ -216,7 +216,7 @@ def main():
     # ==============================================================================================
 
     # ファイルロード
-    BookingFile = "book/exp.csv"
+    BookingFile = "book/exp_height.csv"
     # BookingFile = args[1]
     HoldFile = "data/hold.csv"
     MainLampFile = "data/mainlamp.csv"
@@ -306,6 +306,9 @@ def main():
     # モデリング1(定数・変数の設定)
     # ==============================================================================================
 
+    
+    # """
+    # ここからMIP
     # Gurobiパラメータ設定
     GAP_SP = gp.Model()
     GAP_SP.setParam("TimeLimit", 3600)
@@ -340,7 +343,7 @@ def main():
     for i in I:
         for j in J:
             V_ij[i, j] = GAP_SP.addVar(
-                lb=0.0, ub=float(U[j]), vtype=gp.GRB.CONTINUOUS, name=f"V_ij({i},{j})")
+                lb=0, ub=U[j], vtype=gp.GRB.INTEGER, name=f"V_ij({i},{j})")
 
     # 目的関数1
     # X_ij:注文jをホールドiに割り当てるなら1、そうでなければ0
@@ -585,7 +588,7 @@ def main():
         GAP_SP.addConstr(gp.quicksum(
             delta_s[i] * G[j] * V_ij[i, j] for j in J_lk[t] for i in I) >= min_s)
 
-
+      
     # 最適化計算
     # ==============================================================================================
 
@@ -644,10 +647,10 @@ def main():
         for i in I_lamp:
             if K3_it[i, t].X > 0:
                 penal5 = penal5 + K3_it[i, t].X
- 
+
 
     # 解を全て格納する配列
-    relaxed_all_assignment = []
+    mip_all_assignment = []
     
     # 解の書き込み
     answer = []
@@ -655,28 +658,27 @@ def main():
     for i in I:
         tmp_assignment = []
         for j in J:
-            tmp_assignment.append(V_ij[i, j].X)
             if V_ij[i, j].X > 0:
                 print(V_ij[i, j].X)
+                tmp_assignment.append(V_ij[i, j].X)
                 # assign_data[GAPホールド番号、GAP注文番号、積む台数,ホールド番号、注文番号、ユニット数、RT、積み港、降ろし港、資源要求量]
                 answer.append([i, j])
                 assign.append([0, 0, V_ij[i, j].X, 0, 0, "L", "D", 0])
-        relaxed_all_assignment.append(tmp_assignment) 
-    relaxation_t = np.array(relaxed_all_assignment).T  
-    for i in range(len(relaxation_t)):
-        array_sum = sum(relaxation_t[i])
-        relaxation_t[i] = list(map( lambda x:x/array_sum,relaxation_t[i]))
-    print(len(relaxation_t))
-    print(len(relaxation_t[0]))
-    
-    
-    
-    
-    
-    
-    
+            else:
+                tmp_assignment.append(0.0)
+        mip_all_assignment.append(tmp_assignment)   
+    mip_t = np.array(mip_all_assignment).T
+    for i in range(len(mip_t)):
+        array_sum = sum(mip_t[i])
+        mip_t[i] = list(map( lambda x:x/array_sum,mip_t[i]))
+    print("----")   
+    print(len(mip_t)) 
+    print(len(mip_t[0]))
+
+
+
+    # ここから緩和問題
     # """
-    # ここからMIP
     # Gurobiパラメータ設定
     GAP_SP = gp.Model()
     GAP_SP.setParam("TimeLimit", 3600)
@@ -711,7 +713,7 @@ def main():
     for i in I:
         for j in J:
             V_ij[i, j] = GAP_SP.addVar(
-                lb=0, ub=U[j], vtype=gp.GRB.INTEGER, name=f"V_ij({i},{j})")
+                lb=0.0, ub=float(U[j]), vtype=gp.GRB.CONTINUOUS, name=f"V_ij({i},{j})")
 
     # 目的関数1
     # X_ij:注文jをホールドiに割り当てるなら1、そうでなければ0
@@ -890,22 +892,6 @@ def main():
         GAP_SP.addConstrs(K3_it[i1, t] >= len(
             I) * (K1_it[i1, t] - 1) + gp.quicksum(K2_it[i2, t] for i2 in I_back_i1) for t in L)
 
-    # 特殊制約1(注文の分割制約)
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    # J_small
-    # 分割しない
-    GAP_SP.addConstrs(gp.quicksum(X_ij[i, j] for i in I) == 1 for j in J_small)
-
-    # J_medium
-    GAP_SP.addConstrs(gp.quicksum(X_ij[i, j]
-                                  for i in I) == 1 for j in J_medium)
-
-    # J_large
-    for k1 in range(len(I_deck)):
-        for k2 in range(k1):
-            GAP_SP.addConstrs(gp.quicksum(X_ij[i1, j] for i1 in I_deck[k1]) * gp.quicksum(
-                X_ij[i2, j] for i2 in I_deck[k2]) <= 0 for j in J_large)
 
     # 特殊制約2(移動経路制約)
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -956,8 +942,8 @@ def main():
         GAP_SP.addConstr(gp.quicksum(
             delta_s[i] * G[j] * V_ij[i, j] for j in J_lk[t] for i in I) >= min_s)
 
-    
-      
+
+
     # 最適化計算
     # ==============================================================================================
 
@@ -1016,9 +1002,9 @@ def main():
         for i in I_lamp:
             if K3_it[i, t].X > 0:
                 penal5 = penal5 + K3_it[i, t].X
-
+ 
     # 解を全て格納する配列
-    mip_all_assignment = []
+    relaxed_all_assignment = []
     
     # 解の書き込み
     answer = []
@@ -1026,25 +1012,23 @@ def main():
     for i in I:
         tmp_assignment = []
         for j in J:
+            tmp_assignment.append(V_ij[i, j].X)
             if V_ij[i, j].X > 0:
-                tmp_assignment.append(V_ij[i, j].X)
+                print(V_ij[i, j].X)
                 # assign_data[GAPホールド番号、GAP注文番号、積む台数,ホールド番号、注文番号、ユニット数、RT、積み港、降ろし港、資源要求量]
                 answer.append([i, j])
                 assign.append([0, 0, V_ij[i, j].X, 0, 0, "L", "D", 0])
-            else:
-                tmp_assignment.append(0.0)
-        mip_all_assignment.append(tmp_assignment)   
-    mip_t = np.array(mip_all_assignment).T
-    for i in range(len(mip_t)):
-        array_sum = sum(mip_t[i])
-        mip_t[i] = list(map( lambda x:x/array_sum,mip_t[i]))
-    print('--------')
-    for item in mip_t:
-        print(item)     
-    print(len(mip_t)) 
-    print(len(mip_t[0]))
+        relaxed_all_assignment.append(tmp_assignment) 
+    relaxation_t = np.array(relaxed_all_assignment).T  
+    for i in range(len(relaxation_t)):
+        array_sum = sum(relaxation_t[i])
+        relaxation_t[i] = list(map( lambda x:x/array_sum,relaxation_t[i]))
+    print(len(relaxation_t))
+    print(len(relaxation_t[0]))
     
-    # """
+    # 解の誤差を計算
+
+
     
     order_abs = 0
     for order_num in range(len(J)):
@@ -1054,6 +1038,7 @@ def main():
     
     print("解の差")
     print((order_abs/(2*len(J)))*100)
+# """
 
 if __name__ == "__main__":
     main()
