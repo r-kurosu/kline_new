@@ -216,7 +216,7 @@ def main():
     # ==============================================================================================
 
     # ファイルロード
-    BookingFile = "book/exp_height.csv"
+    BookingFile = "book/for_relaxation_exp_4_3.csv"
     # BookingFile = args[1]
     HoldFile = "data/hold.csv"
     MainLampFile = "data/mainlamp.csv"
@@ -659,7 +659,7 @@ def main():
         tmp_assignment = []
         for j in J:
             if V_ij[i, j].X > 0:
-                print(V_ij[i, j].X)
+                # print(V_ij[i, j].X)
                 tmp_assignment.append(V_ij[i, j].X)
                 # assign_data[GAPホールド番号、GAP注文番号、積む台数,ホールド番号、注文番号、ユニット数、RT、積み港、降ろし港、資源要求量]
                 answer.append([i, j])
@@ -712,8 +712,12 @@ def main():
     V_ij = {}
     for i in I:
         for j in J:
-            V_ij[i, j] = GAP_SP.addVar(
-                lb=0.0, ub=float(U[j]), vtype=gp.GRB.CONTINUOUS, name=f"V_ij({i},{j})")
+            if (mip_all_assignment[i][j] == 0.0):
+                V_ij[i, j] = GAP_SP.addVar(
+                    lb=0.0, ub=0.0, vtype=gp.GRB.CONTINUOUS, name=f"V_ij({i},{j})")
+            else:
+                V_ij[i, j] = GAP_SP.addVar(
+                    lb=1.0, ub=float(U[j]), vtype=gp.GRB.CONTINUOUS, name=f"V_ij({i},{j})")
 
     # 目的関数1
     # X_ij:注文jをホールドiに割り当てるなら1、そうでなければ0
