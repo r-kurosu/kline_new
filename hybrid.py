@@ -657,7 +657,14 @@ def main():
             tmp.append([])
         assignment.append(tmp)
     
-    
+    # LP緩和解をもとに初期解を生成する手順
+
+    # 注文ごとに、割り当て台数を確率にして割り当てホールドを決める
+    # ホールドとセグメントを変換する
+    # 注文の積み港を調べる
+    # assignment[セグメント番号][積み地の番号]に追加
+
+
     for i in range(len(L)):
         randomed_J = random.sample(J_t_load[i], len(J_t_load[i]))
         for j in range(len(randomed_J)):
