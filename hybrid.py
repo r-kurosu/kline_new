@@ -596,7 +596,11 @@ def main():
 
 
     # LP緩和の解を他のファイルから呼び出し
-    lp_relaxation_script.lp_relaxation(BookingFile)
+    initial_relaxed_assignment = lp_relaxation_script.lp_relaxation(BookingFile)
+    for item in initial_relaxed_assignment:
+        # print(item)
+        print(sum(item))
+    exit()
 
 
     random.seed(1)

@@ -643,17 +643,9 @@ def lp_relaxation(FileName):
         tmp_assignment = []
         for j in J:
             tmp_assignment.append(V_ij[i, j].X)
-            if V_ij[i, j].X > 0:
-                print(V_ij[i, j].X)
-                # assign_data[GAPホールド番号、GAP注文番号、積む台数,ホールド番号、注文番号、ユニット数、RT、積み港、降ろし港、資源要求量]
-                answer.append([i, j])
-                assign.append([0, 0, V_ij[i, j].X, 0, 0, "L", "D", 0])
         relaxed_all_assignment.append(tmp_assignment) 
-    relaxation_t = np.array(relaxed_all_assignment).T  
-    for i in range(len(relaxation_t)):
-        array_sum = sum(relaxation_t[i])
-        relaxation_t[i] = list(map( lambda x:x/array_sum,relaxation_t[i]))
-    print(len(relaxation_t))
-    print(len(relaxation_t[0]))
+
+    initial_assingment_T = np.array(relaxed_all_assignment).T
+    return initial_assingment_T
 
 
