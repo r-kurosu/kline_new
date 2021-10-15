@@ -597,6 +597,8 @@ def main():
 
     # LP緩和の解を他のファイルから呼び出し
     initial_relaxed_assignment = lp_relaxation_script.lp_relaxation(BookingFile)
+    for i in range(len(initial_relaxed_assignment[58])):
+        print(i)
 
     random.seed(1)
 
@@ -625,6 +627,11 @@ def main():
                          [39, 40],
                          [42, 41]]
                         )
+    def segment_index(hold_num):
+        for index in range(len(segments)):
+            if hold_num in segments[index]:
+                return index
+
     each_segments_size = []
     for i in range(SEGMENT_COUNT):
         total_size = 0
