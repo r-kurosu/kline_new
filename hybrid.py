@@ -14,6 +14,7 @@ args = sys.argv
 import itertools
 import copy
 import datetime
+import lp_relaxation_script
 
 warnings.filterwarnings("ignore")
 
@@ -592,6 +593,12 @@ def main():
         # ここまで    
         return penalty_coefficient*(unloaded_units+balance_penalty+constraint1)+objective1+objective2+objective3+objective4-objective5
     
+
+
+    # LP緩和の解を他のファイルから呼び出し
+    lp_relaxation_script.lp_relaxation(BookingFile)
+
+
     random.seed(1)
 
     SEGMENT_COUNT = 18
