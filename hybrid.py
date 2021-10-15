@@ -664,6 +664,20 @@ def main():
     # 注文の積み港を調べる
     # assignment[セグメント番号][積み地の番号]に追加
 
+    for order_index in range(len(initial_relaxed_assignment)):
+        initial_assignment = initial_relaxed_assignment[order_index]
+        print(initial_assignment)
+        total_num_of_vehicles = 0.0
+        selection_hold_list = {}
+        for hold_index in range(len(initial_assignment)):
+            total_num_of_vehicles += initial_assignment[hold_index]
+            if (initial_assignment[hold_index] != 0.0):
+                selection_hold_list[hold_index] = initial_assignment[hold_index]
+        print(total_num_of_vehicles)
+        print(selection_hold_list)
+        # https://www.haya-programming.com/entry/2018/03/31/174915 これでいけそう
+        exit()
+
 
     for i in range(len(L)):
         randomed_J = random.sample(J_t_load[i], len(J_t_load[i]))
