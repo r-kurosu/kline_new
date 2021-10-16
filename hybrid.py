@@ -659,8 +659,8 @@ def main():
     
     # LP緩和解をもとに初期解を生成する手順
 
-    # 注文ごとに、割り当て台数を確率にして割り当てホールドを決める
-    # ホールドとセグメントを変換する
+    # 注文ごとに、割り当て台数を確率にして割り当てホールドを決める done
+    # ホールドとセグメントを変換する done
     # 注文の積み港を調べる
     # assignment[セグメント番号][積み地の番号]に追加
 
@@ -673,7 +673,6 @@ def main():
             total_num_of_vehicles += abs(round(initial_assignment[hold_index],3))
             if (initial_assignment[hold_index] != 0.0):
                 selection_hold_list[hold_index] = abs(round(initial_assignment[hold_index],3))
-        # https://www.haya-programming.com/entry/2018/03/31/174915 これでいけそう
         hold_arr = []
         prob_arr = []
         for hold_idx,prob in selection_hold_list.items():
@@ -683,7 +682,10 @@ def main():
         print(prob_arr)
         selected_hold = np.random.choice(hold_arr, p=prob_arr)
         print(selected_hold)
+        selected_segment = segment_index(selected_hold)
+        print(selected_segment)
         print("----")
+
     exit()
 
 
