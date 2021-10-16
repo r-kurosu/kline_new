@@ -670,13 +670,21 @@ def main():
         total_num_of_vehicles = 0.0
         selection_hold_list = {}
         for hold_index in range(len(initial_assignment)):
-            total_num_of_vehicles += initial_assignment[hold_index]
+            total_num_of_vehicles += abs(round(initial_assignment[hold_index],3))
             if (initial_assignment[hold_index] != 0.0):
-                selection_hold_list[hold_index] = initial_assignment[hold_index]
-        print(total_num_of_vehicles)
-        print(selection_hold_list)
+                selection_hold_list[hold_index] = abs(round(initial_assignment[hold_index],3))
         # https://www.haya-programming.com/entry/2018/03/31/174915 これでいけそう
-        exit()
+        hold_arr = []
+        prob_arr = []
+        for hold_idx,prob in selection_hold_list.items():
+            hold_arr.append(hold_idx)
+            prob_arr.append(prob/total_num_of_vehicles)
+        print(hold_arr)
+        print(prob_arr)
+        selected_hold = np.random.choice(hold_arr, p=prob_arr)
+        print(selected_hold)
+        print("----")
+    exit()
 
 
     for i in range(len(L)):
