@@ -684,6 +684,11 @@ def main():
         print(selected_hold)
         selected_segment = segment_index(selected_hold)
         print(selected_segment)
+
+        # 注文の積み港を調べる
+        loading_port = operation.find_loading_port(order_index,J_t_load)
+        print(loading_port)
+
         print("----")
 
     exit()
