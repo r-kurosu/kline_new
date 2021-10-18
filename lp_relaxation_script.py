@@ -93,18 +93,6 @@ def lp_relaxation(FileName):
         J_lk.append(lk)
         J_ld.append(ld)
 
-    gang_num = np.zeros(len(L))  # 各港のギャング数
-    J_N = 0
-    for t in L:
-        for j in J_t_load[t]:
-            J_N = J_N + U[j]
-        if J_N <= 500:
-            gang_num[t] = 1
-        if J_N > 500 and J_N <= 1000:
-            gang_num[t] = 2
-        if J_N > 1000:
-            gang_num[t] = 3
-
     print(len(J)) #注文数
     print(len(I)) #ホールドの数
     
@@ -394,49 +382,6 @@ def lp_relaxation(FileName):
     # ペナルティ計算
     print("-" * 65)
     print("penalty count => ")
-
-    # OBJ1のペナルティ
-    penal1 = 0
-    for i in I:
-        for t1 in L:
-            for t2 in D:
-                if Z_it1t2[i, t1, t2].X > 0:
-                    penal1 = penal1 + Z_it1t2[i, t1, t2].X
-
-    # OBJ2のペナルティ
-    penal2_1 = penal2_2 = 0
-    for i1 in I:
-        for i2 in I:
-            for t in L:
-                if Z1_i1i2t[i1, i2, t].X > 0:
-                    penal2_1 = penal2_1 + 1
-                    # print(f"ホールド{i1},{i2}で積み地ペナルティ")
-            for t in D:
-                if Z2_i1i2t[i1, i2, t].X > 0:
-                    penal2_2 = penal2_2 + 1
-                    # print(f"ホールド{i1},{i2}で揚げ地ペナルティ")
-
-    # OBJ3のペナルティ
-    penal3 = 0
-    for i in I:
-        for j in J:
-            for t in T:
-                if M_ijt[i, j, t].X > 0:
-                    penal3 = penal3 + M_ijt[i, j, t].X
-
-    # OBJ4のペナルティ
-    benefit4 = 0
-    for t in check_point:
-        for i in I:
-            if N_it[i, t].X > 0:
-                benefit4 = benefit4 + N_it[i, t].X
-
-    # OBJ5のペナルティ
-    penal5 = 0
-    for t in L:
-        for i in I_lamp:
-            if K3_it[i, t].X > 0:
-                penal5 = penal5 + K3_it[i, t].X
  
     # 解を全て格納する配列
     relaxed_all_assignment = []
