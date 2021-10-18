@@ -7,207 +7,12 @@ import category_encoders as ce
 from sklearn.preprocessing import LabelEncoder
 import sys
 args = sys.argv
+import read_booking
+import read_hold
+import read_other
 
 warnings.filterwarnings("ignore")
 
-
-def Read_booking(FileName):
-
-    Booking_df = pd.read_csv(FileName)
-
-    L = []  # 積み地の集合
-    D = []  # 揚げ地の集合
-    T = []  # 港の集合
-
-    lport_name = [x for x in list(
-        Booking_df["PORT_L"].unique()) if not pd.isnull(x)]
-    dport_name = [x for x in list(
-        Booking_df["PORT_D"].unique()) if not pd.isnull(x)]
-
-    for t in range(len(lport_name)):
-        L.append(t)
-
-    for t in range(len(dport_name)):
-        D.append(t + max(L) + 1)
-
-    T = L + D
-
-    Check_port = []
-    key1 = Booking_df.columns.get_loc('CPORT')
-    for j in range(len(Booking_df)):
-        count = 0
-        if str(Booking_df.iloc[j, key1]) != 'nan':
-            for p in lport_name:
-                if p == str(Booking_df.iloc[j, key1]):
-                    Check_port.append(count)
-                else:
-                    count = count + 1
-
-    # 港番号のエンコード
-    for k in range(len(lport_name)):
-        Booking_df = Booking_df.replace(lport_name[k], L[k])
-
-    for k in range(len(dport_name)):
-        Booking_df = Booking_df.replace(dport_name[k], D[k])
-
-    # 巨大な注文の分割
-    divided_j = []
-    divide_dic = []
-    divide_df = Booking_df.iloc[0, :]
-
-    for j in range(len(Booking_df)):
-        tmp = Booking_df.iloc[j, Booking_df.columns.get_loc('Units')]
-        if 500 < tmp and tmp <= 1000:
-            if tmp % 2 == 0:
-                u_num = [int(tmp / 2), int(tmp / 2)]
-            if tmp % 2 == 1:
-                u_num = [int(tmp / 2) + 1, int(tmp / 2)]
-            concat1 = concat2 = Booking_df.iloc[j, :]
-            concat1["Units"] = u_num[0]
-            concat2["Units"] = u_num[1]
-            divide_df = pd.concat([divide_df, concat1, concat2], axis=1)
-            divided_j.append(j)
-            divide_dic.append([j, tmp])
-
-    divide_df = divide_df.T
-    divide_df = divide_df.drop(divide_df.index[[0]])
-
-    if len(divided_j) > 0:
-        Booking_df = Booking_df.drop(Booking_df.index[divided_j])
-        Booking = pd.concat([Booking_df, divide_df])
-    else:
-        Booking = Booking_df
-
-    Booking["Index"] = 0
-    for k in range(len(Booking)):
-        Booking.iloc[k, Booking.columns.get_loc('Index')] = k
-
-    A = list(Booking["RT"])
-    J = list(Booking["Index"])
-    U = list(Booking["Units"])
-    G = list(Booking["Weight"])
-
-    key2 = Booking.columns.get_loc('LPORT')
-    key3 = Booking.columns.get_loc('DPORT')
-    Port = Booking.iloc[:, key2:key3+1]
-
-    # 注文をサイズ毎に分類
-    J_small = []
-    J_medium = []
-    J_large = []
-    for j in J:
-        if U[j] <= 100:
-            J_small.append(j)
-        if 100 < U[j] and U[j] <= 200:
-            J_medium.append(j)
-        if 200 < U[j]:
-            J_large.append(j)
-
-    return T, L, D, J, U, A, G, J_small, J_medium, J_large, Port, Check_port, Booking, divide_dic
-
-
-def Read_hold(FileName):
-
-    Hold_df = pd.read_csv(FileName)
-
-    B = list(Hold_df["Resourse"])
-    RT_benefit = list(Hold_df["RT_benefit"])
-    delta_s = list(Hold_df["Weight_s"])
-    delta_h = list(Hold_df["Weight_h1"] * Hold_df["Weight_h2"])
-    min_s = Hold_df.iloc[0, Hold_df.columns.get_loc('Min_s')]
-    max_s = Hold_df.iloc[0, Hold_df.columns.get_loc('Max_s')]
-    max_h = Hold_df.iloc[0, Hold_df.columns.get_loc('Max_h')]
-
-    list_drop_cols = ['Resourse', 'RT_benefit', 'Weight_s',
-                      'Weight_h1', 'Weight_h2', 'Min_s', 'Max_s', 'Max_h']
-
-    # ホールド番号のエンコード
-    Hold_encode = Hold_df.iloc[:, 0:2]
-    le = LabelEncoder()
-    Hold_encode["Resourse"] = le.fit_transform(Hold_df['Hold'].values)
-    Hold_encode = Hold_encode.rename(columns={'Resourse': 'Index'})
-
-    Hold_data = Hold_df.drop(list_drop_cols, axis=1)
-
-    for i in range(len(Hold_encode)):
-        Hold_data = Hold_data.replace(
-            Hold_encode.iloc[i, 0], Hold_encode.iloc[i, 1])
-
-    I = list(Hold_data["Hold"])
-    I_pair = []
-    I_next = []
-    I_same = []
-    I_lamp = []
-    I_deck = []
-
-    key1 = Hold_data.columns.get_loc('Pair_Hold1')
-    key2 = Hold_data.columns.get_loc('Next_Hold1')
-    key3 = Hold_data.columns.get_loc('Same_Hold1')
-    key4 = Hold_data.columns.get_loc('Lamp_Hold')
-    key5 = Hold_data.columns.get_loc('Region1')
-
-    for i in range(len(Hold_data)):
-        if str(Hold_data.iloc[i, key1]) != 'nan':
-            I_pair.append([int(Hold_data.iloc[i, key1]),
-                           int(Hold_data.iloc[i, key1+1])])
-        if str(Hold_data.iloc[i, key2]) != 'nan':
-            I_next.append([int(Hold_data.iloc[i, key2]),
-                           int(Hold_data.iloc[i, key2+1])])
-        if str(Hold_data.iloc[i, key3]) != 'nan':
-            I_same.append([int(Hold_data.iloc[i, key3]),
-                           int(Hold_data.iloc[i, key3+1])])
-        if str(Hold_data.iloc[i, key4]) != 'nan':
-            I_lamp.append(int(Hold_data.iloc[i, key4]))
-
-    last = len(Hold_data.T)
-    for i in range(key5, last):
-        append_list = []
-        count = 0
-        while str(Hold_data.iloc[count, i]) != 'nan':
-            append_list.append(int(Hold_data.iloc[count, i]))
-            count = count + 1
-        I_deck.append(append_list)
-
-    return I, B, I_pair, I_next, I_same, I_lamp, I_deck, RT_benefit, delta_s, min_s, max_s, delta_h, max_h, Hold_encode, Hold_df
-
-
-def Read_other(FileName1, FileName2, FileName3, FileName4, FileName5, FileName6, Hold_encode):
-
-    Ml_Load = pd.read_csv(FileName1)
-    Ml_Back = pd.read_csv(FileName2)
-    Ml_Afr = pd.read_csv(FileName3)
-    Stress = pd.read_csv(FileName4)
-    g_2 = pd.read_csv(FileName5)
-    g_3 = pd.read_csv(FileName6)
-
-    for i in range(len(Hold_encode)):
-        g_2 = g_2.replace(Hold_encode.iloc[i, 0], Hold_encode.iloc[i, 1])
-        g_3 = g_3.replace(Hold_encode.iloc[i, 0], Hold_encode.iloc[i, 1])
-        Ml_Load = Ml_Load.replace(
-            Hold_encode.iloc[i, 0], Hold_encode.iloc[i, 1])
-        Ml_Back = Ml_Back.replace(
-            Hold_encode.iloc[i, 0], Hold_encode.iloc[i, 1])
-        Ml_Afr = Ml_Afr.replace(Hold_encode.iloc[i, 0], Hold_encode.iloc[i, 1])
-
-    Stress = list(Stress.iloc[:, 1])
-
-    GANG2 = []
-    for n in range(2):
-        add = []
-        for k in range(len(g_2.iloc[:, n])):
-            if str(g_2.iloc[k, n]) != 'nan':
-                add.append(int(g_2.iloc[k, n]))
-        GANG2.append(add)
-
-    GANG3 = []
-    for n in range(3):
-        add = []
-        for k in range(len(g_3.iloc[:, n])):
-            if str(g_3.iloc[k, n]) != 'nan':
-                add.append(int(g_3.iloc[k, n]))
-        GANG3.append(add)
-
-    return Ml_Load, Ml_Back, Ml_Afr, Stress, GANG2, GANG3
 
 
 def lp_relaxation(FileName):
@@ -230,15 +35,15 @@ def lp_relaxation(FileName):
     booking_name = BookingFile.split("/")[1].split(".")[0]
     # 注文情報の読み込み
     T, L, D, J, U, A, G, J_small, J_medium, J_large, Port, Check_port, Booking, divide_dic\
-        = Read_booking(BookingFile)
+        = read_booking.Read_booking(BookingFile)
 
     # 船体情報の読み込み1
     I, B, I_pair, I_next, I_same, I_lamp, I_deck, RT_benefit, delta_s, min_s, max_s, delta_h, max_h, Hold_encode, Hold\
-        = Read_hold(HoldFile)
+        = read_hold.Read_hold(HoldFile)
 
     # 船体情報の読み込み2
     Ml_Load, Ml_Back, Ml_Afr, Stress, GANG2, GANG3\
-        = Read_other(MainLampFile, BackMainLampFile, AfrMainLampFile, StressFile, Gang2File, Gang3File, Hold_encode)
+        = read_other.Read_other(MainLampFile, BackMainLampFile, AfrMainLampFile, StressFile, Gang2File, Gang3File, Hold_encode)
 
     J_t_load = []  # J_t_load:港tで積む注文の集合
     J_t_keep = []  # J_t_keep:港tを通過する注文の集合
