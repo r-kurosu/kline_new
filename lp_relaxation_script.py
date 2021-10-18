@@ -107,7 +107,7 @@ def lp_relaxation(FileName):
     GAP_SP.setParam("TimeLimit", 3600)
     GAP_SP.setParam("MIPFocus", 1)
     GAP_SP.setParam("LPMethod", 1)
-    GAP_SP.setParam("MIPGap",0.1)
+    GAP_SP.setParam("MIPGap",0.3)
     GAP_SP.printStats()
 
     # ハイパーパラメータ設定
