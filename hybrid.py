@@ -666,7 +666,7 @@ def main():
 
     for order_index in range(len(initial_relaxed_assignment)):
         initial_assignment = initial_relaxed_assignment[order_index]
-        print(initial_assignment)
+        # print(initial_assignment)
         total_num_of_vehicles = 0.0
         selection_hold_list = {}
         for hold_index in range(len(initial_assignment)):
@@ -678,26 +678,27 @@ def main():
         for hold_idx,prob in selection_hold_list.items():
             hold_arr.append(hold_idx)
             prob_arr.append(prob/total_num_of_vehicles)
-        print(hold_arr)
-        print(prob_arr)
+        # print(hold_arr)
+        # print(prob_arr)
         selected_hold = np.random.choice(hold_arr, p=prob_arr)
-        print(selected_hold)
+        # print(selected_hold)
         selected_segment = segment_index(selected_hold)
-        print(selected_segment)
+        # print(selected_segment)
 
         # 注文の積み港を調べる
         loading_port = operation.find_loading_port(order_index,J_t_load)
-        print(loading_port)
+        # print(loading_port)
 
-        print("----")
+        assignment[selected_segment][loading_port].append(order_index)
 
-    exit()
+        # print("----")
 
 
-    for i in range(len(L)):
-        randomed_J = random.sample(J_t_load[i], len(J_t_load[i]))
-        for j in range(len(randomed_J)):
-            assignment[j%SEGMENT_COUNT][i].append(randomed_J[j])
+
+    # for i in range(len(L)):
+    #     randomed_J = random.sample(J_t_load[i], len(J_t_load[i]))
+    #     for j in range(len(randomed_J)):
+    #         assignment[j%SEGMENT_COUNT][i].append(randomed_J[j])
 
     penalty_coefficient = 100
     #初期解を，ホールドに割当
@@ -705,6 +706,8 @@ def main():
     #初期解のペナルティ    
     penalty,objective = evaluate(assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt)
     evaluated_value = penalty_coefficient*penalty+objective
+    print(evaluated_value)
+
     shift_neighbor_list = operation.create_shift_neighbor(ORDER_COUNT,SEGMENT_COUNT)
     shift_count = 0
     # swap_neighbor_list = operation.create_swap_neighbor(J_t_load,Booking)
