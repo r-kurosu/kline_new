@@ -594,11 +594,11 @@ def main():
         return penalty_coefficient*(unloaded_units+balance_penalty+constraint1)+objective1+objective2+objective3+objective4-objective5
     
 
+    dt1 = datetime.datetime.now()
+    print(len(J))
 
     # LP緩和の解を他のファイルから呼び出し
     initial_relaxed_assignment = lp_relaxation_script.lp_relaxation(BookingFile)
-    for i in range(len(initial_relaxed_assignment[58])):
-        print(i)
 
     random.seed(1)
 
@@ -646,7 +646,6 @@ def main():
     assignment[i][j][k]で，j個目の港でk個目に積み込む注文を見れる
     '''
     
-    dt1 = datetime.datetime.now()
     
     # 解の初期化
     assignment = []
@@ -758,6 +757,8 @@ def main():
     # assignment = operation.swap(assignment,swap_order2,order1_seg,order1_index,swap_order1,order2_seg,order2_index,loading_port)
     ここまで
     """
+    for item in assignment:
+        print(item)
     while total_improve != 0:
         shift_count = 0
         while(shift_count < len(shift_neighbor_list)):
@@ -766,6 +767,9 @@ def main():
             loading_port = operation.find_loading_port(shift_order,J_t_load)
             # """
             #ランダムな場所に追加
+            # print(shift_order,loading_port)
+            # print(operation.find_current_segment_and_index(assignment,shift_order,loading_port))
+            # print("---------")
             current_segment,current_index = operation.find_current_segment_and_index(assignment,shift_order,loading_port)
             inserted_index = random.randint(0,len(assignment[shift_seg][loading_port]))
             assignment= operation.shift(assignment,shift_order,current_segment,shift_seg,loading_port,inserted_index)
