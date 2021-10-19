@@ -104,10 +104,11 @@ def lp_relaxation(FileName):
     # """
     # Gurobiパラメータ設定
     GAP_SP = gp.Model()
-    GAP_SP.setParam("TimeLimit", 3600)
+    # GAP_SP.setParam("TimeLimit", 3600)
+    GAP_SP.setParam("SolutionLimit", 1)
     GAP_SP.setParam("MIPFocus", 1)
     GAP_SP.setParam("LPMethod", 1)
-    GAP_SP.setParam("MIPGap",0.3)
+    # GAP_SP.setParam("MIPGap",0.3)
     GAP_SP.printStats()
 
     # ハイパーパラメータ設定
