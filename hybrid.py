@@ -875,7 +875,7 @@ def main():
         total_improve = 0
         swap_count = 0
         
-        """
+        
         while(swap_count < len(swap_neighbor_list)):
             swap_order1 = swap_neighbor_list[swap_count][0]
             swap_order2 = swap_neighbor_list[swap_count][1]
@@ -897,7 +897,7 @@ def main():
             else:
                 assignment = operation.swap(assignment,swap_order2,order1_seg,order1_index,swap_order1,order2_seg,order2_index,loading_port)
                 swap_count += 1
-        """
+        
         
     assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt = assign_to_hold(assignment)
     penalty,objective = evaluate(assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt)
