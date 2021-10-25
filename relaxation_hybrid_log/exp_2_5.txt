@@ -1,0 +1,296 @@
+140
+File:book/exp_2_5.csv
+140
+43
+Using license file /Users/takedakiyoshi/gurobi.lic
+Academic license - for non-commercial use only
+Changed value of parameter TimeLimit to 3600.0
+   Prev: inf  Min: 0.0  Max: inf  Default: inf
+Changed value of parameter MIPFocus to 1
+   Prev: 0  Min: 0  Max: 3  Default: 0
+No parameters matching 'LPMethod' found
+Changed value of parameter MIPGap to 0.3
+   Prev: 0.0001  Min: 0.0  Max: inf  Default: 0.0001
+
+Statistics for model Unnamed :
+  Linear constraint matrix    : 0 Constrs, 0 Vars, 0 NZs
+  Matrix coefficient range    : [ 0, 0 ]
+  Objective coefficient range : [ 0, 0 ]
+  Variable bound range        : [ 0, 0 ]
+  RHS coefficient range       : [ 0, 0 ]
+
+========================= Solve Assignment Problem =========================
+Gurobi Optimizer version 9.0.2 build v9.0.2rc0 (mac64)
+Optimize a model with 119112 rows, 96337 columns and 3072337 nonzeros
+Model fingerprint: 0xbee96071
+Model has 11900 quadratic constraints
+Variable types: 48233 continuous, 48104 integer (48104 binary)
+Coefficient statistics:
+  Matrix range     [5e-03, 2e+05]
+  QMatrix range    [1e+00, 1e+00]
+  QLMatrix range   [1e+00, 1e+00]
+  Objective range  [1e+00, 1e+03]
+  Bounds range     [1e+00, 1e+02]
+  RHS range        [1e-01, 4e+07]
+  QRHS range       [1e+00, 1e+02]
+Presolve removed 34346 rows and 70462 columns
+Presolve time: 4.55s
+Presolved: 176326 rows, 93495 columns, 2080371 nonzeros
+Variable types: 85523 continuous, 7972 integer (7944 binary)
+
+Deterministic concurrent LP optimizer: primal and dual simplex
+Showing first log only...
+
+
+Root simplex log...
+
+Iteration    Objective       Primal Inf.    Dual Inf.      Time
+       0   -1.3360000e+03   1.920014e+04   7.739410e+08     14s
+    3742    1.8036298e+06   0.000000e+00   4.005079e+05     15s
+   43851    1.2674244e+04   0.000000e+00   1.538116e+06     20s
+   49043    6.0239373e+03   0.000000e+00   2.360627e+06     25s
+   52297    3.8784581e+03   0.000000e+00   1.364481e+06     30s
+   54867    1.5429883e+03   0.000000e+00   4.312197e+06     35s
+   57691   -2.6916222e+02   0.000000e+00   2.262123e+06     40s
+   60329   -1.6006634e+03   0.000000e+00   1.123604e+06     45s
+   62649   -2.0522517e+03   0.000000e+00   8.838757e+05     50s
+   64849   -2.4042742e+03   0.000000e+00   2.503806e+05     55s
+Concurrent spin time: 1.39s
+
+Solved with dual simplex
+
+Root relaxation: objective -4.461980e+03, 34815 iterations, 45.20 seconds
+Total elapsed time = 57.56s
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0 -4461.9800    0 1371          - -4461.9800      -     -  293s
+     0     0 -4461.9800    0 1677          - -4461.9800      -     -  556s
+     0     0 -4461.9800    0 1136          - -4461.9800      -     -  705s
+     0     0 -4461.9800    0 1361          - -4461.9800      -     - 1443s
+     0     0 -4461.9800    0 1706          - -4461.9800      -     - 2040s
+     0     0 -4461.9800    0 1862          - -4461.9800      -     - 3600s
+H    0     0                    1805498.3617 -4461.9800   100%     - 3600s
+
+Cutting planes:
+  Learned: 4
+  Cover: 6
+  Implied bound: 4
+  Clique: 6
+  MIR: 63
+  Flow cover: 81
+  Zero half: 124
+  Network: 1
+  RLT: 268
+  Relax-and-lift: 14
+  BQP: 31
+
+Explored 1 nodes (2322105 simplex iterations) in 3600.09 seconds
+Thread count was 8 (of 8 available processors)
+
+Solution count 1: 1.8055e+06 
+
+Time limit reached
+Best objective 1.805498361676e+06, best bound -4.461980000001e+03, gap 100.2471%
+-----------------------------------------------------------------
+penalty count => 
+80376.98999999999
+[[15, 70], [92]]
+[[17, 45], [99]]
+[[3, 58, 60, 63], [129]]
+[[10, 14, 59], [81, 88, 96, 137]]
+[[8, 27, 29, 31, 35, 43], [89, 97, 103, 139]]
+[[0, 16, 19, 47, 68, 77, 107], [94, 95, 102, 121]]
+[[5, 7, 38, 39, 41, 46, 48, 62, 64, 65], [91, 100, 111, 113, 126, 133, 135, 136]]
+[[9, 21, 37, 50, 56, 57, 74, 75], [90, 101, 112, 124]]
+[[12, 23, 32, 76], [98]]
+[[2, 13, 61], [86, 117, 130]]
+[[], [122, 127, 128, 138]]
+[[30], [110]]
+[[1, 4, 18, 28, 42, 66, 67, 72, 73, 78], [93, 118, 132]]
+[[20, 40, 51, 71, 105, 106], [85, 108, 114, 131]]
+[[6, 24, 26, 33, 34, 44, 52, 53, 79, 104], [115, 123]]
+[[11, 25, 36, 69], [80, 82, 83, 84, 119]]
+[[22, 49, 54, 55], [87, 109, 116, 125]]
+[[], [120, 134]]
+改善 shift 80276.98999999999
+改善 shift 80256.98999999999
+改善 shift 74792.31999999999
+改善 shift 67073.36
+改善 shift 66993.36
+改善 shift 66543.12
+改善 shift 66541.12
+改善 shift 66511.36
+改善 shift 62915.939999999995
+改善 shift 60302.149999999994
+改善 shift 60207.66999999999
+改善 shift 60107.66999999999
+改善 shift 60071.95
+改善 shift 59202.41
+改善 shift 59102.41
+改善 shift 58837.310000000005
+改善 shift 58813.78999999999
+改善 shift 51664.19
+改善 shift 51404.63
+改善 shift 51115.63
+改善 shift 49505.81
+改善 shift 49025.81
+改善 shift 48725.81
+改善 shift 48655.729999999996
+改善 shift 48629.729999999996
+改善 shift 47659.729999999996
+改善 shift 46865.93
+改善 shift 46288.13
+改善 shift 46271.13
+改善 shift 46251.13
+改善 shift 46194.57
+改善 shift 46193.57
+改善 shift 45493.57
+改善 shift 45479.09
+改善 shift 45459.09
+改善 shift 44559.09
+改善 shift 42869.09
+改善 shift 39289.09
+改善 shift 39254.65000000001
+改善 shift 36838.600000000006
+改善 shift 30354.840000000007
+改善 shift 30354.840000000004
+改善 shift 30154.840000000004
+改善 shift 30149.320000000003
+改善 shift 30139.680000000004
+改善 shift 30038.160000000003
+改善 shift 30017.160000000003
+改善 shift 29587.160000000003
+改善 shift 26553.16
+改善 shift 20806.64
+改善 shift 20796.64
+改善 shift 20767.64
+改善 shift 20677.64
+改善 shift 20264.52
+改善 shift 20237.18
+改善 shift 20236.78
+改善 shift 20227.78
+改善 shift 20106.78
+改善 shift 20104.94
+改善 shift 19904.94
+改善 shift 19804.94
+改善 shift 19504.94
+改善 shift 18939.06
+改善 shift 18749.06
+改善 shift 17755.260000000002
+改善 shift 17572.62
+改善 shift 17421.62
+改善 shift 17307.14
+改善 shift 17297.14
+改善 shift 17287.14
+改善 shift 17215.04
+改善 shift 17035.079999999998
+改善 shift 15828.76
+改善 shift 15818.76
+改善 shift 15808.68
+改善 shift 14429.48
+改善 shift 14110.8
+改善 shift 14090.8
+改善 shift 14080.88
+改善 shift 13883.74
+改善 shift 13568.88
+改善 shift 13550.88
+改善 shift 13528.68
+改善 shift 13150.76
+改善 shift 13148.92
+改善 shift 13146.06
+改善 shift 13116.380000000001
+改善 shift 13021.23
+改善 shift 12684.529999999999
+改善 shift 11735.529999999999
+改善 shift 11727.61
+改善 shift 11704.05
+改善 shift 11691.17
+改善 shift 11642.11
+改善 shift 11542.11
+改善 shift 11484.1
+改善 shift 11471.310000000001
+改善 shift 10891.310000000001
+改善 shift 10191.310000000001
+改善 shift 7634.75
+改善 shift 7629.11
+改善 shift 7316.47
+改善 shift 7296.47
+改善 shift 7289.11
+改善 shift 7264.99
+改善 shift 7155.63
+改善 shift 7153.19
+改善 shift 7045.889999999999
+改善 shift 7014.889999999999
+改善 shift 7004.889999999999
+改善 shift 6616.49
+改善 shift 4468.13
+改善 shift 4448.13
+改善 shift 4440.45
+改善 shift 3625.66
+改善 shift 3618.1000000000004
+改善 shift 3614.0199999999995
+改善 shift 3566.83
+改善 shift 3546.83
+改善 shift 3533.4299999999994
+改善 shift 3513.4299999999994
+改善 shift 3493.4299999999994
+改善 shift 3483.4300000000003
+改善 shift 3478.3900000000003
+改善 shift 3474.3100000000004
+改善 shift 3473.3100000000004
+改善 shift 3460.55
+改善 shift 3450.55
+改善 shift 3437.87
+改善 shift 3427.87
+改善 shift 3407.87
+改善 shift 3401.0699999999997
+改善 shift 3400.55
+改善 shift 3380.55
+改善 shift 3372.55
+改善 shift 3325.8599999999997
+改善 shift 3320.96
+改善 shift 3290.96
+改善 shift 2661.96
+改善 shift 2651.26
+改善 shift 2651.2599999999998
+改善 shift 2589.9399999999996
+改善 shift 2566.8599999999997
+改善 shift 2229.8199999999997
+改善 shift 1930.0199999999995
+改善 shift 1910.0199999999995
+改善 shift 1890.4599999999996
+改善 shift 1870.4599999999996
+改善 shift 484.0999999999999
+改善 shift 464.0999999999999
+改善 shift 440.4599999999998
+改善 shift 430.4599999999998
+改善 shift 394.4599999999998
+改善 shift 373.4599999999998
+改善 shift 363.4599999999998
+改善 swap  314.4599999999998
+改善 swap  2.1599999999998545
+改善 shift -15.3900000000001
+改善 shift -44.3900000000001
+改善 shift -152.50000000000023
+改善 swap  -161.50000000000023
+改善 shift -220.9000000000001
+改善 shift -621.9000000000003
+改善 shift -636.4000000000005
+改善 shift -646.4000000000005
+改善 swap  -1759.3000000000004
+改善 swap  -1788.3000000000004
+改善 shift -1798.3000000000004
+改善 shift -1827.3000000000004
+改善 shift -1836.3000000000004
+改善 shift -1837.3000000000004
+改善 swap  -1844.5400000000004
+改善 shift -1845.5000000000005
+改善 swap  -1883.5400000000004
+-1883.5400000000004
+----
+0 0 0
+260 633 337.34999999999997 0 3113.8900000000003
+-1883.5400000000004
+計算時間: 4046.702283秒
