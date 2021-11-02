@@ -20,3 +20,5 @@
 ### サーバからローカルに転送
 ```scp takeda@emily.co.mi.i.nagoya-u.ac.jp:/home/takeda/KLINE/height.out /Users/takedakiyoshi/lab/kline/KLINE```
 
+scp /Users/takedakiyoshi/lab/kline/KLINE/hybrid.py takeda@emily.co.mi.i.nagoya-u.ac.jp:/home/takeda/KLINE
+
