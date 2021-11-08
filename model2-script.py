@@ -1,35 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
-"""
-Created on Mon Oct 21 13:22:02 2019
-
-@author: tomoyaukawa
-"""
-
-############
-"""GAP_SP"""
-############
-
-"""
-
-OPTIMISATION:
-    
-    Variable integer to optimize:
-    V_ij:The number of loading k RT (out of order's RT) in hold i
-    
-    Minimize:
-    1.The penalty of order different discharging port in one hold
-    2.The penalty of vehicles different loading/discharging port in pair hold
-    3.The penalty of cars passed holds that exceed threshold
-    5.The penalty of dead space when the ship loads car
-    
-    Maximize:
-    4.The benefit of left space near the entrance when the ship reaches check point
-    
-"""
-
-
 import warnings
 import openpyxl
 import numpy as np
@@ -118,7 +86,6 @@ def Read_booking(FileName):
     J = list(Booking["Index"])
     U = list(Booking["Units"])
     G = list(Booking["Weight"])
-    VehicleHeight = list(Booking["Height"])
 
     Port = Booking.iloc[:, key2:key3+1]
 
@@ -131,7 +98,7 @@ def Read_booking(FileName):
         if 100 < A[j]:
             J_large.append(j)
 
-    return T, L, D, J, U, A, G, J_small, J_large, Port, Check_port, Booking, VehicleHeight
+    return T, L, D, J, U, A, G, J_small, J_large, Port, Check_port, Booking
 
 
 def Read_hold(FileName):
@@ -145,10 +112,9 @@ def Read_hold(FileName):
     min_s = Hold_df.iloc[0, Hold_df.columns.get_loc('Min_s')]
     max_s = Hold_df.iloc[0, Hold_df.columns.get_loc('Max_s')]
     max_h = Hold_df.iloc[0, Hold_df.columns.get_loc('Max_h')]
-    # height = list(Hold_df["Height"])
 
     list_drop_cols = ['Resourse', 'RT_benefit', 'Weight_s',
-                      'Weight_h1', 'Weight_h2', 'Min_s', 'Max_s', 'Max_h', 'Height']
+                      'Weight_h1', 'Weight_h2', 'Min_s', 'Max_s', 'Max_h']
 
     # ホールド番号のエンコード
     Hold_encode = Hold_df.iloc[:, 0:2]
@@ -197,7 +163,7 @@ def Read_hold(FileName):
             count = count + 1
         I_deck.append(append_list)
 
-    return I, B, I_pair, I_next, I_same, I_lamp, I_deck, RT_benefit, delta_s, min_s, max_s, delta_h, max_h, Hold_encode, Hold_df, height
+    return I, B, I_pair, I_next, I_same, I_lamp, I_deck, RT_benefit, delta_s, min_s, max_s, delta_h, max_h, Hold_encode, Hold_df
 
 
 def Read_other(FileName1, FileName2, FileName3, FileName4, FileName5, FileName6, Hold_encode):
@@ -245,10 +211,8 @@ def main():
     # ==============================================================================================
 
     # ファイルロード
-    File1 = "book/exp_height.csv"
-    # File1 = "/Users/takedakiyoshi/lab/kline/KLINE/高さ制約を比較するフォルダ/exp_full_height.csv"
+    File1 = "book/takibayashi_revised.csv"
     File2 = "data/hold.csv"
-    # File2 = "/Users/takedakiyoshi/lab/kline/KLINE/高さ制約を比較するフォルダ/hold_with_height.csv"
     File3 = "data/mainlamp.csv"
     File4 = "data/back_mainlamp.csv"
     File5 = "data/afr_mainlamp.csv"
@@ -257,12 +221,11 @@ def main():
     File8 = "data/gangnum_3.csv"
 
     # 注文情報の読み込み
-    T, L, D, J, U, A, G, J_small, J_large, Port, Check_port, Booking, VehicleHeight = Read_booking(
+    T, L, D, J, U, A, G, J_small, J_large, Port, Check_port, Booking= Read_booking(
         File1)
 
     # 船体情報の読み込み1
-    I, B, I_pair, I_next, I_same, I_lamp, I_deck, RT_benefit, delta_s, min_s, max_s, delta_h, max_h, Hold_encode, Hold, HoldHeight = Read_hold(
-        File2)
+    I, B, I_pair, I_next, I_same, I_lamp, I_deck, RT_benefit, delta_s, min_s, max_s, delta_h, max_h, Hold_encode, Hold = Read_hold(File2)
 
     # 船体情報の読み込み2
     Ml_Load, Ml_Back, Ml_Afr, Stress, GANG2, GANG3 \
@@ -477,23 +440,6 @@ def main():
     # 基本制約
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    # 高さ制約
-    # ホールドの高さ
-    HoldHeightVar = []
-    for i in range(len(HoldHeight)):
-        HoldHeightVar.append(GAP_SP.addVar(
-            lb=0, vtype=gp.GRB.CONTINUOUS))
-    # 車の高さ
-    VehicleHeightVar = []
-    for i in range(len(VehicleHeight)):
-        VehicleHeightVar.append(GAP_SP.addVar(
-            lb=0, vtype=gp.GRB.CONTINUOUS))
-
-    # 制約式
-    for i in range(len(HoldHeight)):
-        for j in range(len(VehicleHeight)):
-            GAP_SP.addConstr(
-                VehicleHeightVar[j]*X_ij[i, j] <= HoldHeightVar[i])
 
     # 割当てた注文がコンパートメント毎にリソースを超えない
     GAP_SP.addConstrs(gp.quicksum(V_ij[i, j] for j in J) <= B[i] for i in I)
@@ -829,9 +775,9 @@ def main():
     c_list.append("Units")
     c_list.append("LPORT")
     c_list.append("DPORT")
-    assign_data = pd.DataFrame(csv, columns=c_list)
-    assign_data.to_excel('result/assignment.xlsx', index=False, columns=c_list)
-    I_left_data.to_excel('result/leftRT.xlsx', index=False)
+    # assign_data = pd.DataFrame(csv, columns=c_list)
+    # assign_data.to_excel('result/assignment.xlsx', index=False, columns=c_list)
+    # I_left_data.to_excel('result/leftRT.xlsx', index=False)
 
 
 if __name__ == "__main__":
