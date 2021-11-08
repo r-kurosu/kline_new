@@ -555,9 +555,9 @@ def model2(FileName):
     for i in I:
         for j in J:
             if V_ij[i, j].X > 0:
-                # assign_data[ホールド番号、注文番号、積載RT,RT、ユニット数、積み地、揚げ地]
+                # assign_data[ホールド番号,積載RT,積み地,揚げ地]
                 answer.append([i, j])
-                assign.append([0, 0, V_ij[i, j].X, 0, 0, "L", "D"])
+                assign.append([0, V_ij[i, j].X,  "L", "D"])
                 
 
 
@@ -573,25 +573,13 @@ def model2(FileName):
         # hold_ID
         assign[k][0] = i_t
 
-        # order_ID
-        assign[k][1] = Booking.iloc[j_t, Booking.columns.get_loc('Order_num')]
 
-        # RT
-        assign[k][3] = Booking.iloc[j_t, Booking.columns.get_loc('RT')]
-
-        # Units(original booking)
-        assign[k][4] = Booking.iloc[j_t, Booking.columns.get_loc('Units')]
-        """
-        for j in range(len(divide_dic)):
-            if assign[k][1] - 1 == divide_dic[j][0]:
-                assign[k][3] = divide_dic[j][1]
-        """
 
         # L_port
-        assign[k][5] = Booking.iloc[j_t, Booking.columns.get_loc('LPORT')]
+        assign[k][2] = Booking.iloc[j_t, Booking.columns.get_loc('LPORT')]
 
         # D_port
-        assign[k][6] = Booking.iloc[j_t, Booking.columns.get_loc('DPORT')]
+        assign[k][3] = Booking.iloc[j_t, Booking.columns.get_loc('DPORT')]
 
         # 残リソース計算
         I_left_data.iloc[answer[k][0],
@@ -607,10 +595,7 @@ def model2(FileName):
 
     c_list = []
     c_list.append("Hold_ID")
-    c_list.append("Order_ID")
     c_list.append("Load_RT")
-    c_list.append("RT_sum")
-    c_list.append("Units")
     c_list.append("LPORT")
     c_list.append("DPORT")
     assign_data = pd.DataFrame(csv, columns=c_list)
