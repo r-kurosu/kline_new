@@ -593,13 +593,7 @@ def main():
         return penalty_coefficient*(unloaded_units+balance_penalty+constraint1)+objective1+objective2+objective3+objective4-objective5
     
 
-    dt1 = datetime.datetime.now()
-    print(len(J))
-
-    # モデル2の解を他のファイルから呼び出し
-    model2_assignment = model2_script.model2(BookingFile)
-    print(model2_assignment)
-    exit()
+    dt1 = datetime.datetime.now()    
     random.seed(1)
 
     SEGMENT_COUNT = 18
@@ -655,13 +649,19 @@ def main():
         for j in range(len(L)): #積み地の数だけ空配列を追加
             tmp.append([])
         assignment.append(tmp)
-    
-    # LP緩和解をもとに初期解を生成する手順
 
-    # 注文ごとに、割り当て台数を確率にして割り当てホールドを決める done
-    # ホールドとセグメントを変換する done
-    # 注文の積み港を調べる
-    # assignment[セグメント番号][積み地の番号]に追加
+    
+    # モデル2の解を他のファイルから呼び出し
+    model2_assignment = model2_script.model2(BookingFile)
+    print(model2_assignment)
+    exit()
+    
+    # モデル2の解をもとに初期解を生成する手順
+
+    # LPORTとDPORTの2つから、注文を全て見れるデータ構造を作る 2次元配列でいいかな？
+    # セグメントごとに、合計RTを計算する
+    # 1で作ったデータをランダムにする
+    # 合計RTを満たすまで、ランダムにした注文を初期解に詰め込んでいく assignment[セグメント番号][積み地の番号]に追加
 
     for order_index in range(len(initial_relaxed_assignment)):
         initial_assignment = initial_relaxed_assignment[order_index]
@@ -691,6 +691,8 @@ def main():
         assignment[selected_segment][loading_port].append(order_index)
 
         # print("----")
+        
+        
 
 
 
