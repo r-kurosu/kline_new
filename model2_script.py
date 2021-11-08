@@ -581,17 +581,11 @@ def model2(FileName):
         # D_port
         assign[k][3] = Booking.iloc[j_t, Booking.columns.get_loc('DPORT')]
 
-        # 残リソース計算
-        I_left_data.iloc[answer[k][0],
-                         1] = I_left_data.iloc[answer[k][0], 1] - assign[k][2]
-        if I_left_data.iloc[answer[k][0], 1] < 0.1:
-            I_left_data.iloc[answer[k][0], 1] = 0
 
     
     csv = []
     for k in range(len(assign)):
-        if assign[k][2] > 0.1:
-            csv.append(assign[k])
+        csv.append(assign[k])
 
     c_list = []
     c_list.append("Hold_ID")
