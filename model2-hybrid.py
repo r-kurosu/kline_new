@@ -662,6 +662,7 @@ def main():
     # セグメントごとに、合計RTを計算する
     # 1で作ったデータをランダムにする
     # 合計RTを満たすまで、ランダムにした注文を初期解に詰め込んでいく assignment[セグメント番号][積み地の番号]に追加
+    # 積み地、揚げ地のペアが、セグメントに2つ以上あったら、順番をランダムにする(積み地、揚げ地で固まらないように)
 
     for order_index in range(len(initial_relaxed_assignment)):
         initial_assignment = initial_relaxed_assignment[order_index]
