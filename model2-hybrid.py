@@ -672,15 +672,14 @@ def main():
     
     for i in range(len(order_list_by_port)):
         for dport in T:
+            order_list_by_port[i].append([])
     for index in range(len(Booking)):
         lport = int(Booking.at[index,"LPORT"])
         dport = int(Booking.at[index,"DPORT"])
         order_list_by_port[lport][dport].append(index)
-    # for i in range(len(order_list_by_port)):
-    #     for j in range(len(order_list_by_port[i])):
-    #         print(order_list_by_port[i][j])
-    
-    
+    for i in range(len(order_list_by_port)):
+        for j in range(len(order_list_by_port[i])):
+            print(order_list_by_port[i][j])
     exit()
 
     for order_index in range(len(initial_relaxed_assignment)):
