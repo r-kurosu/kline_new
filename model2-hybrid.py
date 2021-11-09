@@ -652,9 +652,8 @@ def main():
 
     
     # モデル2の解を他のファイルから呼び出し
-    model2_assignment = model2_script.model2(BookingFile)
-    print(model2_assignment)
-    exit()
+    # model2_assignment = model2_script.model2(BookingFile)
+    # print(model2_assignment)
     
     # モデル2の解をもとに初期解を生成する手順
 
@@ -663,6 +662,26 @@ def main():
     # 1で作ったデータをランダムにする
     # 合計RTを満たすまで、ランダムにした注文を初期解に詰め込んでいく assignment[セグメント番号][積み地の番号]に追加
     # 積み地、揚げ地のペアが、セグメントに2つ以上あったら、順番をランダムにする(積み地、揚げ地で固まらないように)
+    print(Booking)
+    
+    
+    # order_list_by_port[LPORT][DPORT]で、積み地と揚げ地に対応する注文を全て見れる
+    order_list_by_port = []
+    for lport in L:
+        order_list_by_port.append([])
+    
+    for i in range(len(order_list_by_port)):
+        for dport in T:
+            order_list_by_port[i].append([])
+    print(order_list_by_port)
+    for index in range(len(Booking)):
+        lport = int(Booking.at[index,"LPORT"])
+        dport = int(Booking.at[index,"DPORT"])
+        order_list_by_port[lport][dport].append(index)
+    for i in range(len(order_list_by_port)):
+        for j in range(len(order_list_by_port[i])):
+            print(order_list_by_port[i][j])
+    exit()
 
     for order_index in range(len(initial_relaxed_assignment)):
         initial_assignment = initial_relaxed_assignment[order_index]
