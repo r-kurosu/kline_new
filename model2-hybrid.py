@@ -657,7 +657,7 @@ def main():
     
     # モデル2の解をもとに初期解を生成する手順
 
-    # LPORTとDPORTの2つから、注文を全て見れるデータ構造を作る 2次元配列でいいかな？
+    # LPORTとDPORTの2つから、注文を全て見れるデータ構造を作る 2次元配列でいいかな？ done
     # セグメントごとに、合計RTを計算する
     # 1で作ったデータをランダムにする
     # 合計RTを満たすまで、ランダムにした注文を初期解に詰め込んでいく assignment[セグメント番号][積み地の番号]に追加
@@ -672,15 +672,15 @@ def main():
     
     for i in range(len(order_list_by_port)):
         for dport in T:
-            order_list_by_port[i].append([])
-    print(order_list_by_port)
     for index in range(len(Booking)):
         lport = int(Booking.at[index,"LPORT"])
         dport = int(Booking.at[index,"DPORT"])
         order_list_by_port[lport][dport].append(index)
-    for i in range(len(order_list_by_port)):
-        for j in range(len(order_list_by_port[i])):
-            print(order_list_by_port[i][j])
+    # for i in range(len(order_list_by_port)):
+    #     for j in range(len(order_list_by_port[i])):
+    #         print(order_list_by_port[i][j])
+    
+    
     exit()
 
     for order_index in range(len(initial_relaxed_assignment)):
