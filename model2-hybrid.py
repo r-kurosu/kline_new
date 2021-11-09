@@ -652,8 +652,8 @@ def main():
 
     
     # モデル2の解を他のファイルから呼び出し
-    # model2_assignment = model2_script.model2(BookingFile)
-    # print(model2_assignment)
+    model2_assignment = model2_script.model2(BookingFile)
+    print(model2_assignment)
     
     # モデル2の解をもとに初期解を生成する手順
 
@@ -662,7 +662,6 @@ def main():
     # 1で作ったデータをランダムにする
     # 合計RTを満たすまで、ランダムにした注文を初期解に詰め込んでいく assignment[セグメント番号][積み地の番号]に追加
     # 積み地、揚げ地のペアが、セグメントに2つ以上あったら、順番をランダムにする(積み地、揚げ地で固まらないように)
-    print(Booking)
     
     
     # order_list_by_port[LPORT][DPORT]で、積み地と揚げ地に対応する注文を全て見れる
@@ -677,9 +676,26 @@ def main():
         lport = int(Booking.at[index,"LPORT"])
         dport = int(Booking.at[index,"DPORT"])
         order_list_by_port[lport][dport].append(index)
-    for i in range(len(order_list_by_port)):
-        for j in range(len(order_list_by_port[i])):
-            print(order_list_by_port[i][j])
+    # for i in range(len(order_list_by_port)):
+    #     for j in range(len(order_list_by_port[i])):
+    #         print(order_list_by_port[i][j])
+    
+
+    # initial_rt_by_segment[segment]で、モデル2の解のセグメントごとの割当RT これだと港が違うやつを区別できないので、order_list_by_portと同じように多次元配列で持つ必要がありそう
+    # todo
+    # 積み地と揚げ地に対応する多次元配列を作る arr[セグメント][lport][dport]に、対応するRTとかかな
+    # すべてを0で初期化
+    # model2_assignmentをforで回して、配列に値を追加
+    
+    
+    # initial_rt_by_segment = [] 
+    # for segment in segments:
+    #     initial_rt_by_segment.append(0)
+    # for index in range(len(model2_assignment)):
+    #     hold_id = model2_assignment.at[index,"Hold_ID"]
+    #     segment_id = segment_index(hold_id)    
+    #     initial_rt_by_segment[segment_id] += model2_assignment.at[index,"Load_RT"]
+        
     exit()
 
     for order_index in range(len(initial_relaxed_assignment)):
