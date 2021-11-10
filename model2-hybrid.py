@@ -658,10 +658,8 @@ def main():
     # モデル2の解をもとに初期解を生成する手順
 
     # LPORTとDPORTの2つから、注文を全て見れるデータ構造を作る 2次元配列でいいかな？ done
-    # セグメントごとに、合計RTを計算する
-    # 1で作ったデータをランダムにする
+    # セグメントごとに、合計RTを計算する done
     # 合計RTを満たすまで、ランダムにした注文を初期解に詰め込んでいく assignment[セグメント番号][積み地の番号]に追加
-    # 積み地、揚げ地のペアが、セグメントに2つ以上あったら、順番をランダムにする(積み地、揚げ地で固まらないように)
     
     
     # order_list_by_port[LPORT][DPORT]で、積み地と揚げ地に対応する注文を全て見れる
@@ -701,16 +699,8 @@ def main():
         load_rt = model2_assignment.at[index,"Load_RT"]
         initial_rt_by_segment[segment_id][lport][dport] += load_rt
     
-    for item in initial_rt_by_segment:
-        print(item)
-    
-    # initial_rt_by_segment = [] 
-    # for segment in segments:
-    #     initial_rt_by_segment.append(0)
-    # for index in range(len(model2_assignment)):
-    #     hold_id = model2_assignment.at[index,"Hold_ID"]
-    #     segment_id = segment_index(hold_id)    
-    #     initial_rt_by_segment[segment_id] += model2_assignment.at[index,"Load_RT"]
+    # for item in initial_rt_by_segment:
+    #     print(item)
         
     exit()
 
