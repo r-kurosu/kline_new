@@ -681,12 +681,28 @@ def main():
     #         print(order_list_by_port[i][j])
     
 
-    # initial_rt_by_segment[segment]で、モデル2の解のセグメントごとの割当RT これだと港が違うやつを区別できないので、order_list_by_portと同じように多次元配列で持つ必要がありそう
-    # todo
-    # 積み地と揚げ地に対応する多次元配列を作る arr[セグメント][lport][dport]に、対応するRTとかかな
-    # すべてを0で初期化
-    # model2_assignmentをforで回して、配列に値を追加
+    # セグメントと積み地と揚げ地に対応する多次元配列を作る arr[セグメント][lport][dport]に、対応するRTとかかな done
     
+    initial_rt_by_segment = []
+    for segment in segments:
+        initial_rt_by_segment.append([])
+    
+    for i in range(len(initial_rt_by_segment)): #セグメントの数
+        for lport_num in range(len(L)): #積み地
+            initial_rt_by_segment[i].append([])
+            for dport in T: #揚げ地
+                initial_rt_by_segment[i][lport_num].append(0) #0で初期化
+    
+    for index in range(len(model2_assignment)):
+        hold_id = model2_assignment.at[index,"Hold_ID"]
+        segment_id = segment_index(hold_id)  
+        lport = model2_assignment.at[index,"LPORT"]
+        dport = model2_assignment.at[index,"DPORT"]
+        load_rt = model2_assignment.at[index,"Load_RT"]
+        initial_rt_by_segment[segment_id][lport][dport] += load_rt
+    
+    for item in initial_rt_by_segment:
+        print(item)
     
     # initial_rt_by_segment = [] 
     # for segment in segments:
