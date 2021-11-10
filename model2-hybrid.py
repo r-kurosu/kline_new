@@ -657,8 +657,9 @@ def main():
     
     # モデル2の解をもとに初期解を生成する手順
 
-    # LPORTとDPORTの2つから、注文を全て見れるデータ構造を作る 2次元配列でいいかな？ done
-    # セグメントごとに、合計RTを計算する done
+    # LPORTとDPORTの2つから、注文を全て見れるデータ構造を作る done
+    # 注文をシャッフルする
+    # セグメントごとに、合計RTを集計する done
     # 合計RTを満たすまで、ランダムにした注文を初期解に詰め込んでいく assignment[セグメント番号][積み地の番号]に追加
     
     
@@ -674,10 +675,15 @@ def main():
         lport = int(Booking.at[index,"LPORT"])
         dport = int(Booking.at[index,"DPORT"])
         order_list_by_port[lport][dport].append(index)
-    # for i in range(len(order_list_by_port)):
-    #     for j in range(len(order_list_by_port[i])):
-    #         print(order_list_by_port[i][j])
+        
+        
+    for i in range(len(order_list_by_port)):
+        for j in range(len(order_list_by_port[i])):
+            random.shuffle(order_list_by_port[i][j])
     
+    for i in range(len(order_list_by_port)):
+        for j in range(len(order_list_by_port[i])):
+            print(order_list_by_port[i][j])
 
     # セグメントと積み地と揚げ地に対応する多次元配列を作る arr[セグメント][lport][dport]に、対応するRTとかかな done
     
@@ -701,6 +707,8 @@ def main():
     
     # for item in initial_rt_by_segment:
     #     print(item)
+    
+    
         
     exit()
 
