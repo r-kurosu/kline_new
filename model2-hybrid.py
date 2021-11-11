@@ -679,7 +679,7 @@ def main():
         
     for i in range(len(order_list_by_port)):
         for j in range(len(order_list_by_port[i])):
-            random.shuffle(order_list_by_port[i][j])
+            order_list_by_port[i][j].sort(reverse=True)
     
     for i in range(len(order_list_by_port)):
         for j in range(len(order_list_by_port[i])):
@@ -705,45 +705,34 @@ def main():
         load_rt = model2_assignment.at[index,"Load_RT"]
         initial_rt_by_segment[segment_id][lport][dport] += load_rt
     
-    # for item in initial_rt_by_segment:
-    #     print(item)
+    for item in initial_rt_by_segment:
+        print(item)
+    print(Booking)
     
-    
-        
-    exit()
-
-    for order_index in range(len(initial_relaxed_assignment)):
-        initial_assignment = initial_relaxed_assignment[order_index]
-        # print(initial_assignment)
-        total_num_of_vehicles = 0.0
-        selection_hold_list = {}
-        for hold_index in range(len(initial_assignment)):
-            total_num_of_vehicles += abs(round(initial_assignment[hold_index],3))
-            if (initial_assignment[hold_index] != 0.0):
-                selection_hold_list[hold_index] = abs(round(initial_assignment[hold_index],3))
-        hold_arr = []
-        prob_arr = []
-        for hold_idx,prob in selection_hold_list.items():
-            hold_arr.append(hold_idx)
-            prob_arr.append(prob/total_num_of_vehicles)
-        # print(hold_arr)
-        # print(prob_arr)
-        selected_hold = np.random.choice(hold_arr, p=prob_arr)
-        # print(selected_hold)
-        selected_segment = segment_index(selected_hold)
-        # print(selected_segment)
-
-        # 注文の積み港を調べる
-        loading_port = operation.find_loading_port(order_index,J_t_load)
-        # print(loading_port)
-
-        assignment[selected_segment][loading_port].append(order_index)
-
-        # print("----")
+    print("----")
+    for segment_num in range(len(segments)):
+        print(segment_num)
+        print(initial_rt_by_segment[segment_num])
+        for lport in range(len(initial_rt_by_segment[segment_num])):
+            for dport in range(len(initial_rt_by_segment[segment_num][lport])):
+                initial_rt_by_segment[segment_num][lport][dport]
+                while initial_rt_by_segment[segment_num][lport][dport]>0: #積まれるべき合計RTがまだある場合
+                    if len(order_list_by_port[lport][dport]) >0: #まだ積まれていない注文が残っている場合
+                        order = order_list_by_port[lport][dport].pop()
+                        # print(order)
+                        # print(Booking.at[order,"Units"],Booking.at[order,"RT"])
+                        tmp_rt = Booking.at[order,"Units"]*Booking.at[order,"RT"]
+                        # print(tmp_rt)
+                        initial_rt_by_segment[segment_num][lport][dport] -= tmp_rt
+                        assignment[segment_num][lport].append(order)
+                    else:
+                        break
+        print(initial_rt_by_segment[segment_num])
         
         
 
-
+    for item in order_list_by_port:
+        print(item)
 
     # for i in range(len(L)):
     #     randomed_J = random.sample(J_t_load[i], len(J_t_load[i]))
@@ -757,7 +746,7 @@ def main():
     penalty,objective = evaluate(assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt)
     evaluated_value = penalty_coefficient*penalty+objective
     print(evaluated_value)
-
+    exit()
     shift_neighbor_list = operation.create_shift_neighbor(ORDER_COUNT,SEGMENT_COUNT)
     shift_count = 0
     # swap_neighbor_list = operation.create_swap_neighbor(J_t_load,Booking)
