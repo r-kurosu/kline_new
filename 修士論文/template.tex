@@ -1,0 +1,121 @@
+%#!ptex2pdf -l -u -ot '--synctex=1 --shell-escape' template
+%\documentclass[uplatex]{jsarticle}
+\documentclass[uplatex]{ujreport}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{psfrag}
+\usepackage[T1]{fontenc }
+\usepackage{pifont}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{amsmath,cases}
+\usepackage{here}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{url}      %URLの表記に使う\urlコマンドに必要．
+\usepackage{enumerate}%enumerate環境で項目を[Step 1.]のような形式に変更するのに利用.
+
+
+\setlength{\topmargin}{-10mm}
+\setlength{\textheight}{23cm}
+\setlength{\oddsidemargin}{5mm}
+\setlength{\evensidemargin}{5mm}
+\setlength{\textwidth}{15cm}
+
+\renewcommand{\tablename}{表}
+\renewcommand{\figurename}{図}
+%\newcommand{\bs}{\texttt{\symbol{'134}}}
+%    \newcommand{\cmd}[1]{\texttt{\def\{{\char`\{}\def\}{\char`\}}\bs#1}}
+\newtheorem{thm}{定理}[section]
+\newtheorem{prf}{証明}[section]
+\usepackage{latexsym}
+\def\qed{\hfill $\Box$}
+
+\usepackage[margin=3.25cm]{geometry}
+\renewcommand{\bibname}{参考文献}
+
+\begin{document}
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%表紙
+\begin{table}[b]
+\begin{center}
+{\huge 修\hspace{0.1cm} 士\hspace{0.1cm} 論\hspace{0.1cm} 文}\\[2.5cm]
+{\huge 自動車運搬船における \\ 貨物積載プランニングの席割問題}\\[6cm]
+{\huge 252001054\qquad 竹田陽}\\[1cm]
+{\huge 名古屋大学大学院情報学研究科}\\[0.5cm]
+{\huge 数理情報学専攻}\\[0.5cm]
+{\huge 2022年1月}\\
+\end{center}
+\end{table}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\thispagestyle{empty}
+\clearpage
+\newpage
+\pagenumbering{roman}
+\setcounter{page}{1}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%摘要とabstract
+\include{tekiyou}
+\include{abstract}
+
+
+
+\thispagestyle{empty}
+\tableofcontents
+\newpage
+\setcounter{page}{1}
+\pagestyle{plain}
+\pagenumbering{arabic}
+
+
+
+\include{chapter1}
+\include{chapter2}
+\include{chapter3}
+\include{chapter4}
+\include{chapter5}
+\include{chapter6}
+\include{chapter7}
+\include{chapter8}
+
+
+
+
+\addcontentsline{toc}{chapter}{参考文献}
+\begin{thebibliography}{99}
+ \bibitem{GareyJohnson79} M.R.~Garey and D.S.~Johnson,
+	 {\it Computers and Intractability: A Guide to the Theory of NP-Completeness},
+	 Freeman, New York, 1979.
+ \bibitem{IYI05} S.~Imahori, M.~Yagiura and T.~Ibaraki,
+	 Variable neighborhood search for the rectangle packing problem,
+         {\it Proceedings of the 6th Metaheuristics International Conference} (MIC),
+	 Vienna, Austria, August 22--26, 2005, pp.~532--537.
+ \bibitem{JohnsonMcGeoch97} D.S. Johnson and L.A. McGeoch,
+	 The traveling salesman problem: a case study,
+	 in: E.H.L. Aarts and J.K. Lenstra (eds.),
+	 {\it Local Search in Combinatorial Optimization},
+	 John Wiley \& Sons, Chichester, 1997, pp.~215--310.
+ \bibitem{MHI13} 真野洋平，橋本英樹，柳浦睦憲，
+	 学生実験のスケジューリングシステムの構築，
+	 オペレーションズ・リサーチ，58 (2013) 524--532.
+ \bibitem{YIG04} M.~Yagiura, T.~Ibaraki and F.~Glover,
+	 An ejection chain approach for the generalized assignment problem,
+	 {\it INFORMS Journal on Computing}, 16 (2004) 133--151.
+\end{thebibliography}
+\end{document}
+
+
+
+% LocalWords:  ij Imahori Yagiura Ibaraki th Metaheuristics McGeoch Aarts lrr
+% LocalWords:  Lenstra Chichester algorithmicx Fulkerson lrrcrr
+%%presented by YUKI SAWAI 2015/12/22
+%この卒論修論はhttp://www.co.cm.is.nagoya-u.ac.jp/~yagiura/writing/haifu_template/をもとに澤井佑樹が作っています

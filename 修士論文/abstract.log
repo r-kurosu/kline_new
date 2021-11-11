@@ -1,0 +1,182 @@
+This is e-upTeX, Version 3.14159265-p3.8.2-u1.25-190131-2.6 (utf8.uptex) (TeX Live 2019) (preloaded format=uplatex 2019.11.6)  11 NOV 2021 11:01
+entering extended mode
+ restricted \write18 enabled.
+ file:line:error style messages enabled.
+ %&-line parsing enabled.
+**abstract.tex
+(./abstract.tex
+pLaTeX2e <2019-10-01u02>+1 (based on LaTeX2e <2019-10-01> patch level 1)
+
+./abstract.tex:2: LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2 \begin{center}
+                  {\LARGE A column generation approach \\for the bus crew sc...
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Overfull \hbox (20.0pt too wide) in paragraph at lines 2--2
+[] 
+ []
+
+./abstract.tex:2: Undefined control sequence.
+l.2 \begin{center}{\LARGE
+                          A column generation approach \\for the bus crew sc...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Overfull \hbox (7.50002pt too wide) in paragraph at lines 2--2
+ \OT1/cmr/m/n/10 A 
+ []
+
+
+Overfull \hbox (15.55557pt too wide) in paragraph at lines 2--2
+ \OT1/cmr/m/n/10 col- 
+ []
+
+
+Overfull \hbox (19.4445pt too wide) in paragraph at lines 2--2
+ \OT1/cmr/m/n/10 umn 
+ []
+
+
+Overfull \hbox (18.33336pt too wide) in paragraph at lines 2--2
+ \OT1/cmr/m/n/10 gen- 
+ []
+
+
+Overfull \hbox (11.69444pt too wide) in paragraph at lines 2--2
+ \OT1/cmr/m/n/10 er- 
+ []
+
+
+Overfull \hbox (8.33334pt too wide) in paragraph at lines 2--2
+ \OT1/cmr/m/n/10 a- 
+ []
+
+
+Overfull \hbox (17.22227pt too wide) in paragraph at lines 2--2
+ \OT1/cmr/m/n/10 tion 
+ []
+
+
+Overfull \hbox (13.88892pt too wide) in paragraph at lines 2--2
+ \OT1/cmr/m/n/10 ap- 
+ []
+
+
+Overfull \hbox (29.1945pt too wide) in paragraph at lines 2--2
+ \OT1/cmr/m/n/10 proach 
+ []
+
+
+Overfull \hbox (11.97226pt too wide) in paragraph at lines 2--2
+ []\OT1/cmr/m/n/10 for 
+ []
+
+
+Overfull \hbox (13.88892pt too wide) in paragraph at lines 2--2
+ \OT1/cmr/m/n/10 the 
+ []
+
+
+Overfull \hbox (15.05559pt too wide) in paragraph at lines 2--2
+ \OT1/cmr/m/n/10 bus 
+ []
+
+
+Overfull \hbox (20.02779pt too wide) in paragraph at lines 2--2
+ \OT1/cmr/m/n/10 crew 
+ []
+
+
+Overfull \hbox (35.33337pt too wide) in paragraph at lines 2--2
+ \OT1/cmr/m/n/10 schedul- 
+ []
+
+
+Overfull \hbox (13.33337pt too wide) in paragraph at lines 2--2
+ \OT1/cmr/m/n/10 ing 
+ []
+
+
+Overfull \hbox (23.36116pt too wide) in paragraph at lines 2--2
+ \OT1/cmr/m/n/10 prob- 
+ []
+
+
+Overfull \hbox (15.55559pt too wide) in paragraph at lines 2--2
+ \OT1/cmr/m/n/10 lem 
+ []
+
+./abstract.tex:4: Undefined control sequence.
+l.4 \hfill {\large
+                   252001054\qquad Kiyoshi Takeda}\\[0.5cm]
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Overfull \hbox (45.00014pt too wide) in paragraph at lines 4--5
+ \OT1/cmr/m/n/10 252001054
+ []
+
+
+Overfull \hbox (32.83342pt too wide) in paragraph at lines 4--5
+\OT1/cmr/m/n/10 Kiyoshi
+ []
+
+
+Overfull \hbox (31.38895pt too wide) in paragraph at lines 4--5
+\OT1/cmr/m/n/10 Takeda 
+ []
+
+./abstract.tex:6: Undefined control sequence.
+l.6 {\large
+            \bf Abstract}\\
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+./abstract.tex:6: Undefined control sequence.
+l.6 {\large \bf
+                Abstract}\\
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Overfull \hbox (38.13896pt too wide) in paragraph at lines 6--6
+ \OT1/cmr/m/n/10 Abstract 
+ []
+
+)
+! Emergency stop.
+<*> abstract.tex
+                
+*** (job aborted, no legal \end found)
+
+ 
+Here is how much of TeX's memory you used:
+ 5 strings out of 492752
+ 57 string characters out of 6140168
+ 66392 words of memory out of 5000000
+ 4557 multiletter control sequences out of 15000+600000
+ 6281 words of font info for 32 fonts, out of 8000000 for 9000
+ 929 hyphenation exceptions out of 8191
+ 9i,1n,4p,559b,61s stack positions out of 5000i,500n,10000p,200000b,80000s
+No pages of output.

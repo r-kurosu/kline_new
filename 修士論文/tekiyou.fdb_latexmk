@@ -1,0 +1,14 @@
+# Fdb version 3
+["dvipdf"] 0 "tekiyou.dvi" "tekiyou.pdf" "tekiyou" 0
+  "tekiyou.dvi" 0 -1 0 "latex"
+  (generated)
+  "tekiyou.pdf"
+["latex"] 1636596120 "tekiyou.tex" "tekiyou.dvi" "tekiyou" 1636596120
+  "/usr/local/texlive/2019/texmf-dist/web2c/texmf.cnf" 1570742662 39452 758acee3f2beaeeedff570c5f5d76d98 ""
+  "/usr/local/texlive/2019/texmf-var/web2c/euptex/uplatex.fmt" 1573005491 4553067 6bfd2d44f501852523d42dc3f56fd483 ""
+  "/usr/local/texlive/2019/texmf.cnf" 1557341546 577 d150fef99ac436ad1156e86b0892f6ef ""
+  "tekiyou.aux" 1636596036 695 3e601870a2e5c9c9c1ab59b7bc53b6ae ""
+  "tekiyou.tex" 1636596120 1373 1c0bb5f8b61a8864cb3fbc1425854411 ""
+  (generated)
+  "tekiyou.dvi"
+  "tekiyou.log"

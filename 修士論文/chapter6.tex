@@ -1,0 +1,45 @@
+\chapter{計算実験}\label{computational_result}
+実験結果を示す際には，計算環境（実験に用いた計算機のCPUやメモリー，
+実装に用いた言語）を明記しましょう．
+計算結果を表示するのに用いる図や表を表示する例を図\ref{fig1}と
+表\ref{table1}に示しておきます．
+また，今回は2段組ではありませんが, 2段組みの原稿において幅の広い表を表示する例を表\ref{table2}に示しておきます
+（図も同様に\texttt{\char`\\begin\{figure*\}}のようにすればよい）．
+
+\begin{figure}[htbp]
+ \centering
+ \includegraphics[width=0.9\linewidth]{sample_fig.eps}
+ \caption{図の表示例}
+ \label{fig1}
+\end{figure}
+
+\begin{table}[htbp]
+ \centering
+ \tabcolsep = 15pt
+ \renewcommand{\arraystretch}{0.8}
+ \caption{表の表示例}
+ \label{table1}
+ \begin{tabular}{lrr} \hline
+  問題例 & 最良値 & 計算時間（秒） \\ \hline
+  c05100 &    123 & 10.1 \\
+  c10100 &    456 & 15.2 \\
+  c20100 &    789 & 20.3 \\ \hline
+ \end{tabular}
+\end{table}
+
+
+\begin{table*}
+ \centering
+ \tabcolsep = 19pt
+ \renewcommand{\arraystretch}{0.8}
+ \caption{2段組みスタイルにおいて幅の広い表を表示する例}
+ \label{table2}
+ \begin{tabular}{lrrcrr} \hline
+  &\multicolumn{2}{c}{既存手法} && \multicolumn{2}{c}{提案手法}\\ \cline{2-3} \cline{5-6}
+  
+  問題例 & 最良値 & 計算時間（秒）&& 最良値 & 計算時間（秒） \\ \hline
+  c05100 &    123 &          10.1 &&    111 &          10.0 \\
+  c10100 &    456 &          15.2 &&    432 &          15.0 \\
+  c20100 &    789 &          20.3 &&    765 &          20.0 \\ \hline
+ \end{tabular}
+\end{table*}
