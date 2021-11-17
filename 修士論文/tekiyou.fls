@@ -6,3 +6,4 @@ INPUT /usr/local/texlive/2019/texmf-dist/web2c/texmf.cnf
 INPUT /usr/local/texlive/2019/texmf-var/web2c/euptex/uplatex.fmt
 INPUT tekiyou.tex
 OUTPUT tekiyou.log
+OUTPUT tekiyou.dvi

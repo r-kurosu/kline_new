@@ -1,4 +1,4 @@
-This is e-upTeX, Version 3.14159265-p3.8.2-u1.25-190131-2.6 (utf8.uptex) (TeX Live 2019) (preloaded format=uplatex 2019.11.6)  11 NOV 2021 11:02
+This is e-upTeX, Version 3.14159265-p3.8.2-u1.25-190131-2.6 (utf8.uptex) (TeX Live 2019) (preloaded format=uplatex 2019.11.6)  17 NOV 2021 15:39
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -342,7 +342,22 @@ LaTeX Font Info:    Font shape `JY2/mc/bx/n' in size <10> not available
 (Font)              Font shape `JY2/gt/m/n' tried instead on input line 1.
 LaTeX Font Info:    Font shape `JY2/gt/m/n' will be
 (Font)              scaled to size 9.6222pt on input line 1.
+LaTeX Font Info:    Font shape `JY2/mc/m/n' will be
+(Font)              scaled to size 6.73553pt on input line 3.
+LaTeX Font Info:    Font shape `JY2/mc/m/n' will be
+(Font)              scaled to size 4.8111pt on input line 3.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 3.
+ (/usr/local/texlive/2019/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
+LaTeX Font Info:    Trying to load font information for U+msb on input line 3.
+ (/usr/local/texlive/2019/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+LaTeX Font Info:    Trying to load font information for U+lasy on input line 3.
+ (/usr/local/texlive/2019/texmf-dist/tex/latex/base/ulasy.fd
+File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
+))
 \tf@toc=\write4
 \openout4 = `template.toc'.
 
@@ -354,36 +369,7 @@ LaTeX Font Info:    Font shape `JY2/gt/m/n' will be
 
  (./chapter1.tex
 第 1 章
-LaTeX Font Info:    Font shape `JY2/mc/m/n' will be
-(Font)              scaled to size 6.73553pt on input line 4.
-LaTeX Font Info:    Font shape `JY2/mc/m/n' will be
-(Font)              scaled to size 4.8111pt on input line 4.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 4.
-(/usr/local/texlive/2019/texmf-dist/tex/latex/amsfonts/umsa.fd
-File: umsa.fd 2013/01/14 v3.01 AMS symbols A
-)
-LaTeX Font Info:    Trying to load font information for U+msb on input line 4.
- (/usr/local/texlive/2019/texmf-dist/tex/latex/amsfonts/umsb.fd
-File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-)
-LaTeX Font Info:    Trying to load font information for U+lasy on input line 4.
- (/usr/local/texlive/2019/texmf-dist/tex/latex/base/ulasy.fd
-File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
-)
-LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
-(Font)              scaled to size 6.73553pt on input line 4.
-LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
-(Font)              scaled to size 7.69775pt on input line 4.
-LaTeX Font Info:    Font shape `JY2/mc/m/n' will be
-(Font)              scaled to size 7.69775pt on input line 4.
-LaTeX Font Info:    Font shape `JY2/mc/m/n' will be
-(Font)              scaled to size 5.77332pt on input line 4.
-LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
-(Font)              scaled to size 5.77332pt on input line 4.
-LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 4.
- (/usr/local/texlive/2019/texmf-dist/tex/latex/base/t1cmtt.fd
-File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
-)) [1
+) [1
 
 
 ]
@@ -391,68 +377,144 @@ File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 
  (./chapter2.tex
 第 2 章
-LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
-(Font)              scaled to size 4.8111pt on input line 10.
-) [2
+LaTeX Font Info:    Trying to load font information for OMS+cmr on input line 10.
+(/usr/local/texlive/2019/texmf-dist/tex/latex/base/omscmr.fd
+File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 10.
+ [2
 
 
 
-]
+] [3]) [4]
 \openout2 = `chapter3.aux'.
 
  (./chapter3.tex
 第 3 章
-) [3
+LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
+(Font)              scaled to size 6.73553pt on input line 48.
+LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
+(Font)              scaled to size 4.8111pt on input line 48.
+
+Overfull \hbox (2.57716pt too wide) in paragraph at lines 91--95
+[][][][]| 
+ []
+
+
+Overfull \hbox (6.0658pt too wide) in paragraph at lines 142--146
+[][][][]| 
+ []
+
+
+LaTeX Warning: Float too large for page by 2.19392pt on input line 431.
+
+[5
 
 
 
-]
+] [6] [7] [8
+
+] [9] [10] [11]
+
+LaTeX Warning: File `Flowchart.png' not found on input line 547.
+
+
+./chapter3.tex:547: LaTeX Error: File `"""Flowchart".png' not found.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.547 \includegraphics[scale=0.58]{Flowchart.png}
+                                                 
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+./chapter3.tex:547: LaTeX Error: Cannot determine size of graphic in """Flowchart".png (no BoundingBox).
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.547 \includegraphics[scale=0.58]{Flowchart.png}
+                                                 
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+File: """Flowchart".png Graphic file (type eps)
+<"""Flowchart".png> [12
+
+] [13
+
+]) [14]
 \openout2 = `chapter4.aux'.
 
  (./chapter4.tex
 第 4 章
 
-Overfull \hbox (11.25394pt too wide) in paragraph at lines 44--50
-[]\JY2/mc/m/n/10 手続きをまとめるのに以下のようなスタイルを使うこともあります ． なお ， \T1/cmr/m/n/10 Step \JY2/mc/m/n/10 番号を \T1/cmtt/m/n/10 description
- []
+LaTeX Warning: Reference `24hours' on page 15 undefined on input line 10.
 
-[4
+) [15
 
 
 
 ]
-
-LaTeX Font Warning: Font shape `JT2/mc/bx/sc' undefined
-(Font)              using `JT2/mc/bx/n' instead on input line 56.
-
-
-LaTeX Font Warning: Font shape `JY2/mc/bx/sc' undefined
-(Font)              using `JY2/mc/bx/n' instead on input line 56.
-
-LaTeX Font Info:    Trying to load font information for T1+cmss on input line 60.
-(/usr/local/texlive/2019/texmf-dist/tex/latex/base/t1cmss.fd
-File: t1cmss.fd 2014/09/29 v2.5h Standard LaTeX font definitions
-)) [5]
 \openout2 = `chapter5.aux'.
 
  (./chapter5.tex
 第 5 章
-) [6
+
+LaTeX Warning: File `segment.png' not found on input line 15.
+
+
+./chapter5.tex:15: LaTeX Error: File `"""segment".png' not found.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.15 ...graphics[width=0.9\linewidth]{segment.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+./chapter5.tex:15: LaTeX Error: Cannot determine size of graphic in """segment".png (no BoundingBox).
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.15 ...graphics[width=0.9\linewidth]{segment.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+File: """segment".png Graphic file (type eps)
+<"""segment".png> [16
 
 
 
-]
+] [17]
+LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
+(Font)              scaled to size 7.69775pt on input line 63.
+LaTeX Font Info:    Font shape `JY2/mc/m/n' will be
+(Font)              scaled to size 7.69775pt on input line 63.
+) [18]
 \openout2 = `chapter6.aux'.
 
  (./chapter6.tex
 第 6 章
-File: sample_fig.eps Graphic file (type eps)
-<sample_fig.eps>
-Overfull \hbox (27.69402pt too wide) in paragraph at lines 37--45
- [][][][] 
- []
 
-) [7
+LaTeX Warning: No positions in optional float specifier.
+               Default added (so using `tbp') on input line 6.
+
+
+LaTeX Warning: Reference `heuristic' on page 19 undefined on input line 24.
+
+) [19
 
 
 
@@ -461,45 +523,32 @@ Overfull \hbox (27.69402pt too wide) in paragraph at lines 37--45
 
  (./chapter7.tex
 第 7 章
-) [8
+) [20
 
 
 
 ]
 \openout2 = `chapter8.aux'.
 
- (./chapter8.tex) [9
+ (./chapter8.tex) [21
 
 
 
-]
-
-LaTeX Font Warning: Font shape `JT2/mc/m/it' undefined
-(Font)              using `JT2/mc/m/n' instead on input line 96.
-
-
-LaTeX Font Warning: Font shape `JY2/mc/m/it' undefined
-(Font)              using `JY2/mc/m/n' instead on input line 96.
-
-LaTeX Font Info:    Font shape `JT2/mc/m/it' will be
-(Font)              scaled to size 9.6222pt on input line 100.
-LaTeX Font Info:    Font shape `JY2/mc/m/it' will be
-(Font)              scaled to size 9.6222pt on input line 100.
-[10
+] [22
 
 
 ] (./template.aux (./tekiyou.aux) (./abstract.aux) (./chapter1.aux) (./chapter2.aux) (./chapter3.aux) (./chapter4.aux) (./chapter5.aux) (./chapter6.aux) (./chapter7.aux) (./chapter8.aux))
 
-LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 3436 strings out of 492752
- 42329 string characters out of 6140168
- 119081 words of memory out of 5000000
- 7718 multiletter control sequences out of 15000+600000
- 27075 words of font info for 91 fonts, out of 8000000 for 9000
+ 3383 strings out of 492752
+ 41043 string characters out of 6140168
+ 149174 words of memory out of 5000000
+ 7682 multiletter control sequences out of 15000+600000
+ 19948 words of font info for 69 fonts, out of 8000000 for 9000
  929 hyphenation exceptions out of 8191
- 30i,10n,34p,578b,496s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 30i,19n,34p,1776b,560s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on template.dvi (14 pages, 23532 bytes).
+Output written on template.dvi (26 pages, 89184 bytes).

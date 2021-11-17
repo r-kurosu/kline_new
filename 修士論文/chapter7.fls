@@ -1,0 +1,9 @@
+PWD /Users/takedakiyoshi/lab/kline/KLINE/修士論文
+INPUT /usr/local/texlive/2019/texmf.cnf
+INPUT /usr/local/texlive/2019/texmf-dist/web2c/texmf.cnf
+INPUT /usr/local/texlive/2019/texmf.cnf
+INPUT /usr/local/texlive/2019/texmf-dist/web2c/texmf.cnf
+INPUT /usr/local/texlive/2019/texmf-var/web2c/euptex/uplatex.fmt
+INPUT chapter7.tex
+OUTPUT chapter7.log
+OUTPUT chapter7.dvi

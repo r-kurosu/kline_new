@@ -1,84 +1,15 @@
-\chapter{提案手法}\label{method}
-提案手法を書く際には，
-\begin{enumerate}
- \item まず手法の大まかなアイデアや全体像を言葉で簡潔に説明し，
- \item 次に手法の構成要素のおのおのの詳細を述べ，
- \item 最後にそれらの構成要素をどのように組み合わせて全体の枠組みが
-       構成されているのかを示す
-\end{enumerate}
-というような順序で書くと分かりやすいと思います．
-その際，各構成要素を，
-サブルーチンのように入力として何を受け取って何を返すのかを記述した
-手続きとして名前をつけてまとめておき，
-最後に全体の枠組みを示す際にそれらを利用してアルゴリズムを記述すると
-書きやすいと思います．
+\chapter{MIPを用いた計算実験}\label{method}
 
-このような手続きを疑似コードとしてまとめるのに\texttt{algorithmic}が便利です
-（\texttt{algorithmicx}も便利のようです）．
-Algorithm~\ref{algo1}に例を示します．
-\begin{algorithm}
- \caption{Ford-Fulkerson}
- \label{algo1}
- \begin{algorithmic}[1]%1を0にすると行番号なし．
-  \REQUIRE グラフ$G = (V, E)$，始点$s \in V$, 終点$t \in V$, および各辺$e \in E$の容量$u_e$.
-  \ENSURE  $s$から$t$への最大フロー．
-  \FOR{$e = 1$ to $|E|$}
-  \STATE $x_e := 0$とする.
-  \ENDFOR
-  \STATE 残余ネットワーク$G_x$を作成する．
-  \WHILE{$G_x$にフロー追加路が存在する}
-  \STATE フロー追加路に沿って$x$にフローを追加する．
-  \STATE 残余ネットワーク$G_x$を更新する．
-  \ENDWHILE
-  \STATE フロー$x$を出力して終了．
- \end{algorithmic}
-\end{algorithm}
+\label {gurobiの計算実験}
+鵜川らによる研究の数理モデルでは自動車の注文数や積み地や揚げ地の数の増加とともに制約や組合せが急速に増加してしまい，指定された時間内では十分に計算が進まない可能性が指摘されている\cite{ukawa}.
 
-なお，手続きの入出力を表す「\texttt{\char`\\REQUIRE}」と「\texttt{\char`\\ENSURE}」
-を使うと，通常はそれぞれ「\textbf{Require:}」と「\textbf{Ensure:}」のように表示されますが，
-これらを上の例のように「\textbf{Input:}」と「\textbf{Output:}」に変更するための記述が
-本\LaTeX ファイルのプリアンブル
-\footnote{\texttt{\char`\\documentclass}と\texttt{\char`\\begin\{document\}}の間の部分．}
-にあります．
+\subsection{解くことのできる問題例の規模}
+注文数や港の数を変更した問題例をいくつか準備し，どの程度の規模の問題例ならばある程度の時間内で解けるのか調査を行った．
+実験に用いるプログラムは Pythonを用いて実装し, 計算機はPowerEdge T320 (CPU: Intel(R) Xeon(R) CPU E5-1410 v2 (2.80 GHz, 10 M cache), RAM: 96 GB) を使用した. また，整数計画ソルバーとしてGurobi Optimizer (ver 9.0.0) を使用した.
 
-手続きをまとめるのに以下のようなスタイルを使うこともあります．
-なお，Step番号を\texttt{description}環境で手動で書いても同様のスタイルを実現できますが，
-Stepを追加したり削除したりしたときに番号の相互参照で失敗しないよう，
-自動的に番号を振る方法の方がよいと思います．
-以下の例では\texttt{enumerate}環境を利用していますが，
-プリアンブルに\texttt{\char`\\usepackage\{enumerate\}}が必要です．
-\newpage
-%\\ \hrulefill %←これでも線は引けるが上下に大きめのスペースが空く
-\vspace{3mm}
-\hrule width \linewidth%←こちらは上下にスペースが空かないので適宜手動調整が要る
-\vspace{2mm}
-\begin{description}
- \item[\underline{Algorithm \textsc{Ford-Fulkerson}}] 
- \item[Input:] グラフ$G=(V,E)$ \ldots （略）
- \item[Output:] $s$から$t$への最大フロー．
-\end{description}
-\begin{enumerate}[{\sf Step 1.}] %← enumerateパッケージが必要．
- %\begin{enumerate}[\textbf{Step 1.}]では番号がずっと1のままでうまくいかない.
- \item すべての$e \in E$に対し$x_e := 0$とする.
- \item 残余ネットワーク$G_x$を作成する．
- \item \label{StepShuryoHantei}
-       $G_x$にフロー追加路が存在しなければ，フロー$x$を出力して終了．
- \item フロー追加路に沿って$x$にフローを追加．
- \item %残余ネットワーク
-       $G_x$を更新したのちStep~\ref{StepShuryoHantei}に戻る．
-\end{enumerate}
-\vspace{2mm}
-%\hrule height 0.2mm depth 0.2mm width \linewidth
-\hrule width \linewidth
-\vspace{3mm}
+表\ref{24hours}に実行可能解が初めて出力された計算時間と，計算を回して1時間後と24時間後の解の精度を示した．
 
-どのようなスタイルを使う方が書きやすいか，分かりやすいかは，
-アルゴリズムによっても変わりますし，好みもあると思いますが，
-アルゴリズムの反復構造は\texttt{algorithmic}の方が分かりやすいように思います．
+結果より，注文数が250程度，港の数が3,4より少なければ，24時間以内にある程度の解を出力することが確認できた.
+一方で，注文数が350の問題例に関しては，24時間後でも解の探索があまり進まなかった．
 
-疑似コードを読まなくてもアルゴリズムのアイデアが大体分かるように
-本文の文章中に説明を書きましょう．
-疑似コードはアルゴリズムを正確に記述するためのものなので，複雑になりがちです．
-従って，よほど内容に興味がある読者でなければ疑似コードまで読みたいとは思いません．
-読者が疑似コードを読まなくてもアイデアの概要が本文から分かるように書いてなければ，
-とても読みづらい論文になってしまいます．
+実際にはこれ以上の注文数を持つ問題例が多く存在しており，提案したモデルではより大規模な問題例を解くことは難しいと考えられる．

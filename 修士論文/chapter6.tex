@@ -1,45 +1,27 @@
 \chapter{計算実験}\label{computational_result}
-実験結果を示す際には，計算環境（実験に用いた計算機のCPUやメモリー，
-実装に用いた言語）を明記しましょう．
-計算結果を表示するのに用いる図や表を表示する例を図\ref{fig1}と
-表\ref{table1}に示しておきます．
-また，今回は2段組ではありませんが, 2段組みの原稿において幅の広い表を表示する例を表\ref{table2}に示しておきます
-（図も同様に\texttt{\char`\\begin\{figure*\}}のようにすればよい）．
+\subsection{計算時間の短縮}
+\ref{近傍操作の計算時間短縮}で解の精度を変化させることなく計算時間を短縮する手法を提案した．
+本説では，実際に計算実験を行い計算時間の比較を行う．
 
-\begin{figure}[htbp]
- \centering
- \includegraphics[width=0.9\linewidth]{sample_fig.eps}
- \caption{図の表示例}
- \label{fig1}
-\end{figure}
-
-\begin{table}[htbp]
- \centering
- \tabcolsep = 15pt
- \renewcommand{\arraystretch}{0.8}
- \caption{表の表示例}
- \label{table1}
- \begin{tabular}{lrr} \hline
-  問題例 & 最良値 & 計算時間（秒） \\ \hline
-  c05100 &    123 & 10.1 \\
-  c10100 &    456 & 15.2 \\
-  c20100 &    789 & 20.3 \\ \hline
- \end{tabular}
+\begin{table}[]
+  \centering
+  \caption{近傍操作に関する計算時間の比較}
+  \label{shift}
+\begin{tabular}{cccrr}
+\hline
+注文数 & 積み地 & 揚げ地 & \multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}全ての位置\\ を探索\end{tabular}} & 提案手法 \\ \hline
+109 & 2   & 3   & 145                                                                      & 81                        \\
+109 & 2   & 5   & 192                                                                      & 89                        \\
+109 & 4   & 3   & 122                                                                      & 99                        \\
+250 & 2   & 3   & 387                                                                      & 204                       \\ \hline
+\end{tabular}
 \end{table}
 
+挿入近傍操作を一定回数行った際の計算時間の比較結果を表\ref{shift}に示す．
+提案手法により、全てのインスタンスにおいて計算時間が短縮できることを確認した．
 
-\begin{table*}
- \centering
- \tabcolsep = 19pt
- \renewcommand{\arraystretch}{0.8}
- \caption{2段組みスタイルにおいて幅の広い表を表示する例}
- \label{table2}
- \begin{tabular}{lrrcrr} \hline
-  &\multicolumn{2}{c}{既存手法} && \multicolumn{2}{c}{提案手法}\\ \cline{2-3} \cline{5-6}
-  
-  問題例 & 最良値 & 計算時間（秒）&& 最良値 & 計算時間（秒） \\ \hline
-  c05100 &    123 &          10.1 &&    111 &          10.0 \\
-  c10100 &    456 &          15.2 &&    432 &          15.0 \\
-  c20100 &    789 &          20.3 &&    765 &          20.0 \\ \hline
- \end{tabular}
-\end{table*}
+\subsection{MIPモデルとの比較}
+元のモデルで探索を行って1時間後と24時間後の結果と，新たに提案するモデルの結果の比較を表\ref{heuristic}に示す．
+
+結果より，いくつかのインスタンスでは計算時間を短縮しつつ，ある程度の精度の解を得ることができていることが確認できた．
+その一方で，いくつかのインスタンスでは，局所探索で一度も実行可能解を得ることができなかった．
