@@ -1,10 +1,23 @@
 \newpage
-\begin{center}{\LARGE A column generation approach \\for the bus crew scheduling problem}\\[0.5cm]
+\begin{center}{\LARGE A mathematical modeling \\ for the stowage planning problem }\\[0.5cm]
 \end{center}
 \hfill {\large 252001054\qquad Kiyoshi Takeda}\\[0.5cm]
 \begin{center}
 {\large \bf Abstract}\\
 \end{center}
-Our research considers the situation in which cars are transported to several ports of various countries by a carrier ship. Two stages of work called stowage planning and simulation planning are performed before loading a collection of cars onto a pure car carrier (PCC). The stowage planning stage considers assigning cars to one of the areas called holds, a few of which compose each level of the ship. The simulation planning stage places the cars assigned to each area in the stowage planning one by one considering the orientation of cars.
- In our research, as the first step of fully automating the stowage planning and simulation planning, we aim to output efficient stowage plans.
- We propose heuristic algorithm to solve large instances, and also propose a method to reduce computation time while keeping the quality of solution.
+
+We consider the cargo loading of a car carrier, which loads cars from one port through several ports and unloads them at several ports.
+Two kinds of operations called "stowage planning" and "simulation" are carried out after the information of cars to be loaded on a car carrier is given.
+In the stowage planning work, they decide how many cars from the given list of loaded cars should be assigned to the spaces called holds, which are divided into certain intervals in the ship's hierarchy.
+In the simulation work, the cars assigned to each hold in the stowage planning work are determined to be placed in the hold considering the direction of the cars, available space, and work efficiency.
+In this study, we aim to automate the work of stowage planning by using mathematical optimization techniques to output efficient stowage planning in a short time.
+
+The stowage planning problem can be formulated as an assignment problem, and there are two characteristic requirements.
+The first is that when loading or unloading a car onto or off a ship, it is necessary to secure a passage for a person to drive the car to a certain position.
+In this case, if a car already loaded is in the path of a car to be newly loaded or unloaded, the car cannot move between the assigned hold and the entrance of the ship.
+Secondly, the load balance of the entire ship must be taken into account.
+For example, if the loaded cars are concentrated in some areas of the ship as the ship moves through the sea, it is very dangerous that the ship may roll over when it is rocked by waves.
+
+From the interviews, we have confirmed that it is important not to cause unintended cars to be unloaded during loading and unloading, that cars with the same port of loading and unloading are placed close to each other on the ship, that there is enough space for the driver to work efficiently, and that the space on the ship is not wasted. In this study, we design an objective function that takes these indicators of good stowage planning into account.
+
+In this study, we propose a mathematical model that takes into account indicators and features for creating a good stowage planning. Two types of mathematical models are proposed: one is based on an exact solution method using an integer programming solver, and the other is based on an approximate solution method using a local search method, and the computation time and accuracy are compared. As a result of computational experiments, it was confirmed that the model using the local search method can reduce the computation time without losing much accuracy of the solution. We also propose two approaches to generate initial solution in local search. The first one is to solve the linear relaxation problem of the model formulated as an integer programming problem and use the solution as the initial solution. The second approach is to consider all orders with the same loading and unloading ports as a single order, solve the integer programming problem, and use the solution as the initial solution. We compare the computation time and the accuracy of the solution by using the proposed two approaches and a randomly generated solution as the initial solution in the local search.
