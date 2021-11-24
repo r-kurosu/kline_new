@@ -8,8 +8,8 @@
 \contentsline {section}{\numberline {3.2}制約}{8}% 
 \contentsline {section}{\numberline {3.3}目的関数}{8}% 
 \contentsline {section}{\numberline {3.4}定式化}{10}% 
-\contentsline {chapter}{\numberline {第4章}MIPを用いた計算実験}{12}% 
-\contentsline {subsection}{\numberline {4.0.1}解くことのできる問題例の規模}{12}% 
+\contentsline {chapter}{\numberline {第4章}提案手法1}{12}% 
+\contentsline {section}{\numberline {4.1}求解が可能な問題例の規模}{12}% 
 \contentsline {chapter}{\numberline {第5章}提案手法2}{13}% 
 \contentsline {section}{\numberline {5.1}ヒューリスティックを用いるモデル}{13}% 
 \contentsline {subsection}{\numberline {5.1.1}ホールドの統合}{13}% 

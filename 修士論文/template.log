@@ -1,4 +1,4 @@
-This is e-upTeX, Version 3.14159265-p3.8.2-u1.25-190131-2.6 (utf8.uptex) (TeX Live 2019) (preloaded format=uplatex 2019.11.6)  24 NOV 2021 16:02
+This is e-upTeX, Version 3.14159265-p3.8.2-u1.25-190131-2.6 (utf8.uptex) (TeX Live 2019) (preloaded format=uplatex 2019.11.6)  24 NOV 2021 16:20
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -428,7 +428,26 @@ LaTeX Warning: Float too large for page by 2.19392pt on input line 432.
  (./chapter4.tex
 第 4 章
 
-LaTeX Warning: Reference `24hours' on page 12 undefined on input line 10.
+./chapter4.tex:19: LaTeX Error: Environment landscape undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.19 \begin{landscape}
+                      
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+LaTeX Warning: No positions in optional float specifier.
+               Default added (so using `tbp') on input line 20.
+
+
+Overfull \hbox (33.17815pt too wide) in paragraph at lines 24--34
+ [][][][] 
+ []
 
 ) [12
 
@@ -515,14 +534,18 @@ LaTeX Warning: Reference `heuristic' on page 16 undefined on input line 24.
 
 LaTeX Warning: There were undefined references.
 
- ) 
+ )
+(\end occurred inside a group at level 1)
+
+### semi simple group (level 1) entered at line 19 (\begingroup)
+### bottom level 
 Here is how much of TeX's memory you used:
  3378 strings out of 492752
  40971 string characters out of 6140168
- 149166 words of memory out of 5000000
+ 149177 words of memory out of 5000000
  7678 multiletter control sequences out of 15000+600000
  19948 words of font info for 69 fonts, out of 8000000 for 9000
  929 hyphenation exceptions out of 8191
- 30i,19n,34p,1366b,560s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 30i,19n,34p,1366b,590s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on template.dvi (23 pages, 75980 bytes).
+Output written on template.dvi (23 pages, 77432 bytes).
