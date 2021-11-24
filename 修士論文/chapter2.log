@@ -1,4 +1,4 @@
-This is e-upTeX, Version 3.14159265-p3.8.2-u1.25-190131-2.6 (utf8.uptex) (TeX Live 2019) (preloaded format=uplatex 2019.11.6)  17 NOV 2021 15:24
+This is e-upTeX, Version 3.14159265-p3.8.2-u1.25-190131-2.6 (utf8.uptex) (TeX Live 2019) (preloaded format=uplatex 2019.11.6)  24 NOV 2021 15:17
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -54,38 +54,41 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.3 様
-       々な国で複数の港を経由し, 自動車を輸送する運搬...
+l.3 複
+       数の港を経由し, 自動車を輸送する運搬船を想定す...
 You're in trouble here.  Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 3.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 3.
+\citation{stowage}
+LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
+(Font)              scaled to size 9.6222pt on input line 3.
+LaTeX Font Info:    Font shape `JY2/mc/m/n' will be
+(Font)              scaled to size 9.6222pt on input line 3.
+LaTeX Font Info:    Font shape `JT2/mc/bx/n' in size <10> not available
+(Font)              Font shape `JT2/gt/m/n' tried instead on input line 3.
+LaTeX Font Info:    Font shape `JT2/gt/m/n' will be
+(Font)              scaled to size 9.6222pt on input line 3.
+LaTeX Font Info:    Font shape `JY2/mc/bx/n' in size <10> not available
+(Font)              Font shape `JY2/gt/m/n' tried instead on input line 3.
+LaTeX Font Info:    Font shape `JY2/gt/m/n' will be
+(Font)              scaled to size 9.6222pt on input line 3.
+./chapter2.tex:3: Undefined control sequence.
+<write> ...: Citation `\@citeb ' on page \thepage 
+                                                  \space undefined\on@line .^^J
+l.3 ...を席割作業(stowage plan)\cite{stowage}
+                                                  という. 本稿では複...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
 
-Overfull \hbox (38.74438pt too wide) in paragraph at lines 3--4
-[]\JY2/mc/m/n/10 様 々
- []
+
+LaTeX Warning: Citation `stowage' on page  undefined on input line 3.
 
 
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 3--4
-\JY2/mc/m/n/10 な
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 3--4
-\JY2/mc/m/n/10 国
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 3--4
-\JY2/mc/m/n/10 で
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 3--4
-\JY2/mc/m/n/10 複
+Overfull \hbox (29.6222pt too wide) in paragraph at lines 3--4
+[]\JY2/mc/m/n/10 複
  []
 
 
@@ -205,22 +208,17 @@ Overfull \hbox (12.39998pt too wide) in paragraph at lines 3--4
 
 
 Overfull \hbox (9.6222pt too wide) in paragraph at lines 3--4
-\JY2/mc/m/n/10 こ
+\JY2/mc/m/n/10 例
  []
 
 
 Overfull \hbox (9.6222pt too wide) in paragraph at lines 3--4
-\JY2/mc/m/n/10 の
+\JY2/mc/m/n/10 え
  []
 
 
 Overfull \hbox (9.6222pt too wide) in paragraph at lines 3--4
-\JY2/mc/m/n/10 と
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 3--4
-\JY2/mc/m/n/10 き
+\JY2/mc/m/n/10 ば
  []
 
 
@@ -604,8 +602,8 @@ Overfull \hbox (37.83339pt too wide) in paragraph at lines 3--4
  []
 
 
-Overfull \hbox (33.33344pt too wide) in paragraph at lines 3--4
-\OT1/cmr/m/n/10 plan)$[3]$
+Overfull \hbox (33.76395pt too wide) in paragraph at lines 3--4
+\OT1/cmr/m/n/10 plan)[[]]
  []
 
 
@@ -645,22 +643,12 @@ Overfull \hbox (9.6222pt too wide) in paragraph at lines 3--4
 
 
 Overfull \hbox (9.6222pt too wide) in paragraph at lines 3--4
-\JY2/mc/m/n/10 席
+\JY2/mc/m/n/10 複
  []
 
 
 Overfull \hbox (9.6222pt too wide) in paragraph at lines 3--4
-\JY2/mc/m/n/10 割
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 3--4
-\JY2/mc/m/n/10 作
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 3--4
-\JY2/mc/m/n/10 業
+\JY2/mc/m/n/10 数
  []
 
 
@@ -670,17 +658,42 @@ Overfull \hbox (9.6222pt too wide) in paragraph at lines 3--4
 
 
 Overfull \hbox (9.6222pt too wide) in paragraph at lines 3--4
-\JY2/mc/m/n/10 自
+\JY2/mc/m/n/10 種
  []
 
 
 Overfull \hbox (9.6222pt too wide) in paragraph at lines 3--4
-\JY2/mc/m/n/10 動
+\JY2/mc/m/n/10 類
  []
 
 
 Overfull \hbox (9.6222pt too wide) in paragraph at lines 3--4
-\JY2/mc/m/n/10 化
+\JY2/mc/m/n/10 が
+ []
+
+
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 3--4
+\JY2/mc/m/n/10 あ
+ []
+
+
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 3--4
+\JY2/mc/m/n/10 る
+ []
+
+
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 3--4
+\JY2/mc/m/n/10 運
+ []
+
+
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 3--4
+\JY2/mc/m/n/10 搬
+ []
+
+
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 3--4
+\JY2/mc/m/n/10 船
  []
 
 
@@ -690,37 +703,17 @@ Overfull \hbox (9.6222pt too wide) in paragraph at lines 3--4
 
 
 Overfull \hbox (9.6222pt too wide) in paragraph at lines 3--4
-\JY2/mc/m/n/10 初
+\JY2/mc/m/n/10 な
  []
 
 
 Overfull \hbox (9.6222pt too wide) in paragraph at lines 3--4
-\JY2/mc/m/n/10 期
+\JY2/mc/m/n/10 か
  []
 
 
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 3--4
-\JY2/mc/m/n/10 段
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 3--4
-\JY2/mc/m/n/10 階
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 3--4
-\JY2/mc/m/n/10 と
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 3--4
-\JY2/mc/m/n/10 し
- []
-
-
-Overfull \hbox (12.39998pt too wide) in paragraph at lines 3--4
-\JY2/mc/m/n/10 て\OT1/cmr/m/n/10 ,
+Overfull \hbox (13.93329pt too wide) in paragraph at lines 3--4
+\JY2/mc/m/n/10 で ，
  []
 
 
@@ -939,18 +932,33 @@ Overfull \hbox (9.6222pt too wide) in paragraph at lines 3--4
  []
 
 
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 3--4
-\JY2/mc/m/n/10 る
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 3--4
-\JY2/mc/m/n/10 た
- []
-
-
 Overfull \hbox (12.39998pt too wide) in paragraph at lines 3--4
-\JY2/mc/m/n/10 め\OT1/cmr/m/n/10 ,
+\JY2/mc/m/n/10 り\OT1/cmr/m/n/10 ,
+ []
+
+
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 3--4
+\JY2/mc/m/n/10 ブ
+ []
+
+
+Overfull \hbox (18.74438pt too wide) in paragraph at lines 3--4
+\JY2/mc/m/n/10 ル ー
+ []
+
+
+Overfull \hbox (18.74438pt too wide) in paragraph at lines 3--4
+\JY2/mc/m/n/10 ド ー
+ []
+
+
+Overfull \hbox (18.74438pt too wide) in paragraph at lines 3--4
+\JY2/mc/m/n/10 ザ ー
+ []
+
+
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 3--4
+\JY2/mc/m/n/10 や
  []
 
 
@@ -976,31 +984,6 @@ Overfull \hbox (9.6222pt too wide) in paragraph at lines 3--4
 
 Overfull \hbox (18.74438pt too wide) in paragraph at lines 3--4
 \JY2/mc/m/n/10 カ ー
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 3--4
-\JY2/mc/m/n/10 や
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 3--4
-\JY2/mc/m/n/10 ブ
- []
-
-
-Overfull \hbox (18.74438pt too wide) in paragraph at lines 3--4
-\JY2/mc/m/n/10 ル ー
- []
-
-
-Overfull \hbox (18.74438pt too wide) in paragraph at lines 3--4
-\JY2/mc/m/n/10 ド ー
- []
-
-
-Overfull \hbox (18.74438pt too wide) in paragraph at lines 3--4
-\JY2/mc/m/n/10 ザ ー
  []
 
 
@@ -1031,26 +1014,6 @@ Overfull \hbox (9.6222pt too wide) in paragraph at lines 3--4
 
 Overfull \hbox (9.6222pt too wide) in paragraph at lines 3--4
 \JY2/mc/m/n/10 は
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 3--4
-\JY2/mc/m/n/10 自
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 3--4
-\JY2/mc/m/n/10 動
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 3--4
-\JY2/mc/m/n/10 車
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 3--4
-\JY2/mc/m/n/10 の
  []
 
 
@@ -1285,11 +1248,6 @@ Overfull \hbox (9.6222pt too wide) in paragraph at lines 3--4
 
 
 Overfull \hbox (9.6222pt too wide) in paragraph at lines 3--4
-\JY2/mc/m/n/10 て
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 3--4
 \JY2/mc/m/n/10 本
  []
 
@@ -1306,6 +1264,71 @@ Overfull \hbox (9.6222pt too wide) in paragraph at lines 3--4
 
 Overfull \hbox (9.6222pt too wide) in paragraph at lines 3--4
 \JY2/mc/m/n/10 は
+ []
+
+
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 3--4
+\JY2/mc/m/n/10 作
+ []
+
+
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 3--4
+\JY2/mc/m/n/10 業
+ []
+
+
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 3--4
+\JY2/mc/m/n/10 自
+ []
+
+
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 3--4
+\JY2/mc/m/n/10 動
+ []
+
+
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 3--4
+\JY2/mc/m/n/10 化
+ []
+
+
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 3--4
+\JY2/mc/m/n/10 の
+ []
+
+
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 3--4
+\JY2/mc/m/n/10 初
+ []
+
+
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 3--4
+\JY2/mc/m/n/10 期
+ []
+
+
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 3--4
+\JY2/mc/m/n/10 段
+ []
+
+
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 3--4
+\JY2/mc/m/n/10 階
+ []
+
+
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 3--4
+\JY2/mc/m/n/10 と
+ []
+
+
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 3--4
+\JY2/mc/m/n/10 し
+ []
+
+
+Overfull \hbox (13.93329pt too wide) in paragraph at lines 3--4
+\JY2/mc/m/n/10 て ，
  []
 
 
@@ -1796,10 +1819,6 @@ Overfull \hbox (12.39998pt too wide) in paragraph at lines 3--4
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
-(Font)              scaled to size 9.6222pt on input line 4.
-LaTeX Font Info:    Font shape `JY2/mc/m/n' will be
-(Font)              scaled to size 9.6222pt on input line 4.
 
 
 ./chapter2.tex:4: LaTeX Error: The font size command \normalsize is not defined:
@@ -3392,6 +3411,10 @@ Overfull \hbox (12.39998pt too wide) in paragraph at lines 37--39
 \JY2/mc/m/n/10 港\OT1/cmr/m/n/10 . 
  []
 
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 41.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 41.
 
 Overfull \hbox (13.75pt too wide) in paragraph at lines 40--42
 \OT1/cmr/m/n/10 RT
@@ -4451,14 +4474,6 @@ Overfull \hbox (12.39998pt too wide) in paragraph at lines 57--59
 \JY2/mc/m/n/10 報\OT1/cmr/m/n/10 . 
  []
 
-LaTeX Font Info:    Font shape `JT2/mc/bx/n' in size <10> not available
-(Font)              Font shape `JT2/gt/m/n' tried instead on input line 62.
-LaTeX Font Info:    Font shape `JT2/gt/m/n' will be
-(Font)              scaled to size 9.6222pt on input line 62.
-LaTeX Font Info:    Font shape `JY2/mc/bx/n' in size <10> not available
-(Font)              Font shape `JY2/gt/m/n' tried instead on input line 62.
-LaTeX Font Info:    Font shape `JY2/gt/m/n' will be
-(Font)              scaled to size 9.6222pt on input line 62.
 ./chapter2.tex:62: Undefined control sequence.
 <write> ...: Reference `table21' on page \thepage 
                                                   \space undefined\on@line .^^J
@@ -4786,7 +4801,7 @@ Overfull \hbox (9.6222pt too wide) in paragraph at lines 82--88
  []
 
 
-Overfull \hbox (326.37753pt too wide) in paragraph at lines 89--101
+Overfull \hbox (224.71074pt too wide) in paragraph at lines 89--101
  [][][] 
  []
 
@@ -4993,7 +5008,7 @@ Overfull \hbox (9.6222pt too wide) in paragraph at lines 108--110
 
 
 Overfull \hbox (5.00002pt too wide) in paragraph at lines 108--110
-\OT1/cmr/m/n/10 3
+\OT1/cmr/m/n/10 2
  []
 
 
@@ -5013,7 +5028,7 @@ Overfull \hbox (9.6222pt too wide) in paragraph at lines 108--110
 
 
 Overfull \hbox (5.00002pt too wide) in paragraph at lines 108--110
-\OT1/cmr/m/n/10 1
+\OT1/cmr/m/n/10 2
  []
 
 
@@ -5082,138 +5097,8 @@ Overfull \hbox (9.6222pt too wide) in paragraph at lines 108--110
  []
 
 
-Overfull \hbox (12.39998pt too wide) in paragraph at lines 108--110
-\JY2/mc/m/n/10 る\OT1/cmr/m/n/10 ,
- []
-
-
 Overfull \hbox (9.6222pt too wide) in paragraph at lines 108--110
-\JY2/mc/m/n/10 注
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 108--110
-\JY2/mc/m/n/10 文
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 108--110
-\JY2/mc/m/n/10 番
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 108--110
-\JY2/mc/m/n/10 号
- []
-
-
-Overfull \hbox (5.00002pt too wide) in paragraph at lines 108--110
-\OT1/cmr/m/n/10 2
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 108--110
-\JY2/mc/m/n/10 番
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 108--110
-\JY2/mc/m/n/10 を
- []
-
-
-Overfull \hbox (5.00002pt too wide) in paragraph at lines 108--110
-\OT1/cmr/m/n/10 2
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 108--110
-\JY2/mc/m/n/10 デ
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 108--110
-\JY2/mc/m/n/10 ッ
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 108--110
-\JY2/mc/m/n/10 キ
- []
-
-
-Overfull \hbox (5.00002pt too wide) in paragraph at lines 108--110
-\OT1/cmr/m/n/10 2
- []
-
-
-Overfull \hbox (18.74438pt too wide) in paragraph at lines 108--110
-\JY2/mc/m/n/10 ホ ー
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 108--110
-\JY2/mc/m/n/10 ル
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 108--110
-\JY2/mc/m/n/10 ド
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 108--110
-\JY2/mc/m/n/10 に
- []
-
-
-Overfull \hbox (15.00005pt too wide) in paragraph at lines 108--110
-\OT1/cmr/m/n/10 200
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 108--110
-\JY2/mc/m/n/10 台
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 108--110
-\JY2/mc/m/n/10 中
- []
-
-
-Overfull \hbox (10.00003pt too wide) in paragraph at lines 108--110
-\OT1/cmr/m/n/10 40
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 108--110
-\JY2/mc/m/n/10 台
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 108--110
-\JY2/mc/m/n/10 割
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 108--110
-\JY2/mc/m/n/10 り
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 108--110
-\JY2/mc/m/n/10 当
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 108--110
-\JY2/mc/m/n/10 て
- []
-
-
-Overfull \hbox (12.39998pt too wide) in paragraph at lines 108--110
-\JY2/mc/m/n/10 る\OT1/cmr/m/n/10 ,
+\JY2/mc/m/n/10 る
  []
 
 
@@ -5244,61 +5129,6 @@ Overfull \hbox (9.6222pt too wide) in paragraph at lines 108--110
 
 Overfull \hbox (9.6222pt too wide) in paragraph at lines 108--110
 \JY2/mc/m/n/10 な
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 108--110
-\JY2/mc/m/n/10 エ
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 108--110
-\JY2/mc/m/n/10 ク
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 108--110
-\JY2/mc/m/n/10 セ
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 108--110
-\JY2/mc/m/n/10 ル
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 108--110
-\JY2/mc/m/n/10 フ
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 108--110
-\JY2/mc/m/n/10 ァ
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 108--110
-\JY2/mc/m/n/10 イ
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 108--110
-\JY2/mc/m/n/10 ル
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 108--110
-\JY2/mc/m/n/10 形
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 108--110
-\JY2/mc/m/n/10 式
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 108--110
-\JY2/mc/m/n/10 の
  []
 
 
@@ -5457,7 +5287,7 @@ Overfull \hbox (9.6222pt too wide) in paragraph at lines 111--117
  []
 
 
-Overfull \hbox (391.68832pt too wide) in paragraph at lines 118--130
+Overfull \hbox (430.1771pt too wide) in paragraph at lines 118--130
  [][][] 
  []
 
@@ -5484,9 +5314,9 @@ or  <return>  to continue without it.
 Here is how much of TeX's memory you used:
  18 strings out of 492752
  197 string characters out of 6140168
- 89117 words of memory out of 5000000
+ 89119 words of memory out of 5000000
  4568 multiletter control sequences out of 15000+600000
  6589 words of font info for 33 fonts, out of 8000000 for 9000
  929 hyphenation exceptions out of 8191
- 22i,6n,15p,1120b,161s stack positions out of 5000i,500n,10000p,200000b,80000s
-Output written on chapter2.dvi (3 pages, 7172 bytes).
+ 23i,6n,23p,1130b,161s stack positions out of 5000i,500n,10000p,200000b,80000s
+Output written on chapter2.dvi (3 pages, 7088 bytes).
