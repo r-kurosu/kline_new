@@ -1,4 +1,4 @@
-This is e-upTeX, Version 3.14159265-p3.8.2-u1.25-190131-2.6 (utf8.uptex) (TeX Live 2019) (preloaded format=uplatex 2019.11.6)  24 NOV 2021 18:05
+This is e-upTeX, Version 3.14159265-p3.8.2-u1.25-190131-2.6 (utf8.uptex) (TeX Live 2019) (preloaded format=uplatex 2019.11.6)  25 NOV 2021 15:49
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -474,13 +474,13 @@ LaTeX Warning: Float too large for page by 2.19392pt on input line 432.
  (./chapter4.tex
 第 4 章
 
-./chapter4.tex:19: LaTeX Error: Environment landscape undefined.
+./chapter4.tex:20: LaTeX Error: Environment landscape undefined.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.19 \begin{landscape}
+l.20 \begin{landscape}
                       
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -488,10 +488,10 @@ or  <return>  to continue without it.
 
 
 LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `tbp') on input line 20.
+               Default added (so using `tbp') on input line 21.
 
 
-Overfull \hbox (33.17815pt too wide) in paragraph at lines 24--34
+Overfull \hbox (33.17815pt too wide) in paragraph at lines 25--35
  [][][][] 
  []
 
@@ -505,13 +505,13 @@ Overfull \hbox (33.17815pt too wide) in paragraph at lines 24--34
  (./chapter5.tex
 第 5 章
 
-./chapter5.tex:14: Package keyval Error: slace undefined.
+./chapter5.tex:16: Package keyval Error: slace undefined.
 
 See the keyval package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.14  \includegraphics[slace=0.2]{segment.png}
+l.16  \includegraphics[slace=0.2]{segment.png}
                                               
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
@@ -522,16 +522,11 @@ File: segment.png Graphic file (type bmp)
 
 
 
-] [14]
-
-LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `tbp') on input line 78.
-
-[15]
+] [14] [15]
 LaTeX Font Info:    Font shape `JT2/mc/m/n' will be
-(Font)              scaled to size 7.69775pt on input line 123.
+(Font)              scaled to size 7.69775pt on input line 128.
 LaTeX Font Info:    Font shape `JY2/mc/m/n' will be
-(Font)              scaled to size 7.69775pt on input line 123.
+(Font)              scaled to size 7.69775pt on input line 128.
 ) [16]
 \openout2 = `chapter6.aux'.
 
@@ -539,50 +534,51 @@ LaTeX Font Info:    Font shape `JY2/mc/m/n' will be
 第 6 章
 
 LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `tbp') on input line 6.
+               Default added (so using `tbp') on input line 29.
 
 
-LaTeX Warning: Reference `heuristic' on page 17 undefined on input line 24.
+LaTeX Warning: No positions in optional float specifier.
+               Default added (so using `tbp') on input line 43.
+
+
+LaTeX Warning: No positions in optional float specifier.
+               Default added (so using `tbp') on input line 59.
 
 ) [17
 
 
 
-]
+] [18]
 \openout2 = `chapter7.aux'.
 
  (./chapter7.tex
 第 7 章
-) [18
+) [19
 
 
 
 ]
 \openout2 = `chapter8.aux'.
 
- (./chapter8.tex) [19
+ (./chapter8.tex) [20
 
 
 
-] [20
+] [21
 
 
-] (./template.aux (./tekiyou.aux) (./abstract.aux) (./chapter1.aux) (./chapter2.aux) (./chapter3.aux) (./chapter4.aux) (./chapter5.aux) (./chapter6.aux) (./chapter7.aux) (./chapter8.aux))
-
-LaTeX Warning: There were undefined references.
-
- )
+] (./template.aux (./tekiyou.aux) (./abstract.aux) (./chapter1.aux) (./chapter2.aux) (./chapter3.aux) (./chapter4.aux) (./chapter5.aux) (./chapter6.aux) (./chapter7.aux) (./chapter8.aux)) )
 (\end occurred inside a group at level 1)
 
-### semi simple group (level 1) entered at line 19 (\begingroup)
+### semi simple group (level 1) entered at line 20 (\begingroup)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 4057 strings out of 492752
- 51324 string characters out of 6140168
- 165525 words of memory out of 5000000
- 8318 multiletter control sequences out of 15000+600000
+ 4062 strings out of 492752
+ 51379 string characters out of 6140168
+ 165595 words of memory out of 5000000
+ 8323 multiletter control sequences out of 15000+600000
  19948 words of font info for 69 fonts, out of 8000000 for 9000
  929 hyphenation exceptions out of 8191
  34i,20n,34p,1366b,605s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on template.dvi (24 pages, 87760 bytes).
+Output written on template.dvi (25 pages, 92240 bytes).

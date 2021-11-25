@@ -6,6 +6,6 @@ INPUT /usr/local/texlive/2019/texmf-dist/web2c/texmf.cnf
 INPUT /usr/local/texlive/2019/texmf-var/web2c/euptex/uplatex.fmt
 INPUT chapter5.tex
 OUTPUT chapter5.log
-OUTPUT chapter5.dvi
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/map/fontname/texfonts.map
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm
+OUTPUT chapter5.dvi

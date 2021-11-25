@@ -1,7 +1,30 @@
 \chapter{計算実験}\label{computational_result}
-\subsection{計算時間の短縮}
+\section{実験環境}
+実験に用いるプログラムは Pythonを用いて実装し, 計算機はPowerEdge T320 (CPU: Intel(R) Xeon(R) CPU E5-1410 v2 (2.80 GHz, 10 M cache), RAM: 96 GB) を使用した. また，整数計画ソルバーとしてGurobi Optimizer (ver 9.0.0) を使用した.
+
+\section{計算時間の短縮}
 \ref{近傍操作の計算時間短縮}で解の精度を変化させることなく計算時間を短縮する手法を提案した．
-本説では，実際に計算実験を行い計算時間の比較を行う．
+計算実験を行い，挿入可能な位置にすべて挿入した場合と提案手法において，計算時間の秒数の比較を行う．
+
+挿入近傍操作を一定回数行った際の計算時間の比較結果を表\ref{shift}に示す．
+
+提案手法により、全てのインスタンスにおいて計算時間が短縮できることを確認した．解の精度を落とすことなく計算時間を短縮することができるため，有効な手法だと考えられる．
+
+\section{初期解による比較}
+\label{sectioninitial}
+\ref{initial}章で提案した初期解生成の手法と，注文をランダムに割り当てた初期解の比較を行う．
+\ref{relaxation}章の緩和解を用いる方法を手法1，\ref{model2}章の港ごとに注文をまとめる方法を手法2,初期解をランダムに生成する方法を手法3と記す．計算結果を表\ref{initialresult}に示す．
+
+結果より，手法1では線形緩和問題を解くことに多くの計算時間を要しており，初期解を生成するために計算時間を使いすぎていることが確認できた．
+その一方で，ランダムに初期解を生成した場合には，比較的短い計算時間で，ある程度の精度の解を得る事ができることを確認した．
+
+
+\section{2つの提案手法の比較}
+\ref{method2}章で提案したヒューリスティックを用いる手法と，整数計画問題として解いた結果の比較を行う．
+整数計画問題を解く手法では，探索を行って1時間後と24時間後の評価関数の値を記す．
+ヒューリスティックを用いる手法では，\ref{sectioninitial}章で確認した最も解の精度が良い手法を記す．
+
+結果より，計算時間を短縮しつつ，ある程度の精度の解を得ることができていることが確認できた．
 
 \begin{table}[]
   \centering
@@ -17,11 +40,32 @@
 \end{tabular}
 \end{table}
 
-挿入近傍操作を一定回数行った際の計算時間の比較結果を表\ref{shift}に示す．
-提案手法により、全てのインスタンスにおいて計算時間が短縮できることを確認した．
+\begin{table}[]
+  \centering
+  \caption{初期解生成による計算時間と解の比較}
+  \label{initialresult}
+\begin{tabular}{cccrrrrrr}
+\hline
+\multicolumn{3}{c}{問題例}                                                                               & \multicolumn{2}{c}{手法1}                          & \multicolumn{2}{c}{手法2}                          & \multicolumn{2}{c}{手法3}                          \\ \hline
+注文数 & \begin{tabular}[c]{@{}c@{}}積み\\ 地\end{tabular} & \begin{tabular}[c]{@{}c@{}}揚げ\\ 地\end{tabular} & \multicolumn{1}{c}{計算時間} & \multicolumn{1}{c}{解} & \multicolumn{1}{c}{計算時間} & \multicolumn{1}{c}{解} & \multicolumn{1}{c}{計算時間} & \multicolumn{1}{c}{解} \\ \hline
+109 & 2                                              & 3                                              & 1641                     & -2179                 & -                        & -                     & 873                      & -2975                 \\
+109 & 2                                              & 5                                              & 8057                     & -594                  & -                        & -                     & 938                      & -1167                 \\
+109 & 4                                              & 3                                              & 8782                     & 1840                  & -                        & -                     & 728                      & -1378                 \\
+250 & 2                                              & 3                                              & 9726                     & -2755                 & -                        & -                     & 3069                     & -2235                 \\ \hline
+\end{tabular}
+\end{table}
 
-\subsection{MIPモデルとの比較}
-元のモデルで探索を行って1時間後と24時間後の結果と，新たに提案するモデルの結果の比較を表\ref{heuristic}に示す．
 
-結果より，いくつかのインスタンスでは計算時間を短縮しつつ，ある程度の精度の解を得ることができていることが確認できた．
-その一方で，いくつかのインスタンスでは，局所探索で一度も実行可能解を得ることができなかった．
+\begin{table}[]\caption{提案手法による比較}
+\centering
+\label{heuristic}
+\begin{tabular}{cccrrrr}
+\hline
+\multicolumn{3}{c}{問題例}                                                                               & \multicolumn{2}{c}{整数計画問題の解}                             & \multicolumn{2}{c}{ヒューリスティック}                    \\ \hline
+注文数 & \begin{tabular}[c]{@{}c@{}}積み\\ 地\end{tabular} & \begin{tabular}[c]{@{}c@{}}揚げ\\ 地\end{tabular} & \multicolumn{1}{c}{1時間後の解} & \multicolumn{1}{c}{24時間後の解} & \multicolumn{1}{c}{計算時間} & \multicolumn{1}{c}{解} \\ \hline
+109 & 2                                              & 3                                              & -508                       & -3478                       & 873                      & -2975                 \\
+109 & 2                                              & 5                                              & -2612                      & -3354                       & 938                      & -1167                 \\
+109 & 4                                              & 3                                              & 1240                       & -3455                       & 728                      & -1378                 \\
+250 & 2                                              & 3                                              & 実行不可能                      & -2064                       & 3069                     & -2235                 \\ \hline
+\end{tabular}
+\end{table}
