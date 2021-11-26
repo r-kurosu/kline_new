@@ -1,4 +1,4 @@
-This is e-upTeX, Version 3.14159265-p3.8.2-u1.25-190131-2.6 (utf8.uptex) (TeX Live 2019) (preloaded format=uplatex 2019.11.6)  25 NOV 2021 16:01
+This is e-upTeX, Version 3.14159265-p3.8.2-u1.25-190131-2.6 (utf8.uptex) (TeX Live 2019) (preloaded format=uplatex 2019.11.6)  26 NOV 2021 15:01
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -573,12 +573,12 @@ LaTeX Warning: No positions in optional float specifier.
 ### semi simple group (level 1) entered at line 20 (\begingroup)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 4062 strings out of 492752
- 51379 string characters out of 6140168
- 165595 words of memory out of 5000000
- 8323 multiletter control sequences out of 15000+600000
+ 4064 strings out of 492752
+ 51394 string characters out of 6140168
+ 165601 words of memory out of 5000000
+ 8325 multiletter control sequences out of 15000+600000
  19948 words of font info for 69 fonts, out of 8000000 for 9000
  929 hyphenation exceptions out of 8191
  34i,20n,34p,1366b,605s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on template.dvi (25 pages, 92760 bytes).
+Output written on template.dvi (25 pages, 93348 bytes).
