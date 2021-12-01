@@ -1,4 +1,4 @@
-This is e-upTeX, Version 3.14159265-p3.8.2-u1.25-190131-2.6 (utf8.uptex) (TeX Live 2019) (preloaded format=uplatex 2019.11.6)  26 NOV 2021 14:05
+This is e-upTeX, Version 3.14159265-p3.8.2-u1.25-190131-2.6 (utf8.uptex) (TeX Live 2019) (preloaded format=uplatex 2019.11.6)  1 DEC 2021 14:04
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1803,23 +1803,18 @@ Overfull \hbox (10.2778pt too wide) in paragraph at lines 15--20
  []
 
 
-Overfull \hbox (23.88895pt too wide) in paragraph at lines 15--20
-\OT1/cmr/m/n/10 taken
+Overfull \hbox (18.33336pt too wide) in paragraph at lines 15--20
+\OT1/cmr/m/n/10 con-
  []
 
 
-Overfull \hbox (16.94449pt too wide) in paragraph at lines 15--20
-\OT1/cmr/m/n/10 into
+Overfull \hbox (15.61113pt too wide) in paragraph at lines 15--20
+\OT1/cmr/m/n/10 sid-
  []
 
 
-Overfull \hbox (12.77779pt too wide) in paragraph at lines 15--20
-\OT1/cmr/m/n/10 ac-
- []
-
-
-Overfull \hbox (26.9445pt too wide) in paragraph at lines 15--20
-\OT1/cmr/m/n/10 count.
+Overfull \hbox (21.13892pt too wide) in paragraph at lines 15--20
+\OT1/cmr/m/n/10 ered.
  []
 
 
@@ -2582,9 +2577,9 @@ Overfull \hbox (26.9445pt too wide) in paragraph at lines 21--22
 Here is how much of TeX's memory you used:
  6 strings out of 492752
  69 string characters out of 6140168
- 77055 words of memory out of 5000000
+ 77032 words of memory out of 5000000
  4557 multiletter control sequences out of 15000+600000
  6281 words of font info for 32 fonts, out of 8000000 for 9000
  929 hyphenation exceptions out of 8191
- 18i,4n,8p,1202b,107s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 18i,4n,8p,1180b,107s stack positions out of 5000i,500n,10000p,200000b,80000s
 Output written on abstract.dvi (1 page, 920 bytes).

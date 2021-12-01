@@ -1,4 +1,4 @@
-This is e-upTeX, Version 3.14159265-p3.8.2-u1.25-190131-2.6 (utf8.uptex) (TeX Live 2019) (preloaded format=uplatex 2019.11.6)  30 NOV 2021 17:33
+This is e-upTeX, Version 3.14159265-p3.8.2-u1.25-190131-2.6 (utf8.uptex) (TeX Live 2019) (preloaded format=uplatex 2019.11.6)  1 DEC 2021 14:06
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -2428,22 +2428,22 @@ Overfull \hbox (12.39998pt too wide) in paragraph at lines 16--18
 
 
 Overfull \hbox (9.6222pt too wide) in paragraph at lines 19--21
-\JY2/mc/m/n/10 ギ
+\JY2/mc/m/n/10 オ
  []
 
 
 Overfull \hbox (9.6222pt too wide) in paragraph at lines 19--21
-\JY2/mc/m/n/10 ャ
+\JY2/mc/m/n/10 ペ
  []
 
 
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 19--21
-\JY2/mc/m/n/10 ン
+Overfull \hbox (18.74438pt too wide) in paragraph at lines 19--21
+\JY2/mc/m/n/10 レ ー
  []
 
 
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 19--21
-\JY2/mc/m/n/10 グ 
+Overfull \hbox (18.74438pt too wide) in paragraph at lines 19--21
+\JY2/mc/m/n/10 タ ー 
  []
 
 
@@ -5329,9 +5329,9 @@ or  <return>  to continue without it.
 Here is how much of TeX's memory you used:
  18 strings out of 492752
  197 string characters out of 6140168
- 89109 words of memory out of 5000000
+ 89113 words of memory out of 5000000
  4568 multiletter control sequences out of 15000+600000
  6589 words of font info for 33 fonts, out of 8000000 for 9000
  929 hyphenation exceptions out of 8191
  23i,6n,23p,1130b,161s stack positions out of 5000i,500n,10000p,200000b,80000s
-Output written on chapter2.dvi (3 pages, 7096 bytes).
+Output written on chapter2.dvi (3 pages, 7112 bytes).
