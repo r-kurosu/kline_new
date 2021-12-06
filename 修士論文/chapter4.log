@@ -1,4 +1,4 @@
-This is e-upTeX, Version 3.14159265-p3.8.2-u1.25-190131-2.6 (utf8.uptex) (TeX Live 2019) (preloaded format=uplatex 2019.11.6)  25 NOV 2021 14:24
+This is e-upTeX, Version 3.14159265-p3.8.2-u1.25-190131-2.6 (utf8.uptex) (TeX Live 2019) (preloaded format=uplatex 2019.11.6)  6 DEC 2021 11:29
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -8,7 +8,7 @@ entering extended mode
 pLaTeX2e <2019-10-01u02>+1 (based on LaTeX2e <2019-10-01> patch level 1)
 ./chapter4.tex:1: Undefined control sequence.
 l.1 \chapter
-            {提案手法1}\label{method1}
+            {整数計画問題に対する解法}\label{method1}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -22,34 +22,69 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1 \chapter{提
-                案手法1}\label{method1}
+l.1 \chapter{整
+                数計画問題に対する解法}\label{method1}
 You're in trouble here.  Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
 Overfull \hbox (29.6222pt too wide) in paragraph at lines 1--2
-[]\JY2/mc/m/n/10 提
+[]\JY2/mc/m/n/10 整
  []
 
 
 Overfull \hbox (9.6222pt too wide) in paragraph at lines 1--2
-\JY2/mc/m/n/10 案
+\JY2/mc/m/n/10 数
  []
 
 
 Overfull \hbox (9.6222pt too wide) in paragraph at lines 1--2
-\JY2/mc/m/n/10 手
+\JY2/mc/m/n/10 計
  []
 
 
 Overfull \hbox (9.6222pt too wide) in paragraph at lines 1--2
-\JY2/mc/m/n/10 法
+\JY2/mc/m/n/10 画
  []
 
 
-Overfull \hbox (5.00002pt too wide) in paragraph at lines 1--2
-\OT1/cmr/m/n/10 1[] 
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 1--2
+\JY2/mc/m/n/10 問
+ []
+
+
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 1--2
+\JY2/mc/m/n/10 題
+ []
+
+
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 1--2
+\JY2/mc/m/n/10 に
+ []
+
+
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 1--2
+\JY2/mc/m/n/10 対
+ []
+
+
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 1--2
+\JY2/mc/m/n/10 す
+ []
+
+
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 1--2
+\JY2/mc/m/n/10 る
+ []
+
+
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 1--2
+\JY2/mc/m/n/10 解
+ []
+
+
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 1--2
+\JY2/mc/m/n/10 法[] 
  []
 
 
@@ -2750,7 +2785,7 @@ or  <return>  to continue without it.
 Here is how much of TeX's memory you used:
  14 strings out of 492752
  163 string characters out of 6140168
- 78512 words of memory out of 5000000
+ 78526 words of memory out of 5000000
  4564 multiletter control sequences out of 15000+600000
  6589 words of font info for 33 fonts, out of 8000000 for 9000
  929 hyphenation exceptions out of 8191

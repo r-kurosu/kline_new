@@ -8,9 +8,9 @@
 \contentsline {section}{\numberline {3.2}制約}{8}% 
 \contentsline {section}{\numberline {3.3}目的関数}{8}% 
 \contentsline {section}{\numberline {3.4}定式化}{10}% 
-\contentsline {chapter}{\numberline {第4章}提案手法1}{12}% 
+\contentsline {chapter}{\numberline {第4章}整数計画問題に対する解法}{12}% 
 \contentsline {section}{\numberline {4.1}求解が可能な問題例の規模}{12}% 
-\contentsline {chapter}{\numberline {第5章}提案手法2}{13}% 
+\contentsline {chapter}{\numberline {第5章}ヒューリスティックを用いた解法}{13}% 
 \contentsline {section}{\numberline {5.1}ホールドの統合}{13}% 
 \contentsline {section}{\numberline {5.2}解の表現方法}{14}% 
 \contentsline {section}{\numberline {5.3}局所探索法}{14}% 
