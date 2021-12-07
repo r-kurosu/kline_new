@@ -660,13 +660,14 @@ def main():
     # LPORTとDPORTの2つから、注文を全て見れるデータ構造を作る done
     # ↑で作ったデータ構造で、注文とRT見れるようにする done
     # RTが大きい順に、注文番号を並び替える done
+    
+    # モデル2の初期解から、ホールドに割り当てるRTを集計
     # ホールドに割り当てれる限り割り当てる　12階からやってっても良さそう
     # セグメントで、割り当てたRTの合計を計算する
     # 空きRTが多いところから、未割り当ての注文を割り当てる
     # 未割り当ての注文が残ったら、ランダムに割り当てる
     
     # order_list_by_port[LPORT][DPORT]で、積み地と揚げ地に対応する注文を全て見れる
-    print(Booking)
     order_list_by_port = []
     for lport in L:
         order_list_by_port.append([])
@@ -687,9 +688,33 @@ def main():
         for j in range(len(order_list_by_port[i])):
             order_list_by_port[i][j] = sorted(order_list_by_port[i][j], reverse=True, key=lambda x: x[1])
     
-    for i in range(len(order_list_by_port)):
-        for j in range(len(order_list_by_port[i])):
-            print(order_list_by_port[i][j])
+    # for i in range(len(order_list_by_port)):
+    #     for j in range(len(order_list_by_port[i])):
+    #         print(order_list_by_port[i][j])
+            
+    # model2_rt_by_hold[ホールド番号][LPort][DPort]で、ホールドに割り当てるRTを見れる
+    model2_rt_by_hold = []
+    for hold_num in range(HOLD_COUNT):
+        model2_rt_by_hold.append([])
+        for lport_num in range(len(L)):
+            model2_rt_by_hold[hold_num].append([])
+            for dport in T:
+                model2_rt_by_hold[hold_num][lport_num].append(0)
+    
+    for item in model2_rt_by_hold:
+        print(item)
+    # model2_rt_by_holdの初期化終わり
+    tmp = 0
+    for index in range(len(model2_assignment)):
+        hold_id = model2_assignment.at[index,"Hold_ID"]
+        lport = model2_assignment.at[index,"LPORT"]
+        dport = model2_assignment.at[index,"DPORT"]
+        load_rt = model2_assignment.at[index,"Load_RT"]
+        model2_rt_by_hold[hold_id][lport][dport] += load_rt
+        tmp += load_rt
+    # model2_rt_by_holdの値の挿入終わり
+    
+    
     exit()
     
 
