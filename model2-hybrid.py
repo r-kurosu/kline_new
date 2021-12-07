@@ -656,14 +656,17 @@ def main():
     print(model2_assignment)
     
     # モデル2の解をもとに初期解を生成する手順
-
-    # LPORTとDPORTの2つから、注文を全て見れるデータ構造を作る done
-    # 注文をシャッフルする
-    # セグメントごとに、合計RTを集計する done
-    # 合計RTを満たすまで、ランダムにした注文を初期解に詰め込んでいく assignment[セグメント番号][積み地の番号]に追加
     
+    # LPORTとDPORTの2つから、注文を全て見れるデータ構造を作る done
+    # ↑で作ったデータ構造で、注文とRT見れるようにする done
+    # RTが大きい順に、注文番号を並び替える done
+    # ホールドに割り当てれる限り割り当てる　12階からやってっても良さそう
+    # セグメントで、割り当てたRTの合計を計算する
+    # 空きRTが多いところから、未割り当ての注文を割り当てる
+    # 未割り当ての注文が残ったら、ランダムに割り当てる
     
     # order_list_by_port[LPORT][DPORT]で、積み地と揚げ地に対応する注文を全て見れる
+    print(Booking)
     order_list_by_port = []
     for lport in L:
         order_list_by_port.append([])
@@ -671,68 +674,101 @@ def main():
     for i in range(len(order_list_by_port)):
         for dport in T:
             order_list_by_port[i].append([])
+    
     for index in range(len(Booking)):
         lport = int(Booking.at[index,"LPORT"])
         dport = int(Booking.at[index,"DPORT"])
-        order_list_by_port[lport][dport].append(index)
-        
-        
+        single_rt = Booking.at[index,"RT"]
+        unit = int(Booking.at[index,"Units"])
+        total_rt = single_rt*unit
+        order_list_by_port[lport][dport].append([index,total_rt])
+    
     for i in range(len(order_list_by_port)):
         for j in range(len(order_list_by_port[i])):
-            order_list_by_port[i][j].sort(reverse=True)
+            order_list_by_port[i][j] = sorted(order_list_by_port[i][j], reverse=True, key=lambda x: x[1])
     
     for i in range(len(order_list_by_port)):
         for j in range(len(order_list_by_port[i])):
             print(order_list_by_port[i][j])
+    exit()
+    
 
-    # セグメントと積み地と揚げ地に対応する多次元配列を作る arr[セグメント][lport][dport]に、対応するRTとかかな done
+    # # LPORTとDPORTの2つから、注文を全て見れるデータ構造を作る done
+    # # 注文をシャッフルする
+    # # セグメントごとに、合計RTを集計する done
+    # # 合計RTを満たすまで、ランダムにした注文を初期解に詰め込んでいく assignment[セグメント番号][積み地の番号]に追加
     
-    initial_rt_by_segment = []
-    for segment in segments:
-        initial_rt_by_segment.append([])
     
-    for i in range(len(initial_rt_by_segment)): #セグメントの数
-        for lport_num in range(len(L)): #積み地
-            initial_rt_by_segment[i].append([])
-            for dport in T: #揚げ地
-                initial_rt_by_segment[i][lport_num].append(0) #0で初期化
+    # # order_list_by_port[LPORT][DPORT]で、積み地と揚げ地に対応する注文を全て見れる
+    # order_list_by_port = []
+    # for lport in L:
+    #     order_list_by_port.append([])
     
-    for index in range(len(model2_assignment)):
-        hold_id = model2_assignment.at[index,"Hold_ID"]
-        segment_id = segment_index(hold_id)  
-        lport = model2_assignment.at[index,"LPORT"]
-        dport = model2_assignment.at[index,"DPORT"]
-        load_rt = model2_assignment.at[index,"Load_RT"]
-        initial_rt_by_segment[segment_id][lport][dport] += load_rt
+    # for i in range(len(order_list_by_port)):
+    #     for dport in T:
+    #         order_list_by_port[i].append([])
+    # for index in range(len(Booking)):
+    #     lport = int(Booking.at[index,"LPORT"])
+    #     dport = int(Booking.at[index,"DPORT"])
+    #     order_list_by_port[lport][dport].append(index)
+        
+        
+    # for i in range(len(order_list_by_port)):
+    #     for j in range(len(order_list_by_port[i])):
+    #         order_list_by_port[i][j].sort(reverse=True)
     
-    for item in initial_rt_by_segment:
-        print(item)
-    print(Booking)
+    # for i in range(len(order_list_by_port)):
+    #     for j in range(len(order_list_by_port[i])):
+    #         print(order_list_by_port[i][j])
+
+    # # セグメントと積み地と揚げ地に対応する多次元配列を作る arr[セグメント][lport][dport]に、対応するRTとかかな done
     
-    print("----")
-    for segment_num in range(len(segments)):
-        print(segment_num)
-        print(initial_rt_by_segment[segment_num])
-        for lport in range(len(initial_rt_by_segment[segment_num])):
-            for dport in range(len(initial_rt_by_segment[segment_num][lport])):
-                initial_rt_by_segment[segment_num][lport][dport]
-                while initial_rt_by_segment[segment_num][lport][dport]>0: #積まれるべき合計RTがまだある場合
-                    if len(order_list_by_port[lport][dport]) >0: #まだ積まれていない注文が残っている場合
-                        order = order_list_by_port[lport][dport].pop()
-                        # print(order)
-                        # print(Booking.at[order,"Units"],Booking.at[order,"RT"])
-                        tmp_rt = Booking.at[order,"Units"]*Booking.at[order,"RT"]
-                        # print(tmp_rt)
-                        initial_rt_by_segment[segment_num][lport][dport] -= tmp_rt
-                        assignment[segment_num][lport].append(order)
-                    else:
-                        break
-        print(initial_rt_by_segment[segment_num])
+    # initial_rt_by_segment = []
+    # for segment in segments:
+    #     initial_rt_by_segment.append([])
+    
+    # for i in range(len(initial_rt_by_segment)): #セグメントの数
+    #     for lport_num in range(len(L)): #積み地
+    #         initial_rt_by_segment[i].append([])
+    #         for dport in T: #揚げ地
+    #             initial_rt_by_segment[i][lport_num].append(0) #0で初期化
+    
+    # for index in range(len(model2_assignment)):
+    #     hold_id = model2_assignment.at[index,"Hold_ID"]
+    #     segment_id = segment_index(hold_id)  
+    #     lport = model2_assignment.at[index,"LPORT"]
+    #     dport = model2_assignment.at[index,"DPORT"]
+    #     load_rt = model2_assignment.at[index,"Load_RT"]
+    #     initial_rt_by_segment[segment_id][lport][dport] += load_rt
+    
+    # for item in initial_rt_by_segment:
+    #     print(item)
+    # print(Booking)
+    
+    # print("----")
+    # for segment_num in range(len(segments)):
+    #     print(segment_num)
+    #     print(initial_rt_by_segment[segment_num])
+    #     for lport in range(len(initial_rt_by_segment[segment_num])):
+    #         for dport in range(len(initial_rt_by_segment[segment_num][lport])):
+    #             initial_rt_by_segment[segment_num][lport][dport]
+    #             while initial_rt_by_segment[segment_num][lport][dport]>0: #積まれるべき合計RTがまだある場合
+    #                 if len(order_list_by_port[lport][dport]) >0: #まだ積まれていない注文が残っている場合
+    #                     order = order_list_by_port[lport][dport].pop()
+    #                     # print(order)
+    #                     # print(Booking.at[order,"Units"],Booking.at[order,"RT"])
+    #                     tmp_rt = Booking.at[order,"Units"]*Booking.at[order,"RT"]
+    #                     # print(tmp_rt)
+    #                     initial_rt_by_segment[segment_num][lport][dport] -= tmp_rt
+    #                     assignment[segment_num][lport].append(order)
+    #                 else:
+    #                     break
+    #     print(initial_rt_by_segment[segment_num])
         
         
 
-    for item in order_list_by_port:
-        print(item)
+    # for item in order_list_by_port:
+    #     print(item)
 
     # for i in range(len(L)):
     #     randomed_J = random.sample(J_t_load[i], len(J_t_load[i]))
