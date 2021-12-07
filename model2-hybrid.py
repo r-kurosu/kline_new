@@ -661,9 +661,9 @@ def main():
     # ↑で作ったデータ構造で、注文とRT見れるようにする done
     # RTが大きい順に、注文番号を並び替える done
     # モデル2の初期解から、ホールドに割り当てるRTを集計 done
+    # ホールドに割り当てる集合の配列を作成 done
+    # ホールドに割り当てれる限り割り当てる done
     
-    # ホールドに割り当てる集合の配列を作成
-    # ホールドに割り当てれる限り割り当てる
     # セグメントで、割り当てたRTの合計を計算する
     # 空きRTが多いところから、未割り当ての注文を割り当てる
     # 未割り当ての注文が残ったら、ランダムに割り当てる
@@ -750,10 +750,8 @@ def main():
                     model2_rt_by_hold[hold_num][lport_num][dport_num] = rest_rt
                     for deleted_index in reversed(deleted_index_list):
                         order_list_by_port[lport_num][dport_num].pop(deleted_index)
-        print(len(order_list_by_port[0][2]),len(order_list_by_port[0][3]),len(order_list_by_port[0][4]),len(order_list_by_port[1][2]),len(order_list_by_port[1][3]),len(order_list_by_port[1][4]))
-                
-        print('---------------------') 
-
+    for item in model2_rt_by_hold:
+        print(item)
     exit()
     
 
