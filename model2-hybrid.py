@@ -713,11 +713,8 @@ def main():
         model2_rt_by_hold[hold_id][lport][dport] += load_rt
         tmp += load_rt
     # model2_rt_by_holdの値の挿入終わり
-    for item in model2_rt_by_hold:
-        print(item)
-    # rest_rt = []
-    # for hold_id in range(len(B)):
-    #     rest_rt.append(B[hold_id])
+    # for item in model2_rt_by_hold:
+    #     print(item)
     
     # ホールドに割り当て
     
@@ -733,9 +730,8 @@ def main():
         for lport_num in range(len(model2_rt_by_hold[hold_num])):
             for dport_num in range(len(model2_rt_by_hold[hold_num][lport_num])):
                 if model2_rt_by_hold[hold_num][lport_num][dport_num]>0 and len(order_list_by_port[lport_num][dport_num])>0:
-                    print(order_list_by_port[lport_num][dport_num])
+                    # print(order_list_by_port[lport_num][dport_num])
                     rest_rt = model2_rt_by_hold[hold_num][lport_num][dport_num]
-                    print(rest_rt)
                     #挿入したインデックスのリスト(deleted_index_list)を作成
                     #i番目の注文のRTが、残りより多い時は挿入
                         # model2_hold_assignment[hold_num][lport_num]に追加
@@ -751,18 +747,13 @@ def main():
                             model2_hold_assignment[hold_num][lport_num].append(order_list_by_port[lport_num][dport_num][check_index][0])
                             deleted_index_list.append(check_index)
                             rest_rt -= order_list_by_port[lport_num][dport_num][check_index][1]
-                            print(rest_rt)
-                    
-                    print(deleted_index_list)
-                    print(model2_hold_assignment[hold_num][lport_num])
+                    model2_rt_by_hold[hold_num][lport_num][dport_num] = rest_rt
                     for deleted_index in reversed(deleted_index_list):
-                        print(deleted_index)
                         order_list_by_port[lport_num][dport_num].pop(deleted_index)
-                    print(order_list_by_port[lport_num][dport_num])
-                    exit()
-                    
-        exit()
-    
+        print(len(order_list_by_port[0][2]),len(order_list_by_port[0][3]),len(order_list_by_port[0][4]),len(order_list_by_port[1][2]),len(order_list_by_port[1][3]),len(order_list_by_port[1][4]))
+                
+        print('---------------------') 
+
     exit()
     
 
