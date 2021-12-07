@@ -663,8 +663,8 @@ def main():
     # モデル2の初期解から、ホールドに割り当てるRTを集計 done
     # ホールドに割り当てる集合の配列を作成 done
     # ホールドに割り当てれる限り割り当てる done
+    # セグメントで、割り当てたRTの合計を計算する done
     
-    # セグメントで、割り当てたRTの合計を計算する
     # 空きRTが多いところから、未割り当ての注文を割り当てる
     # 未割り当ての注文が残ったら、ランダムに割り当てる
     
@@ -752,6 +752,31 @@ def main():
                         order_list_by_port[lport_num][dport_num].pop(deleted_index)
     for item in model2_rt_by_hold:
         print(item)
+        
+    # ホールドからセグメントへの変換
+    # rest_rt_by_segment[セグメント番号][LPort][DPort]で、まだ詰めるRTがわかる
+    rest_rt_by_segment = []
+    for segment in segments:
+        rest_rt_by_segment.append([])
+    
+    for i in range(len(rest_rt_by_segment)): #セグメントの数
+        for lport_num in range(len(L)): #積み地
+            rest_rt_by_segment[i].append([])
+            for dport in T: #揚げ地
+                rest_rt_by_segment[i][lport_num].append(0) #0で初期化
+    
+        
+    for hold_num in range(HOLD_COUNT):
+        for lport_num in range(len(model2_rt_by_hold[hold_num])):
+            for dport_num in range(len(model2_rt_by_hold[hold_num][lport_num])):
+                   if model2_rt_by_hold[hold_num][lport_num][dport_num]>0:
+                        segment_id = segment_index(hold_num) 
+                        rest_rt_by_segment[segment_id][lport_num][dport_num] += model2_rt_by_hold[hold_num][lport_num][dport_num]
+    
+    for item in rest_rt_by_segment:
+        print(item)
+    
+    
     exit()
     
 
