@@ -713,11 +713,8 @@ def main():
         model2_rt_by_hold[hold_id][lport][dport] += load_rt
         tmp += load_rt
     # model2_rt_by_holdの値の挿入終わり
-    # for item in model2_rt_by_hold:
-    #     print(item)
     
-    # ホールドに割り当て
-    
+    # ホールドに割り当て 
     # ホールドに割り当てられる集合の配列を作成、初期化
     model2_hold_assignment = []
     for hold_num in range(HOLD_COUNT):
@@ -750,16 +747,14 @@ def main():
                     model2_rt_by_hold[hold_num][lport_num][dport_num] = rest_rt
                     for deleted_index in reversed(deleted_index_list):
                         order_list_by_port[lport_num][dport_num].pop(deleted_index)
-    for item in model2_rt_by_hold:
-        print(item)
+    # for item in model2_rt_by_hold:
+    #     print(item)
         
     # ホールドからセグメントへの変換
     # rest_rt_by_segment[セグメント番号][LPort][DPort]で、まだ詰めるRTがわかる
     rest_rt_by_segment = []
-    for segment in segments:
+    for i in range(len(segments)): #セグメントの数
         rest_rt_by_segment.append([])
-    
-    for i in range(len(rest_rt_by_segment)): #セグメントの数
         for lport_num in range(len(L)): #積み地
             rest_rt_by_segment[i].append([])
             for dport in T: #揚げ地
@@ -775,6 +770,15 @@ def main():
     
     for item in rest_rt_by_segment:
         print(item)
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     exit()
