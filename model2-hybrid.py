@@ -660,9 +660,10 @@ def main():
     # LPORTとDPORTの2つから、注文を全て見れるデータ構造を作る done
     # ↑で作ったデータ構造で、注文とRT見れるようにする done
     # RTが大きい順に、注文番号を並び替える done
+    # モデル2の初期解から、ホールドに割り当てるRTを集計 done
     
-    # モデル2の初期解から、ホールドに割り当てるRTを集計
-    # ホールドに割り当てれる限り割り当てる　12階からやってっても良さそう
+    # ホールドに割り当てる集合の配列を作成
+    # ホールドに割り当てれる限り割り当てる
     # セグメントで、割り当てたRTの合計を計算する
     # 空きRTが多いところから、未割り当ての注文を割り当てる
     # 未割り当ての注文が残ったら、ランダムに割り当てる
@@ -701,8 +702,7 @@ def main():
             for dport in T:
                 model2_rt_by_hold[hold_num][lport_num].append(0)
     
-    for item in model2_rt_by_hold:
-        print(item)
+
     # model2_rt_by_holdの初期化終わり
     tmp = 0
     for index in range(len(model2_assignment)):
@@ -713,7 +713,55 @@ def main():
         model2_rt_by_hold[hold_id][lport][dport] += load_rt
         tmp += load_rt
     # model2_rt_by_holdの値の挿入終わり
+    for item in model2_rt_by_hold:
+        print(item)
+    # rest_rt = []
+    # for hold_id in range(len(B)):
+    #     rest_rt.append(B[hold_id])
     
+    # ホールドに割り当て
+    
+    # ホールドに割り当てられる集合の配列を作成、初期化
+    model2_hold_assignment = []
+    for hold_num in range(HOLD_COUNT):
+        model2_hold_assignment.append([])
+        for lport in range(len(L)):
+            model2_hold_assignment[hold_num].append([])
+    
+    # 実際に割り当て
+    for hold_num in range(HOLD_COUNT):
+        for lport_num in range(len(model2_rt_by_hold[hold_num])):
+            for dport_num in range(len(model2_rt_by_hold[hold_num][lport_num])):
+                if model2_rt_by_hold[hold_num][lport_num][dport_num]>0 and len(order_list_by_port[lport_num][dport_num])>0:
+                    print(order_list_by_port[lport_num][dport_num])
+                    rest_rt = model2_rt_by_hold[hold_num][lport_num][dport_num]
+                    print(rest_rt)
+                    #挿入したインデックスのリスト(deleted_index_list)を作成
+                    #i番目の注文のRTが、残りより多い時は挿入
+                        # model2_hold_assignment[hold_num][lport_num]に追加
+                        # 挿入したら、deleted_index_listにインデックスを追加
+                        # model2_rt_by_holdの残りRTを減らす
+                    # 大きすぎて割り当てできないものは、スキップ
+                    # 最後まで見たら終わり
+                        #追加した注文を、order_list_by_portから削除
+                    
+                    deleted_index_list = []
+                    for check_index in range(0,len(order_list_by_port[lport_num][dport_num])):
+                        if order_list_by_port[lport_num][dport_num][check_index][1]<rest_rt:
+                            model2_hold_assignment[hold_num][lport_num].append(order_list_by_port[lport_num][dport_num][check_index][0])
+                            deleted_index_list.append(check_index)
+                            rest_rt -= order_list_by_port[lport_num][dport_num][check_index][1]
+                            print(rest_rt)
+                    
+                    print(deleted_index_list)
+                    print(model2_hold_assignment[hold_num][lport_num])
+                    for deleted_index in reversed(deleted_index_list):
+                        print(deleted_index)
+                        order_list_by_port[lport_num][dport_num].pop(deleted_index)
+                    print(order_list_by_port[lport_num][dport_num])
+                    exit()
+                    
+        exit()
     
     exit()
     
