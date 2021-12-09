@@ -705,13 +705,16 @@ def main():
     # assignment = operation.swap(assignment,swap_order2,order1_seg,order1_index,swap_order1,order2_seg,order2_index,loading_port)
     ここまで
     """
+    
+    total_count = 0
     while total_improve != 0:
         shift_count = 0
         while(shift_count < len(shift_neighbor_list)):
+            total_count += 1
             shift_order = shift_neighbor_list[shift_count][0]
             shift_seg = shift_neighbor_list[shift_count][1]
             loading_port = operation.find_loading_port(shift_order,J_t_load)
-            """
+            # """
             #ランダムな場所に追加
             current_segment,current_index = operation.find_current_segment_and_index(assignment,shift_order,loading_port)
             inserted_index = random.randint(0,len(assignment[shift_seg][loading_port]))
@@ -720,16 +723,18 @@ def main():
             tmp_penalty,tmp_objective = evaluate(assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt)
             tmp_evaluated_value = penalty_coefficient*tmp_penalty+tmp_objective
             if  tmp_evaluated_value < evaluated_value:
-                print("改善 shift "+str(tmp_evaluated_value))
+                # print("改善 shift "+str(tmp_evaluated_value))
+                print("総回数: "+str(total_count)+" 評価値:" + str('{:.2f}'.format(tmp_evaluated_value))+ " 計算時間"+str((datetime.datetime.now()-dt1).total_seconds())+"(s) shift改善")
                 evaluated_value= tmp_evaluated_value
                 # 探索リストを最初からやり直し
                 shift_count = 0 
                 random.shuffle(shift_neighbor_list)
             else:
+                print("総回数: "+str(total_count)+" 評価値:" + str('{:.2f}'.format(tmp_evaluated_value))+ " 計算時間"+str((datetime.datetime.now()-dt1).total_seconds())+"(s)")
                 shift_count += 1
                 # 探索の解を戻す
                 assignment= operation.shift(assignment,shift_order,shift_seg,current_segment,loading_port,current_index)
-            """
+            # """
             """
             #全ての場所に挿入して比較
             best_index = -1
@@ -756,7 +761,7 @@ def main():
             else:
                 shift_count += 1
             """
-            # """
+            """
             #効果のありそうなとろこに挿入して比較
             best_index = -1
             tmp_best_evaluated_value = evaluated_value
@@ -813,13 +818,14 @@ def main():
                 print("改善 shift "+str(evaluated_value))
             else:
                 shift_count += 1
-            # """
+            """
             
         total_improve = 0
         swap_count = 0
         
-        """
+        # """
         while(swap_count < len(swap_neighbor_list)):
+            total_count +=1 
             swap_order1 = swap_neighbor_list[swap_count][0]
             swap_order2 = swap_neighbor_list[swap_count][1]
             loading_port = operation.find_loading_port(swap_order1,J_t_load)
@@ -830,17 +836,18 @@ def main():
             tmp_penalty,tmp_objective = evaluate(assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt)
             tmp_evaluated_value = penalty_coefficient*tmp_penalty+tmp_objective 
             if  tmp_evaluated_value < evaluated_value:
-                print("改善 swap  "+str(tmp_evaluated_value))
+                print("総回数: "+str(total_count)+" 評価値:" + str('{:.2f}'.format(tmp_evaluated_value))+ " 計算時間"+str((datetime.datetime.now()-dt1).total_seconds())+"(s) swap改善")
                 evaluated_value= tmp_evaluated_value
                 # 探索リストを最初からやり直し
                 random.shuffle(swap_neighbor_list)
                 total_improve += 1
-                swap_count = 0
+                swap_count = len(swap_neighbor_list)
                 break
             else:
+                print("総回数: "+str(total_count)+" 評価値:" + str('{:.2f}'.format(tmp_evaluated_value))+ " 計算時間"+str((datetime.datetime.now()-dt1).total_seconds())+"(s)")
                 assignment = operation.swap(assignment,swap_order2,order1_seg,order1_index,swap_order1,order2_seg,order2_index,loading_port)
                 swap_count += 1
-        """
+        # """
         
     assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt = assign_to_hold(assignment)
     penalty,objective = evaluate(assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt)
