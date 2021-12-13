@@ -770,8 +770,6 @@ def main():
     
     for item in rest_rt_by_segment:
         print(item)
-    
-    print('-----------')
 
     
     # todo
@@ -782,14 +780,30 @@ def main():
     for lport_num in range(len(order_list_by_port)):
         for dport_num in range(len(order_list_by_port[lport_num])):
             if len(order_list_by_port[lport_num][dport_num])>0: #未割り当ての注文がある場合のみ考える
+                print('--------------')
                 print(lport_num,dport_num,order_list_by_port[lport_num][dport_num])
                 for unassigned_order_cnt in range(len(order_list_by_port[lport_num][dport_num])): 
                     unassigned_order = order_list_by_port[lport_num][dport_num][unassigned_order_cnt]
+                    order_num = unassigned_order[0]
                     rt = unassigned_order[1]
-                    print(rt)        
-                    # for segment_num in range(len(rest_rt_by_segment)):
+                    max_rt_segment_num = 0
+                    max_rt = rest_rt_by_segment[0][lport_num][dport_num] 
+                    for segment_num in range(1,len(rest_rt_by_segment)):
+                        rest_rt = rest_rt_by_segment[segment_num][lport_num][dport_num]
+                        if rest_rt > max_rt:
+                            max_rt = rest_rt
+                            max_rt_segment_num = segment_num
+                    
                         # rest_rt_by_segment[segment_num][lport_num][dport_num]で、空き容量が一番多いセグメントを選択して、割り当てることができるなら割り当て
                         # そうでなかったらスキップ(最後に強制的に割り当て)
+                    # ここまでで、空き容量が一番多いセグメントを選んだ
+                
+                    # 割り当てることができたら割り当てる
+                    # if rt<max_rt:
+                        
+                    print(max_rt,max_rt_segment_num) 
+                
+                exit()
     
     
     
