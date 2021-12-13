@@ -187,10 +187,10 @@ def model2(FileName):
 
     # Gurobiパラメータ設定
     GAP_SP = gp.Model()
-    GAP_SP.setParam("TimeLimit", 3600)
+    GAP_SP.setParam("TimeLimit", 300)
     GAP_SP.setParam("MIPFocus", 1)
     GAP_SP.setParam("LPMethod", 1)
-    GAP_SP.setParam("MIPGap",0.05)
+    GAP_SP.setParam("MIPGap",0.01)
     GAP_SP.printStats()
 
     # ハイパーパラメータ設定
