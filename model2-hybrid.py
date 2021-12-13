@@ -771,13 +771,25 @@ def main():
     for item in rest_rt_by_segment:
         print(item)
     
-    
-    
+    print('-----------')
+
     
     # todo
     # model2_rt_by_holdを、lport,dportで縦刺しに見て、model2_rt_by_hold[lport_num][dport_num]の空き容量が多い順に並び替える
     # order_list_by_port[lport_num][dport_num]で、未割り当ての注文が見れるから、RTの大きい未割り当ての注文から割り当てる
     # それでも割り当てできないものは、空き容量が多いセグメントにランダムに割り当てる
+    
+    for lport_num in range(len(order_list_by_port)):
+        for dport_num in range(len(order_list_by_port[lport_num])):
+            if len(order_list_by_port[lport_num][dport_num])>0: #未割り当ての注文がある場合のみ考える
+                print(lport_num,dport_num,order_list_by_port[lport_num][dport_num])
+                for unassigned_order_cnt in range(len(order_list_by_port[lport_num][dport_num])): 
+                    unassigned_order = order_list_by_port[lport_num][dport_num][unassigned_order_cnt]
+                    rt = unassigned_order[1]
+                    print(rt)        
+                    # for segment_num in range(len(rest_rt_by_segment)):
+                        # rest_rt_by_segment[segment_num][lport_num][dport_num]で、空き容量が一番多いセグメントを選択して、割り当てることができるなら割り当て
+                        # そうでなかったらスキップ(最後に強制的に割り当て)
     
     
     
