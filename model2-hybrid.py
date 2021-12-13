@@ -768,8 +768,6 @@ def main():
                         segment_id = segment_index(hold_num) 
                         rest_rt_by_segment[segment_id][lport_num][dport_num] += model2_rt_by_hold[hold_num][lport_num][dport_num]
     
-    for item in rest_rt_by_segment:
-        print(item)
         
     # ホールドへの割り当てから、セグメントでの割り当てに変換
     for hold_num in range(HOLD_COUNT):
@@ -811,24 +809,22 @@ def main():
                 
                 for deleted_index in reversed(deleted_index_list):
                     order_list_by_port[lport_num][dport_num].pop(deleted_index)
-    
-    print('まだ未割り当ての注文は以下')                   
+                 
     for lport_num in range(len(order_list_by_port)):
         for dport_num in range(len(order_list_by_port[lport_num])):
-            if len(order_list_by_port[lport_num][dport_num])>0: #未割り当ての注文がある場合のみ考える
-                print(lport_num,dport_num,order_list_by_port[lport_num][dport_num])          
-                
+            if len(order_list_by_port[lport_num][dport_num])>0: #未割り当ての注文がある場合のみ考える 
+                order_rt_pair = []      
+                for segment_num in range(len(rest_rt_by_segment)):
+                    order_rt_pair.append([segment_num,rest_rt_by_segment[segment_num][lport_num][dport_num]])
+                order_rt_pair = sorted(order_rt_pair, reverse=True, key=lambda x: x[1])
     
-    for item in rest_rt_by_segment:
-        print(item)          
+                order_rt_pair_index = 0
+                for unassigned_order_cnt in range(len(order_list_by_port[lport_num][dport_num])):
+                    unassigned_order = order_list_by_port[lport_num][dport_num][unassigned_order_cnt]
+                    assignment[order_rt_pair[order_rt_pair_index%SEGMENT_COUNT][0]][lport_num].append(unassigned_order[0])
+                    order_rt_pair_index += 1
     
     
-    
-    
-    
-    
-    
-    exit()
     
 
     # # LPORTとDPORTの2つから、注文を全て見れるデータ構造を作る done
@@ -920,7 +916,6 @@ def main():
     penalty,objective = evaluate(assignment_hold,unloaded_orders,balance_penalty,half_way_loaded_rt)
     evaluated_value = penalty_coefficient*penalty+objective
     print(evaluated_value)
-    exit()
     shift_neighbor_list = operation.create_shift_neighbor(ORDER_COUNT,SEGMENT_COUNT)
     shift_count = 0
     # swap_neighbor_list = operation.create_swap_neighbor(J_t_load,Booking)
