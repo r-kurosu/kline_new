@@ -770,6 +770,16 @@ def main():
     
     for item in rest_rt_by_segment:
         print(item)
+        
+    # ホールドへの割り当てから、セグメントでの割り当てに変換
+    for hold_num in range(HOLD_COUNT):
+        segment_id = segment_index(hold_num) 
+        for lport in range(len(L)):
+            for order in model2_hold_assignment[hold_num][lport]:
+                assignment[segment_id][lport].append(order)
+    for item in assignment:
+        print(item)
+    exit()
 
     
     # todo
