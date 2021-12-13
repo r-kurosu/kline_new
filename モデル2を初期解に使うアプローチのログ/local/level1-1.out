@@ -1,0 +1,208 @@
+model2のgap: 0.03
+(base) TakedaKshinoMBP:KLINE takedakiyoshi$ python model2-hybrid.py book/LEVEL1-1.csv 
+/Users/takedakiyoshi/opt/anaconda3/lib/python3.7/site-packages/statsmodels/tools/_testing.py:19: FutureWarning: pandas.util.testing is deprecated. Use the functions in the public API at pandas.testing instead.
+  import pandas.util.testing as tm
+     Order_num  LPORT  DPORT  Units       RT  Weight
+0            1      0      2    450   749.80    2111
+1            2      0      3    176   229.74    1538
+2            3      0      4    343   475.21    1651
+3            4      1      2   2897  4281.20    1598
+4            5      1      3    875  1207.39    1652
+..         ...    ...    ...    ...      ...     ...
+249        250      1      3     49     1.36    1780
+250        251      1      3      1     1.36    1730
+251        252      1      3      1     1.46    1980
+252        253      1      3      2     1.46    2130
+253        254      1      3      7     1.47    2100
+
+[254 rows x 6 columns]
+   Order_num  LPORT  DPORT  Units       RT  Weight
+0          1      0      2    450   749.80    2111
+1          2      0      3    176   229.74    1538
+2          3      0      4    343   475.21    1651
+3          4      1      2   2897  4281.20    1598
+4          5      1      3    875  1207.39    1652
+[0, 1, 2, 3, 4]
+
+--------------------------------------------
+Warning: your license will expire in 4 days
+--------------------------------------------
+
+Using license file /Users/takedakiyoshi/gurobi.lic
+Academic license - for non-commercial use only
+Changed value of parameter TimeLimit to 3600.0
+   Prev: inf  Min: 0.0  Max: inf  Default: inf
+Changed value of parameter MIPFocus to 1
+   Prev: 0  Min: 0  Max: 3  Default: 0
+No parameters matching 'LPMethod' found
+Changed value of parameter MIPGap to 0.03
+   Prev: 0.0001  Min: 0.0  Max: inf  Default: 0.0001
+
+Statistics for model Unnamed :
+  Linear constraint matrix    : 0 Constrs, 0 Vars, 0 NZs
+  Matrix coefficient range    : [ 0, 0 ]
+  Objective coefficient range : [ 0, 0 ]
+  Variable bound range        : [ 0, 0 ]
+  RHS coefficient range       : [ 0, 0 ]
+
+========================= Solve Assignment Problem =========================
+Gurobi Optimizer version 9.0.2 build v9.0.2rc0 (mac64)
+Optimize a model with 6176 rows, 31192 columns and 19811 nonzeros
+Model fingerprint: 0xccfe3d94
+Variable types: 1363 continuous, 29829 integer (29829 binary)
+Coefficient statistics:
+  Matrix range     [2e-04, 7e+04]
+  Objective range  [1e+00, 1e+01]
+  Bounds range     [1e+00, 4e+03]
+  RHS range        [1e-01, 4e+07]
+Presolve removed 2678 rows and 29900 columns
+Presolve time: 0.05s
+Presolved: 3498 rows, 1292 columns, 12227 nonzeros
+Variable types: 221 continuous, 1071 integer (1071 binary)
+
+Root relaxation: objective -4.461980e+03, 613 iterations, 0.01 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0 -4461.9800    0   89          - -4461.9800      -     -    0s
+     0     0 -4461.9800    0  119          - -4461.9800      -     -    0s
+     0     0 -4461.9800    0  111          - -4461.9800      -     -    0s
+     0     0 -4461.9479    0  376          - -4461.9479      -     -    0s
+     0     0 -4461.5424    0  346          - -4461.5424      -     -    0s
+     0     0 -4461.4977    0  347          - -4461.4977      -     -    0s
+     0     0 -4461.4977    0  347          - -4461.4977      -     -    0s
+     0     0 -4457.4624    0  349          - -4457.4624      -     -    0s
+     0     0 -4455.6124    0  325          - -4455.6124      -     -    0s
+     0     0 -4455.4530    0  332          - -4455.4530      -     -    0s
+     0     0 -4455.4392    0  332          - -4455.4392      -     -    0s
+H    0     0                    -4290.410000 -4455.4392  3.85%     -    0s
+H    0     0                    -4301.410000 -4455.4392  3.58%     -    0s
+H    0     0                    -4301.610000 -4455.4392  3.58%     -    0s
+     0     0 -4445.8167    0  413 -4301.6100 -4445.8167  3.35%     -    0s
+H    0     0                    -4302.380000 -4445.8167  3.33%     -    0s
+     0     0 -4443.8233    0  332 -4302.3800 -4443.8233  3.29%     -    0s
+     0     0 -4442.8693    0  357 -4302.3800 -4442.8693  3.27%     -    0s
+     0     0 -4442.8602    0  334 -4302.3800 -4442.8602  3.27%     -    0s
+     0     0 -4442.8599    0  336 -4302.3800 -4442.8599  3.27%     -    0s
+     0     0 -4439.5469    0  310 -4302.3800 -4439.5469  3.19%     -    0s
+H    0     0                    -4332.980000 -4439.5469  2.46%     -    0s
+
+Cutting planes:
+  Learned: 1
+  Gomory: 1
+  Cover: 56
+  Implied bound: 46
+  Clique: 1
+  MIR: 32
+  Flow cover: 48
+  Zero half: 4
+  Network: 1
+  RLT: 54
+  Relax-and-lift: 63
+
+Explored 1 nodes (6178 simplex iterations) in 0.74 seconds
+Thread count was 8 (of 8 available processors)
+
+Solution count 5: -4332.98 -4302.38 -4301.61 ... -4290.41
+
+Optimal solution found (tolerance 3.00e-02)
+Best objective -4.332980000000e+03, best bound -4.439546912666e+03, gap 2.4594%
+13499.509999999997
+[[249, 15, 6, 0], [259, 118]]
+[[], [261, 116, 260, 119, 207]]
+[[], [117, 256, 208, 258, 204]]
+[[], [168, 113, 257, 148, 120, 206, 114, 149, 150, 121, 205]]
+[[], [122, 151, 152, 153, 154, 155, 203, 200]]
+[[], [262, 211]]
+[[250, 252, 253, 20, 5, 80, 70, 73, 69, 60, 68, 74, 100, 78, 99, 67, 79, 87, 92, 63, 109, 104, 62, 105, 107, 81, 57], [156, 123]]
+[[254, 10, 255, 13, 4, 29, 28, 25, 35, 37, 49, 33, 42, 50, 1, 23], [157, 115, 158, 124, 197]]
+[[], [212, 244, 263, 247, 210, 246, 159, 160, 161]]
+[[27, 46, 26, 40, 48, 22, 24, 34, 39, 45, 30, 38, 44, 31, 36, 43, 47, 51, 32, 41], [162, 163, 125, 264, 213, 245, 199]]
+[[], [243, 214, 215, 216, 217, 218, 219, 164, 165, 166, 169]]
+[[], [167, 126, 127, 220, 221, 222, 223, 224, 225, 248, 209]]
+[[14, 7, 17, 251, 8, 19, 9, 21, 12, 16, 11, 18, 2, 3], [128, 129, 130, 131, 132, 170, 202]]
+[[], [133, 134, 135, 136, 137, 138, 139, 140, 198]]
+[[], [141, 142, 143, 144, 145, 146, 147, 171, 172, 173, 174, 175]]
+[[], [176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 196]]
+[[], [226, 227, 228, 229, 230, 231, 232, 188, 189, 190, 191, 192, 193, 194, 195, 201, 242]]
+[[110, 106, 65, 88, 54, 111, 85, 93, 56, 112, 108, 76, 77, 55, 98, 103, 59, 72, 86, 89, 91, 94, 96, 52, 101, 102, 61, 64, 66, 71, 75, 82, 83, 84, 90, 97, 95, 53, 58], [233, 234, 235, 236, 237, 238, 239, 240, 241]]
+改善 shift 13049.549999999996
+改善 shift 11675.549999999988
+改善 shift 11647.549999999988
+改善 shift 10867.549999999988
+改善 shift 10697.549999999988
+改善 shift 9805.549999999988
+改善 shift 9725.549999999988
+改善 shift 9170.389999999989
+改善 shift 8971.389999999989
+改善 shift 7944.509999999993
+改善 shift 7943.789999999993
+改善 shift 7372.789999999993
+改善 shift 6299.7899999999945
+改善 shift 3016.7899999999936
+改善 shift 1984.7899999999981
+改善 shift 914.7899999999981
+改善 shift 885.7899999999954
+改善 shift -327.7100000000046
+改善 shift -420.4200000000046
+改善 shift -520.4200000000046
+改善 shift -620.4200000000046
+改善 shift -672.4200000000001
+改善 shift -781.4200000000001
+改善 shift -791.4200000000001
+改善 shift -1991.42
+改善 shift -2187.2799999999997
+改善 shift -2550.68
+改善 shift -2580.68
+改善 shift -2612.68
+改善 shift -2616.8199999999997
+改善 shift -2624.1099999999997
+改善 shift -2683.1000000000004
+改善 shift -2713.1000000000004
+改善 shift -2899.1000000000004
+改善 shift -2905.170000000003
+改善 shift -2915.170000000003
+改善 shift -3024.170000000003
+改善 shift -3034.170000000003
+改善 shift -3047.45
+改善 shift -3067.45
+改善 shift -3095.8900000000003
+改善 shift -3103.17
+改善 shift -3130.17
+改善 shift -3141.8900000000003
+改善 shift -3142.4900000000002
+改善 shift -3142.83
+改善 shift -3152.83
+改善 shift -3174.91
+改善 shift -3175.91
+改善 shift -3195.91
+改善 shift -3223.5099999999998
+改善 shift -3243.5099999999998
+改善 shift -3244.0699999999997
+改善 shift -3271.67
+改善 shift -3281.96
+改善 shift -3296.18
+改善 shift -3303.08
+改善 shift -3304.46
+改善 shift -3331.76
+改善 shift -3340.76
+改善 shift -3340.86
+改善 shift -3348.86
+改善 shift -3355.26
+改善 shift -3356.26
+改善 shift -3393.2200000000003
+改善 swap  -3402.2200000000003
+改善 swap  -3417.46
+改善 swap  -3436.46
+改善 swap  -3446.46
+改善 swap  -3477.56
+改善 shift -3477.76
+改善 swap  -3517.96
+改善 swap  -3523.8199999999997
+-3523.8199999999997
+----
+0 0 0
+140 394 0 0 4057.8199999999997
+-3523.8199999999997
+計算時間: 779.285107秒
