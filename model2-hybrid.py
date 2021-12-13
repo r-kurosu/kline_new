@@ -653,7 +653,7 @@ def main():
     
     # モデル2の解を他のファイルから呼び出し
     model2_assignment = model2_script.model2(BookingFile)
-    print(model2_assignment)
+    # print(model2_assignment)
     
     # モデル2の解をもとに初期解を生成する手順
     
@@ -664,8 +664,8 @@ def main():
     # ホールドに割り当てる集合の配列を作成 done
     # ホールドに割り当てれる限り割り当てる done
     # セグメントで、割り当てたRTの合計を計算する done
+    # 空きRTが多いところから、未割り当ての注文を割り当てる done
     
-    # 空きRTが多いところから、未割り当ての注文を割り当てる
     # 未割り当ての注文が残ったら、ランダムに割り当てる
     
     # order_list_by_port[LPORT][DPORT]で、積み地と揚げ地に対応する注文を全て見れる
@@ -678,12 +678,12 @@ def main():
             order_list_by_port[i].append([])
     
     for index in range(len(Booking)):
-        lport = int(Booking.at[index,"LPORT"])
-        dport = int(Booking.at[index,"DPORT"])
+        lport_num = int(Booking.at[index,"LPORT"])
+        dport_num = int(Booking.at[index,"DPORT"])
         single_rt = Booking.at[index,"RT"]
         unit = int(Booking.at[index,"Units"])
         total_rt = single_rt*unit
-        order_list_by_port[lport][dport].append([index,total_rt])
+        order_list_by_port[lport_num][dport_num].append([index,total_rt])
     
     for i in range(len(order_list_by_port)):
         for j in range(len(order_list_by_port[i])):
@@ -707,10 +707,10 @@ def main():
     tmp = 0
     for index in range(len(model2_assignment)):
         hold_id = model2_assignment.at[index,"Hold_ID"]
-        lport = model2_assignment.at[index,"LPORT"]
-        dport = model2_assignment.at[index,"DPORT"]
+        lport_num = model2_assignment.at[index,"LPORT"]
+        dport_num = model2_assignment.at[index,"DPORT"]
         load_rt = model2_assignment.at[index,"Load_RT"]
-        model2_rt_by_hold[hold_id][lport][dport] += load_rt
+        model2_rt_by_hold[hold_id][lport_num][dport_num] += load_rt
         tmp += load_rt
     # model2_rt_by_holdの値の挿入終わり
     
@@ -719,7 +719,7 @@ def main():
     model2_hold_assignment = []
     for hold_num in range(HOLD_COUNT):
         model2_hold_assignment.append([])
-        for lport in range(len(L)):
+        for lport_num in range(len(L)):
             model2_hold_assignment[hold_num].append([])
     
     # 実際に割り当て
@@ -774,12 +774,11 @@ def main():
     # ホールドへの割り当てから、セグメントでの割り当てに変換
     for hold_num in range(HOLD_COUNT):
         segment_id = segment_index(hold_num) 
-        for lport in range(len(L)):
-            for order in model2_hold_assignment[hold_num][lport]:
-                assignment[segment_id][lport].append(order)
-    for item in assignment:
-        print(item)
-    exit()
+        for lport_num in range(len(L)):
+            for order in model2_hold_assignment[hold_num][lport_num]:
+                assignment[segment_id][lport_num].append(order)
+    # for item in assignment:
+    #     print(item)
 
     
     # todo
@@ -790,8 +789,7 @@ def main():
     for lport_num in range(len(order_list_by_port)):
         for dport_num in range(len(order_list_by_port[lport_num])):
             if len(order_list_by_port[lport_num][dport_num])>0: #未割り当ての注文がある場合のみ考える
-                print('--------------')
-                print(lport_num,dport_num,order_list_by_port[lport_num][dport_num])
+                deleted_index_list = []
                 for unassigned_order_cnt in range(len(order_list_by_port[lport_num][dport_num])): 
                     unassigned_order = order_list_by_port[lport_num][dport_num][unassigned_order_cnt]
                     order_num = unassigned_order[0]
@@ -804,16 +802,25 @@ def main():
                             max_rt = rest_rt
                             max_rt_segment_num = segment_num
                     
-                        # rest_rt_by_segment[segment_num][lport_num][dport_num]で、空き容量が一番多いセグメントを選択して、割り当てることができるなら割り当て
-                        # そうでなかったらスキップ(最後に強制的に割り当て)
                     # ここまでで、空き容量が一番多いセグメントを選んだ
+                    # 割り当てることができたら割り当てる   
+                    if rt<max_rt:
+                        assignment[max_rt_segment_num][lport_num].append(order_num)
+                        deleted_index_list.append(unassigned_order_cnt)
+                        rest_rt_by_segment[max_rt_segment_num][lport_num][dport_num] -= rt
                 
-                    # 割り当てることができたら割り当てる
-                    # if rt<max_rt:
-                        
-                    print(max_rt,max_rt_segment_num) 
+                for deleted_index in reversed(deleted_index_list):
+                    order_list_by_port[lport_num][dport_num].pop(deleted_index)
+    
+    print('まだ未割り当ての注文は以下')                   
+    for lport_num in range(len(order_list_by_port)):
+        for dport_num in range(len(order_list_by_port[lport_num])):
+            if len(order_list_by_port[lport_num][dport_num])>0: #未割り当ての注文がある場合のみ考える
+                print(lport_num,dport_num,order_list_by_port[lport_num][dport_num])          
                 
-                exit()
+    
+    for item in rest_rt_by_segment:
+        print(item)          
     
     
     
