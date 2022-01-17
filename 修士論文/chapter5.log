@@ -1,4 +1,4 @@
-This is e-upTeX, Version 3.14159265-p3.8.2-u1.25-190131-2.6 (utf8.uptex) (TeX Live 2019) (preloaded format=uplatex 2019.11.6)  6 DEC 2021 11:29
+This is e-upTeX, Version 3.14159265-p3.8.2-u1.25-190131-2.6 (utf8.uptex) (TeX Live 2019) (preloaded format=uplatex 2019.11.6)  17 JAN 2022 13:40
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -2128,6 +2128,26 @@ Overfull \hbox (9.6222pt too wide) in paragraph at lines 23--27
 
 Overfull \hbox (9.6222pt too wide) in paragraph at lines 23--27
 \JY2/mc/m/n/10 ク
+ []
+
+
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 23--27
+\JY2/mc/m/n/10 を
+ []
+
+
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 23--27
+\JY2/mc/m/n/10 用
+ []
+
+
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 23--27
+\JY2/mc/m/n/10 い
+ []
+
+
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 23--27
+\JY2/mc/m/n/10 る
  []
 
 
@@ -5277,12 +5297,7 @@ Overfull \hbox (9.6222pt too wide) in paragraph at lines 38--46
 
 
 Overfull \hbox (9.6222pt too wide) in paragraph at lines 38--46
-\JY2/mc/m/n/10 ハ
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 38--46
-\JY2/mc/m/n/10 ミ
+\JY2/mc/m/n/10 マ
  []
 
 
@@ -5292,7 +5307,22 @@ Overfull \hbox (9.6222pt too wide) in paragraph at lines 38--46
 
 
 Overfull \hbox (9.6222pt too wide) in paragraph at lines 38--46
-\JY2/mc/m/n/10 グ
+\JY2/mc/m/n/10 ハ
+ []
+
+
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 38--46
+\JY2/mc/m/n/10 ッ
+ []
+
+
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 38--46
+\JY2/mc/m/n/10 タ
+ []
+
+
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 38--46
+\JY2/mc/m/n/10 ン
  []
 
 
@@ -5449,7 +5479,7 @@ and I'll forget about whatever was undefined.
 ]
 ./chapter5.tex:47: Undefined control sequence.
 l.47 \subsubsection
-                   {ハミング距離}
+                   {マンハッタン距離}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -5463,19 +5493,14 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.47 \subsubsection{ハ
-                       ミング距離}
+l.47 \subsubsection{マ
+                       ンハッタン距離}
 You're in trouble here.  Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
 Overfull \hbox (29.6222pt too wide) in paragraph at lines 47--49
-[]\JY2/mc/m/n/10 ハ
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 47--49
-\JY2/mc/m/n/10 ミ
+[]\JY2/mc/m/n/10 マ
  []
 
 
@@ -5485,7 +5510,22 @@ Overfull \hbox (9.6222pt too wide) in paragraph at lines 47--49
 
 
 Overfull \hbox (9.6222pt too wide) in paragraph at lines 47--49
-\JY2/mc/m/n/10 グ
+\JY2/mc/m/n/10 ハ
+ []
+
+
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 47--49
+\JY2/mc/m/n/10 ッ
+ []
+
+
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 47--49
+\JY2/mc/m/n/10 タ
+ []
+
+
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 47--49
+\JY2/mc/m/n/10 ン
  []
 
 
@@ -5500,12 +5540,7 @@ Overfull \hbox (9.6222pt too wide) in paragraph at lines 47--49
 
 
 Overfull \hbox (9.6222pt too wide) in paragraph at lines 47--49
-\JY2/mc/m/n/10 ハ
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 47--49
-\JY2/mc/m/n/10 ミ
+\JY2/mc/m/n/10 マ
  []
 
 
@@ -5515,7 +5550,22 @@ Overfull \hbox (9.6222pt too wide) in paragraph at lines 47--49
 
 
 Overfull \hbox (9.6222pt too wide) in paragraph at lines 47--49
-\JY2/mc/m/n/10 グ
+\JY2/mc/m/n/10 ハ
+ []
+
+
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 47--49
+\JY2/mc/m/n/10 ッ
+ []
+
+
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 47--49
+\JY2/mc/m/n/10 タ
+ []
+
+
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 47--49
+\JY2/mc/m/n/10 ン
  []
 
 
@@ -5545,7 +5595,12 @@ Overfull \hbox (5.00002pt too wide) in paragraph at lines 47--49
 
 
 Overfull \hbox (9.6222pt too wide) in paragraph at lines 47--49
-\JY2/mc/m/n/10 つ
+\JY2/mc/m/n/10 点
+ []
+
+
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 47--49
+\JY2/mc/m/n/10 間
  []
 
 
@@ -5555,107 +5610,12 @@ Overfull \hbox (9.6222pt too wide) in paragraph at lines 47--49
 
 
 Overfull \hbox (9.6222pt too wide) in paragraph at lines 47--49
-\JY2/mc/m/n/10 ベ
+\JY2/mc/m/n/10 距
  []
 
 
 Overfull \hbox (9.6222pt too wide) in paragraph at lines 47--49
-\JY2/mc/m/n/10 ク
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 47--49
-\JY2/mc/m/n/10 ト
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 47--49
-\JY2/mc/m/n/10 ル
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 47--49
-\JY2/mc/m/n/10 の
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 47--49
-\JY2/mc/m/n/10 各
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 47--49
-\JY2/mc/m/n/10 要
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 47--49
-\JY2/mc/m/n/10 素
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 47--49
-\JY2/mc/m/n/10 の
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 47--49
-\JY2/mc/m/n/10 比
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 47--49
-\JY2/mc/m/n/10 較
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 47--49
-\JY2/mc/m/n/10 を
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 47--49
-\JY2/mc/m/n/10 行
- []
-
-
-Overfull \hbox (13.93329pt too wide) in paragraph at lines 47--49
-\JY2/mc/m/n/10 い ，
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 47--49
-\JY2/mc/m/n/10 異
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 47--49
-\JY2/mc/m/n/10 な
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 47--49
-\JY2/mc/m/n/10 る
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 47--49
-\JY2/mc/m/n/10 要
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 47--49
-\JY2/mc/m/n/10 素
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 47--49
-\JY2/mc/m/n/10 の
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 47--49
-\JY2/mc/m/n/10 数
+\JY2/mc/m/n/10 離
  []
 
 
@@ -5685,7 +5645,22 @@ Overfull \hbox (9.6222pt too wide) in paragraph at lines 47--49
 
 
 Overfull \hbox (9.6222pt too wide) in paragraph at lines 47--49
-\JY2/mc/m/n/10 あ
+\JY2/mc/m/n/10 離
+ []
+
+
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 47--49
+\JY2/mc/m/n/10 れ
+ []
+
+
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 47--49
+\JY2/mc/m/n/10 て
+ []
+
+
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 47--49
+\JY2/mc/m/n/10 い
  []
 
 
@@ -5734,8 +5709,8 @@ Overfull \hbox (9.6222pt too wide) in paragraph at lines 47--49
  []
 
 
-Overfull \hbox (13.93329pt too wide) in paragraph at lines 47--49
-\JY2/mc/m/n/10 る ． 
+Overfull \hbox (12.39998pt too wide) in paragraph at lines 47--49
+\JY2/mc/m/n/10 る\OT1/cmr/m/n/10 . 
  []
 
 
@@ -5745,8 +5720,8 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.50 長
-        さ$n$の0-1ベクトル$x,y$に対して，ハミング距離$d_H$...
+l.50 平
+        面状の座標に置かれた点に対して，マンハッタン...
 You're in trouble here.  Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
@@ -5771,7 +5746,7 @@ or  <return>  to continue without it.
 <inserted text> 
                 $
 l.52  d_
-        H(x,y) =\sum_{i=1}^n |x_j-y_i|
+        1(x,y) =\sum_{i=1}^n |x_i-y_i|
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
@@ -5801,17 +5776,17 @@ my insertion and my current dilemma will both disappear.
 
 
 Overfull \hbox (29.6222pt too wide) in paragraph at lines 50--54
-[]\JY2/mc/m/n/10 長
+[]\JY2/mc/m/n/10 平
  []
 
 
 Overfull \hbox (9.6222pt too wide) in paragraph at lines 50--54
-\JY2/mc/m/n/10 さ
+\JY2/mc/m/n/10 面
  []
 
 
-Overfull \hbox (6.00235pt too wide) in paragraph at lines 50--54
-\OML/cmm/m/it/10 n$
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 50--54
+\JY2/mc/m/n/10 状
  []
 
 
@@ -5820,38 +5795,43 @@ Overfull \hbox (9.6222pt too wide) in paragraph at lines 50--54
  []
 
 
-Overfull \hbox (8.33334pt too wide) in paragraph at lines 50--54
-\OT1/cmr/m/n/10 0-
- []
-
-
-Overfull \hbox (5.00002pt too wide) in paragraph at lines 50--54
-\OT1/cmr/m/n/10 1
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 50--54
+\JY2/mc/m/n/10 座
  []
 
 
 Overfull \hbox (9.6222pt too wide) in paragraph at lines 50--54
-\JY2/mc/m/n/10 ベ
+\JY2/mc/m/n/10 標
  []
 
 
 Overfull \hbox (9.6222pt too wide) in paragraph at lines 50--54
-\JY2/mc/m/n/10 ク
+\JY2/mc/m/n/10 に
  []
 
 
 Overfull \hbox (9.6222pt too wide) in paragraph at lines 50--54
-\JY2/mc/m/n/10 ト
+\JY2/mc/m/n/10 置
  []
 
 
 Overfull \hbox (9.6222pt too wide) in paragraph at lines 50--54
-\JY2/mc/m/n/10 ル
+\JY2/mc/m/n/10 か
  []
 
 
-Overfull \hbox (15.42128pt too wide) in paragraph at lines 50--54
-\OML/cmm/m/it/10 x; y$
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 50--54
+\JY2/mc/m/n/10 れ
+ []
+
+
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 50--54
+\JY2/mc/m/n/10 た
+ []
+
+
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 50--54
+\JY2/mc/m/n/10 点
  []
 
 
@@ -5876,12 +5856,7 @@ Overfull \hbox (13.93329pt too wide) in paragraph at lines 50--54
 
 
 Overfull \hbox (9.6222pt too wide) in paragraph at lines 50--54
-\JY2/mc/m/n/10 ハ
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 50--54
-\JY2/mc/m/n/10 ミ
+\JY2/mc/m/n/10 マ
  []
 
 
@@ -5891,7 +5866,22 @@ Overfull \hbox (9.6222pt too wide) in paragraph at lines 50--54
 
 
 Overfull \hbox (9.6222pt too wide) in paragraph at lines 50--54
-\JY2/mc/m/n/10 グ
+\JY2/mc/m/n/10 ハ
+ []
+
+
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 50--54
+\JY2/mc/m/n/10 ッ
+ []
+
+
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 50--54
+\JY2/mc/m/n/10 タ
+ []
+
+
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 50--54
+\JY2/mc/m/n/10 ン
  []
 
 
@@ -5905,7 +5895,7 @@ Overfull \hbox (9.6222pt too wide) in paragraph at lines 50--54
  []
 
 
-Overfull \hbox (12.7896pt too wide) in paragraph at lines 50--54
+Overfull \hbox (9.691pt too wide) in paragraph at lines 50--54
 \OML/cmm/m/it/10 d[]$
  []
 
@@ -5990,12 +5980,12 @@ Overfull \hbox (13.93329pt too wide) in paragraph at lines 50--54
  []
 
 
-Overfull \hbox (46.8949pt too wide) in paragraph at lines 50--54
+Overfull \hbox (43.7963pt too wide) in paragraph at lines 50--54
 \OT1/cmr/m/n/10 d$[](\OML/cmm/m/it/10 x; y\OT1/cmr/m/n/10 ) =
  []
 
 
-Overfull \hbox (46.16096pt too wide) in paragraph at lines 50--54
+Overfull \hbox (45.27669pt too wide) in paragraph at lines 50--54
 [][] \OMS/cmsy/m/n/10 j\OML/cmm/m/it/10 x[] \OMS/cmsy/m/n/10 ^^@
  []
 
@@ -6006,7 +5996,7 @@ Overfull \hbox (11.00989pt too wide) in paragraph at lines 50--54
 
 ./chapter5.tex:55: Undefined control sequence.
 l.55 \subsubsection
-                   {ハミング距離の計算方法}
+                   {マンハッタン距離の計算方法}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -6020,19 +6010,14 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.55 \subsubsection{ハ
-                       ミング距離の計算方法}
+l.55 \subsubsection{マ
+                       ンハッタン距離の計算方法}
 You're in trouble here.  Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
 Overfull \hbox (29.6222pt too wide) in paragraph at lines 55--58
-[]\JY2/mc/m/n/10 ハ
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 55--58
-\JY2/mc/m/n/10 ミ
+[]\JY2/mc/m/n/10 マ
  []
 
 
@@ -6042,7 +6027,22 @@ Overfull \hbox (9.6222pt too wide) in paragraph at lines 55--58
 
 
 Overfull \hbox (9.6222pt too wide) in paragraph at lines 55--58
-\JY2/mc/m/n/10 グ
+\JY2/mc/m/n/10 ハ
+ []
+
+
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 55--58
+\JY2/mc/m/n/10 ッ
+ []
+
+
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 55--58
+\JY2/mc/m/n/10 タ
+ []
+
+
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 55--58
+\JY2/mc/m/n/10 ン
  []
 
 
@@ -6322,12 +6322,7 @@ Overfull \hbox (13.93329pt too wide) in paragraph at lines 55--58
 
 
 Overfull \hbox (9.6222pt too wide) in paragraph at lines 55--58
-\JY2/mc/m/n/10 ハ
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 55--58
-\JY2/mc/m/n/10 ミ
+\JY2/mc/m/n/10 マ
  []
 
 
@@ -6337,7 +6332,22 @@ Overfull \hbox (9.6222pt too wide) in paragraph at lines 55--58
 
 
 Overfull \hbox (9.6222pt too wide) in paragraph at lines 55--58
-\JY2/mc/m/n/10 グ
+\JY2/mc/m/n/10 ハ
+ []
+
+
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 55--58
+\JY2/mc/m/n/10 ッ
+ []
+
+
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 55--58
+\JY2/mc/m/n/10 タ
+ []
+
+
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 55--58
+\JY2/mc/m/n/10 ン
  []
 
 
@@ -6916,7 +6926,7 @@ or  <return>  to continue without it.
 <inserted text> 
                 $
 l.65  d_
-        H(x,y) =\sum_{i=1}^n \sum_{j=1}^m|x_{ij}-y_{ij}|
+        1(x,y) =\sum_{i=1}^n \sum_{j=1}^m|x_{ij}-y_{ij}|
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
@@ -7211,12 +7221,7 @@ Overfull \hbox (13.93329pt too wide) in paragraph at lines 62--68
 
 
 Overfull \hbox (9.6222pt too wide) in paragraph at lines 62--68
-\JY2/mc/m/n/10 ハ
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 62--68
-\JY2/mc/m/n/10 ミ
+\JY2/mc/m/n/10 マ
  []
 
 
@@ -7226,7 +7231,22 @@ Overfull \hbox (9.6222pt too wide) in paragraph at lines 62--68
 
 
 Overfull \hbox (9.6222pt too wide) in paragraph at lines 62--68
-\JY2/mc/m/n/10 グ
+\JY2/mc/m/n/10 ハ
+ []
+
+
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 62--68
+\JY2/mc/m/n/10 ッ
+ []
+
+
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 62--68
+\JY2/mc/m/n/10 タ
+ []
+
+
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 62--68
+\JY2/mc/m/n/10 ン
  []
 
 
@@ -7295,7 +7315,7 @@ Overfull \hbox (12.39998pt too wide) in paragraph at lines 62--68
  []
 
 
-Overfull \hbox (46.8949pt too wide) in paragraph at lines 62--68
+Overfull \hbox (43.7963pt too wide) in paragraph at lines 62--68
 \OT1/cmr/m/n/10 d$[](\OML/cmm/m/it/10 x; y\OT1/cmr/m/n/10 ) =
  []
 
@@ -7401,12 +7421,7 @@ Overfull \hbox (9.6222pt too wide) in paragraph at lines 62--68
 
 
 Overfull \hbox (9.6222pt too wide) in paragraph at lines 62--68
-\JY2/mc/m/n/10 ハ
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 62--68
-\JY2/mc/m/n/10 ミ
+\JY2/mc/m/n/10 マ
  []
 
 
@@ -7416,7 +7431,22 @@ Overfull \hbox (9.6222pt too wide) in paragraph at lines 62--68
 
 
 Overfull \hbox (9.6222pt too wide) in paragraph at lines 62--68
-\JY2/mc/m/n/10 グ
+\JY2/mc/m/n/10 ハ
+ []
+
+
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 62--68
+\JY2/mc/m/n/10 ッ
+ []
+
+
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 62--68
+\JY2/mc/m/n/10 タ
+ []
+
+
+Overfull \hbox (9.6222pt too wide) in paragraph at lines 62--68
+\JY2/mc/m/n/10 ン
  []
 
 
@@ -8172,7 +8202,7 @@ Type  H <return>  for immediate help.
  ...                                              
                                                   
 l.74 ど
-        のインスタンスにおいても，整数計画問題の解の...
+        の問題例においても，整数計画問題の解の性質に...
 You're in trouble here.  Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
@@ -8188,32 +8218,17 @@ Overfull \hbox (9.6222pt too wide) in paragraph at lines 74--75
 
 
 Overfull \hbox (9.6222pt too wide) in paragraph at lines 74--75
-\JY2/mc/m/n/10 イ
+\JY2/mc/m/n/10 問
  []
 
 
 Overfull \hbox (9.6222pt too wide) in paragraph at lines 74--75
-\JY2/mc/m/n/10 ン
+\JY2/mc/m/n/10 題
  []
 
 
 Overfull \hbox (9.6222pt too wide) in paragraph at lines 74--75
-\JY2/mc/m/n/10 ス
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 74--75
-\JY2/mc/m/n/10 タ
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 74--75
-\JY2/mc/m/n/10 ン
- []
-
-
-Overfull \hbox (9.6222pt too wide) in paragraph at lines 74--75
-\JY2/mc/m/n/10 ス
+\JY2/mc/m/n/10 例
  []
 
 
@@ -11330,12 +11345,12 @@ Overfull \hbox (13.93329pt too wide) in paragraph at lines 110--112
 
 
 Overfull \hbox (9.6222pt too wide) in paragraph at lines 110--112
-\JY2/mc/m/n/10 挿
+\JY2/mc/m/n/10 交
  []
 
 
 Overfull \hbox (9.6222pt too wide) in paragraph at lines 110--112
-\JY2/mc/m/n/10 入
+\JY2/mc/m/n/10 換
  []
 
 
@@ -13102,9 +13117,9 @@ or  <return>  to continue without it.
 Here is how much of TeX's memory you used:
  20 strings out of 492752
  218 string characters out of 6140168
- 89482 words of memory out of 5000000
+ 90494 words of memory out of 5000000
  4570 multiletter control sequences out of 15000+600000
  6589 words of font info for 33 fonts, out of 8000000 for 9000
  929 hyphenation exceptions out of 8191
  22i,7n,16p,327b,123s stack positions out of 5000i,500n,10000p,200000b,80000s
-Output written on chapter5.dvi (3 pages, 12452 bytes).
+Output written on chapter5.dvi (3 pages, 12420 bytes).

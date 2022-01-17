@@ -16,8 +16,8 @@
 \contentsline {section}{\numberline {5.3}局所探索法}{14}% 
 \contentsline {section}{\numberline {5.4}初期解の生成}{14}% 
 \contentsline {subsection}{\numberline {5.4.1}整数計画問題の緩和解の利用}{14}% 
-\contentsline {subsubsection}{ハミング距離}{14}% 
-\contentsline {subsubsection}{ハミング距離の計算方法}{15}% 
+\contentsline {subsubsection}{マンハッタン距離}{14}% 
+\contentsline {subsubsection}{マンハッタン距離の計算方法}{15}% 
 \contentsline {subsubsection}{線形緩和問題の解の性質}{15}% 
 \contentsline {subsubsection}{線形緩和解の丸め方}{15}% 
 \contentsline {subsection}{\numberline {5.4.2}港が同じ注文をまとめて席割を作成}{15}% 
@@ -27,6 +27,6 @@
 \contentsline {section}{\numberline {6.1}実験環境}{17}% 
 \contentsline {section}{\numberline {6.2}計算時間の短縮}{17}% 
 \contentsline {section}{\numberline {6.3}初期解による比較}{17}% 
-\contentsline {section}{\numberline {6.4}2つの提案手法の比較}{17}% 
+\contentsline {section}{\numberline {6.4}提案手法による比較}{17}% 
 \contentsline {chapter}{\numberline {第7章}まとめ}{19}% 
 \contentsline {chapter}{参考文献}{21}% 
